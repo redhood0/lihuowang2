@@ -1,0 +1,8 @@
+{
+  "LIHUOWANG2_CARD_LIHUOWANG2_STRIKE.title": "Template Strike",
+  "LIHUOWANG2_CARD_LIHUOWANG2_STRIKE.description": "Deal {Damage:diff()} damage.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_STRIKE.smartDescription": "Deal {Damage:diff()} damage.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.title": "Template Defend",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.description": "Gain {Block:diff()} Block.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.smartDescription": "Gain {Block:diff()} Block."
+}

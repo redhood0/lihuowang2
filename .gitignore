@@ -1,0 +1,26 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+# IDE/user-local files
+.idea/
+.vs/
+*.DotSettings
+*.DotSettings.user
+
+# Godot generated files
+.godot/
+*.uid
+*.import
+
+# Local machine configuration
+local.props
+
+# Build/export output
+*.dll
+*.pdb
+*.pck
+*.tmp
+*.log

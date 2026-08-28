@@ -1,0 +1,8 @@
+{
+  "LIHUOWANG2_CARD_LIHUOWANG2_STRIKE.title": "模板打击",
+  "LIHUOWANG2_CARD_LIHUOWANG2_STRIKE.description": "造成 {Damage:diff()} 点伤害。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_STRIKE.smartDescription": "造成 {Damage:diff()} 点伤害。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.title": "模板防御",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.description": "获得 {Block:diff()} 点格挡。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.smartDescription": "获得 {Block:diff()} 点格挡。"
+}

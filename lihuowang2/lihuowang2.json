@@ -1,0 +1,15 @@
+{
+  "id": "lihuowang2",
+  "name": "lihuowang2",
+  "pck_name": "lihuowang2",
+  "author": "red dragon",
+  "description": "这是塔1，还是塔2，我分不清...",
+  "version": "0.0.1",
+  "has_pck": true,
+  "has_dll": true,
+  "affects_gameplay": true,
+  "min_game_version": "0.111.0",
+  "dependencies": [
+    { "id": "STS2-RitsuLib", "version": "0.5.17" }
+  ]
+}

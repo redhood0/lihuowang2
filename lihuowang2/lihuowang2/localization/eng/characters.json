@@ -1,0 +1,21 @@
+{
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.aromaPrinciple": "[sine][blue]A clean template is ready for a new run.[/blue][/sine]",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.banter.alive.endTurnPing": "Turn complete.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.banter.dead.endTurnPing": "I am out for now.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.cardsModifierDescription": "Template Character cards can now appear in rewards and shops.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.cardsModifierTitle": "Template Cards",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.defeatMessage": "The template still needs a little tuning.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.description": "A sample character used to verify the RitsuLib template project.\nReplace this text with your own character concept after copying the template.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.eventDeathPrevention": "Template Character keeps going.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.flavor": "A clean template waiting to become a new adventure.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.goldMonologue": "This gold is enough to start testing.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.possessiveAdjective": "their",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.pronounObject": "them",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.pronounPossessive": "theirs",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.pronounSubject": "they",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.selectMessage": "Template Character is ready.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.title": "Template Character",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.titleObject": "Template Character",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.unlockText": "Complete a run as [pink]{Prerequisite}[/pink] to unlock this character.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.victoryMessage": "Template verification complete."
+}
