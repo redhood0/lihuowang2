@@ -31,11 +31,11 @@ public sealed class
     public override Color MapDrawingColor => ThemeColor;
 
     // 人物性别（男女中立）。
-    public override CharacterGender Gender => CharacterGender.Neutral;
+    public override CharacterGender Gender => CharacterGender.Masculine;
 
     // 初始血量和金币。
-    public override int StartingHp => 75;
-    public override int StartingGold => 99;
+    public override int StartingHp => 80;
+    public override int StartingGold => 0;
 
     // CharacterAssetProfile 按类别拆分。你只写需要替换的部分，其他字段会保留回退。
     // AssetProfile 只指定模板自带的静态占位资源；没有复制的音频、拖尾、转场等资源继续从占位角色回退。

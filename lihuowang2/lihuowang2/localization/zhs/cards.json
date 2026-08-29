@@ -4,5 +4,8 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_STRIKE.smartDescription": "造成 {Damage:diff()} 点伤害。",
   "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.title": "模板防御",
   "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.description": "获得 {Block:diff()} 点格挡。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.smartDescription": "获得 {Block:diff()} 点格挡。"
+  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.smartDescription": "获得 {Block:diff()} 点格挡。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_BITE.title": "撕咬",
+  "LIHUOWANG2_CARD_LIHUOWANG2_BITE.description": "造成 {Damage:diff()} 点伤害。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_BITE.smartDescription": "造成 {Damage:diff()} 点伤害。"
 }

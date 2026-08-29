@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://4c0s364bfs75"]
 
-[ext_resource type="Texture2D" path="res://lihuowang2/images/characters/lihuowang2_character_select.png" id="1_character"]
-[ext_resource type="Texture2D" path="res://lihuowang2/images/characters/lihuowang2_character_icon.png" id="2_icon"]
+[ext_resource type="Texture2D" uid="uid://cxlet7gq04pnk" path="res://lihuowang2/images/characters/lihuowang2_character_select.png" id="1_character"]
+[ext_resource type="Texture2D" uid="uid://ccdwyfccilrmw" path="res://lihuowang2/images/characters/lihuowang2_character_icon.png" id="2_icon"]
+[ext_resource type="Texture2D" uid="uid://3b7rc8kdldiw" path="res://lihuowang2/images/characters/Character_Bg.png" id="3_bld3e"]
 
 [node name="lihuowang2CharacterSelectBg" type="Control"]
 layout_mode = 3
@@ -33,15 +34,17 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="Background"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.18, 0.24, 1)
+color = Color(8.826238e-05, 0.00034471275, 0.00058878213, 1)
 
 [node name="Character" type="TextureRect" parent="Background"]
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -59,8 +62,8 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Icon" type="TextureRect" parent="Background"]
+visible = false
 layout_mode = 1
-anchors_preset = 0
 offset_left = 120.0
 offset_top = 120.0
 offset_right = 288.0
@@ -68,3 +71,14 @@ offset_bottom = 288.0
 texture = ExtResource("2_icon")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Bg" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_bld3e")
+expand_mode = 1
+stretch_mode = 6

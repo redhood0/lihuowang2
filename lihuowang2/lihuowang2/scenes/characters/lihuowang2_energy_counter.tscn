@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://blj5kljxyx345"]
 
-[ext_resource type="Texture2D" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_1.png" id="1_layer1"]
-[ext_resource type="Texture2D" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_2.png" id="2_layer2"]
-[ext_resource type="Texture2D" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_3.png" id="3_layer3"]
-[ext_resource type="Texture2D" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_4.png" id="4_layer4"]
-[ext_resource type="Texture2D" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_5.png" id="5_layer5"]
+[ext_resource type="Texture2D" uid="uid://f65r0ktecr6g" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_1.png" id="1_layer1"]
+[ext_resource type="Texture2D" uid="uid://bcp6x14nahrxo" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_2.png" id="2_layer2"]
+[ext_resource type="Texture2D" uid="uid://dgiribh41l5nl" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_3.png" id="3_layer3"]
+[ext_resource type="Texture2D" uid="uid://cd3y38ce2gsy1" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_4.png" id="4_layer4"]
+[ext_resource type="Texture2D" uid="uid://cnpd5vepokka7" path="res://lihuowang2/images/characters/lihuowang2_energy_orb_layer_5.png" id="5_layer5"]
 
 [node name="TemplateEnergyCounter" type="Control"]
 layout_mode = 3
@@ -52,6 +52,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(64, 64)
 texture = ExtResource("2_layer2")
 expand_mode = 1
 
@@ -62,6 +63,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(64, 64)
 texture = ExtResource("3_layer3")
 expand_mode = 1
 

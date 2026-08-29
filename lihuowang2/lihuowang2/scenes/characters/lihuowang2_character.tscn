@@ -1,13 +1,12 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bvi7nd4vudmws"]
 
-[ext_resource type="Texture2D" path="res://lihuowang2/images/characters/lihuowang2_character_select.png" id="1_character"]
+[ext_resource type="Texture2D" uid="uid://c82mehxdnq76y" path="res://lihuowang2/images/characters/lhw_character.png" id="1_character"]
 
 [node name="lihuowang2Character" type="Node2D"]
 
 [node name="Visuals" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -92)
-scale = Vector2(1.25, 1.25)
+position = Vector2(0, -180)
 texture = ExtResource("1_character")
 
 [node name="Bounds" type="Control" parent="."]
