@@ -1,5 +1,8 @@
 {
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC.title": "模板遗物",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC.description": "每回合开始时，抽 [blue]{Cards}[/blue] 张牌。",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC.flavor": "一个用于验证模板工程的示例遗物。"
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC.flavor": "一个用于验证模板工程的示例遗物。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.title": "心素",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.description": "在每回合开始时，将[blue]1[/blue]张[red]疑虑[/red]加入你的手牌。每当你抽到[blue]3[/blue]张[red]疑虑[/red]时，获得[gold]疯癫[/gold][blue]1[/blue]回合。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.flavor": "我是谁？我在哪？我没病！！！"
 }

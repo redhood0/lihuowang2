@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using lihuowang2.Characters;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -11,12 +13,23 @@ namespace lihuowang2.Relics;
 
 // RegisterRelic 会把遗物注册进指定遗物池。
 // RegisterCharacterStarterRelic 会把它作为 lihuowang2Character 的初始遗物。
-// [RegisterRelic(typeof(lihuowang2RelicPool))]
-// [RegisterCharacterStarterRelic(typeof(lihuowang2Character))]
-public sealed class lihuowang2Relic : ModRelicTemplate
+[RegisterRelic(typeof(lihuowang2RelicPool))]
+[RegisterCharacterStarterRelic(typeof(lihuowang2Character))]
+public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
 {
     // 稀有度。
     public override RelicRarity Rarity => RelicRarity.Common;
+    
+    // protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromCardWithCardHoverTips<Soul>();
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromCard<Doubt>(),
+        // .. HoverTipFactory.FromCardWithCardHoverTips<Doubt>()
+    ];
+    // HoverTipFactory.FromPower<BlurPower>(),
+    // HoverTipFactory.FromKeyword(MyKeywords.Unique)
+    // 通过HoverTipFactory添加各种提示文本
+    
 
     // 遗物的数值。这里会替换本地化中的 {Cards}。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
