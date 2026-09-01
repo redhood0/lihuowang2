@@ -80,6 +80,7 @@
     <ItemGroup>
         <Folder Include="lihuowang2\images\cards\"/>
         <Folder Include="lihuowang2\images\characters\"/>
+        <Folder Include="lihuowang2\images\powers\" />
         <Folder Include="lihuowang2\images\relics\"/>
         <Folder Include="lihuowang2\scenes\characters\"/>
     </ItemGroup>
