@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -82,20 +83,21 @@ public class CrazyPower : ModPowerTemplate
     //     return Math.Max(amount - 1m, 0m);
     // }
 
-    // 自己的回合结束时倒计时，归零后自动移除
+    // 敌人回合结束时移除（即下一个玩家回合开始前）。
+    // 疯癫获得后会覆盖「获得当回合 + 紧接的敌人回合」，到敌方回合结束就消失。
+    // 不用 AfterPlayerTurnStart，因为疯癫本身是心素在 AfterPlayerTurnStart 里施加的，
+    // 挂同一个钩子会在施加的瞬间被自己移除（一获得就消失）。
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
         IEnumerable<Creature> participants)
     {
-        if (!participants.Contains(Owner))
+        // 只在敌人回合结束时移除
+        if (side != CombatSide.Enemy)
             return;
-
-        if ((int)DynamicVars[ExtraTurnsVarName].BaseValue > 0)
-        {
-            DynamicVars[ExtraTurnsVarName].BaseValue -= 1m;
-            return;
-        }
 
         Flash();
         await PowerCmd.Remove(this);
     }
+
+    
+    
 }

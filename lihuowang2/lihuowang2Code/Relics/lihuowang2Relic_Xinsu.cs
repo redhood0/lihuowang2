@@ -69,12 +69,21 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     // }
     
     //这里写方法，回合开始时获得1长张疑虑
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+
+    public override async   Task AfterPlayerTurnStartEarly(PlayerChoiceContext choiceContext, Player player)
     {
         await CardPileCmd.AddToCombatAndPreview<Doubt>(player.Creature, PileType.Hand, 1, player);
         // 生成的疑虑是直接放进手牌的，不会触发抽牌钩子，因此在这里直接计入
         await CountDoubtAndTryTriggerCrazy(choiceContext);
+        await base.AfterPlayerTurnStartEarly(choiceContext, player);
     }
+
+    // public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    // {
+    //     await CardPileCmd.AddToCombatAndPreview<Doubt>(player.Creature, PileType.Hand, 1, player);
+    //     // 生成的疑虑是直接放进手牌的，不会触发抽牌钩子，因此在这里直接计入
+    //     await CountDoubtAndTryTriggerCrazy(choiceContext);
+    // }
 
     // 每场战斗开始时清零，使统计只在单场战斗内累计
     public override async Task BeforeCombatStart()

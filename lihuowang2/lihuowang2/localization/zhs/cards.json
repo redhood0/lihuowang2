@@ -7,5 +7,8 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.smartDescription": "获得 {Block:diff()} 点格挡。",
   "LIHUOWANG2_CARD_LIHUOWANG2_BITE.title": "撕咬",
   "LIHUOWANG2_CARD_LIHUOWANG2_BITE.description": "造成 {Damage:diff()} 点伤害。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_BITE.smartDescription": "造成 {Damage:diff()} 点伤害。"
+  "LIHUOWANG2_CARD_LIHUOWANG2_BITE.smartDescription": "造成 {Damage:diff()} 点伤害。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_HEITAISUI.title": "黑太岁",
+  "LIHUOWANG2_CARD_LIHUOWANG2_HEITAISUI.description": "回合开始时[gold]消耗[/gold][blue]1[/blue]张牌并抽[blue]1[/blue]张牌。 \n 若[gold]消耗[/gold]的是[red]诅咒[/red]牌，则获得[blue]3[/blue]点[gold]格挡[/gold]。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_HEITAISUI.upgradeDescription": "[gold]固有[/gold]。 \n 回合开始时[gold]消耗[/gold][blue]1[/blue]张牌并抽[blue]1[/blue]张牌。 \n 若[gold]消耗[/gold]的是[red]诅咒[/red]牌，则获得[blue]3[/blue]点[gold]格挡[/gold]。"
 }
