@@ -13,5 +13,15 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_HEITAISUI.upgradeDescription": "[gold]固有[/gold]。\n回合开始时[gold]消耗[/gold][blue]1[/blue]张牌并抽[blue]1[/blue]张牌。\n若[gold]消耗[/gold]的是[red]诅咒[/red]牌，则获得[blue]3[/blue]点[gold]格挡[/gold]。",
   "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.title": "大千录·裂甲",
   "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.description": "造成 {Damage:diff()} 点伤害。\n失去[red]3[/red]点生命。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "造成 {Damage:diff()} 点伤害。\n失去[red]3[/red]点生命。"
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "造成 {Damage:diff()} 点伤害。\n失去[red]3[/red]点生命。",
+
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.title": "大千录·断指",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.description": "保留 。 消耗 。 NL 造成 !D! 点无视 格挡 的伤害。 NL 失去6点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "造成 {Damage:diff()} 点伤害。\n失去[red]3[/red]点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.title": "大千录·拔牙",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.description": "消耗 。 NL 随机对敌人造成 !D! 点伤害 !M! 次。 NL 失去3点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "消耗 。 NL 随机对敌人造成 !D! 点伤害 !M! 次。 NL 失去3点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.title": "大千录-剜眼",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.description": "消耗 。 NL 失去8点生命。 NL 获得 !B! 点 格挡 。 NL 获得 [E] 。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "消耗 。 NL 失去8点生命。 NL 获得 !B! 点 格挡 。 NL 获得 [E] [E] 。"
 }
