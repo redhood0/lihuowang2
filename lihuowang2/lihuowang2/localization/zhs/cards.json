@@ -14,14 +14,16 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.title": "大千录·裂甲",
   "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.description": "造成 {Damage:diff()} 点伤害。\n失去[red]3[/red]点生命。",
   "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "造成 {Damage:diff()} 点伤害。\n失去[red]3[/red]点生命。",
-
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.title": "大千录·断指",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.description": "保留 。 消耗 。 NL 造成 !D! 点无视 格挡 的伤害。 NL 失去6点生命。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "造成 {Damage:diff()} 点伤害。\n失去[red]3[/red]点生命。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.title": "大千录·拔牙",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.description": "消耗 。 NL 随机对敌人造成 !D! 点伤害 !M! 次。 NL 失去3点生命。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "消耗 。 NL 随机对敌人造成 !D! 点伤害 !M! 次。 NL 失去3点生命。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.title": "大千录-剜眼",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.description": "消耗 。 NL 失去8点生命。 NL 获得 !B! 点 格挡 。 NL 获得 [E] 。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_NAIL.smartDescription": "消耗 。 NL 失去8点生命。 NL 获得 !B! 点 格挡 。 NL 获得 [E] [E] 。"
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_FINGER.title": "大千录·断指",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_FINGER.description": "造成 {Damage:diff()} 点无视[gold]格挡[/gold]的伤害。\n失去[red]6[/red]点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_FINGER.smartDescription": "造成 {Damage:diff()} 点无视[gold]格挡[/gold]的伤害。\n失去[red]6[/red]点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_TEETH.title": "大千录·拔牙",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_TEETH.description": "随机对敌人造成 {Damage} 点伤害 {Repeat:diff()} 次。\n失去[red]3[/red]点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_TEETH.smartDescription": "随机对敌人造成 {Damage} 点伤害 {Repeat:diff()} 次。\n失去[red]3[/red]点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_EYE.title": "大千录·剜眼",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_EYE.description": "失去[red]8[/red]点生命。\n获得 {Block:diff()} 点[gold]格挡[/gold]。\n获得 {Energy:energyIcons()}。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_EYE.smartDescription": "失去[red]8[/red]点生命。\n获得 {Block:diff()} 点[gold]格挡[/gold]。\n获得 {Energy:energyIcons()}。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_ARM.title": "大千录·断臂",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_ARM.description": "消耗[red]1[/red]张手牌。\n造成 {Damage:diff()} 点伤害。\n给予 {Vulnerable:diff()} 层[red]易伤[/red]。\n失去[red]10[/red]点生命。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_ARM.smartDescription": "消耗[red]1[/red]张手牌。\n造成 {Damage:diff()} 点伤害。\n给予 {Vulnerable:diff()} 层[red]易伤[/red]。\n失去[red]10[/red]点生命。"
 }
