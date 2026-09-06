@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -8,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using lihuowang2.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -66,6 +68,32 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
         // 3. 先记录是否为诅咒，再消耗
         bool isCurse = card.Type == CardType.Curse;
         await CardCmd.Exhaust(choiceContext, card);
+
+        // 3.5 触手牌被黑太岁吃掉时回血（原版 triggerOnExhaust）
+        if (card is lihuowang2ImNotSick)
+        {
+            // 我没病：疯狂进手 + 自身复制体洗回抽牌堆
+            ICombatState? cs = player.Creature.CombatState;
+            if (cs != null)
+            {
+                CardModel? madness = cs.CreateCard<lihuowang2Madness>(player);
+                if (madness != null)
+                    await CardPileCmd.AddGeneratedCardToCombat(madness, PileType.Hand, player);
+
+                CardModel? clone = cs.CreateCard<lihuowang2ImNotSick>(player);
+                if (clone != null)
+                    await CardPileCmd.AddGeneratedCardToCombat(clone, PileType.Draw, player);
+            }
+        }
+        else if (card is lihuowang2LianQi)
+        {
+            await PlayerCmd.GainEnergy(1m, player);
+        }
+        else if (card is lihuowang2TentacleSlash or lihuowang2TentacleBind or
+                 lihuowang2TentacleMend or lihuowang2TentacleEatGhost)
+        {
+            await CreatureCmd.Heal(Owner, card.IsUpgraded ? 4m : 3m);
+        }
 
         // 4. 若消耗的是诅咒，则获得格挡
         if (isCurse)

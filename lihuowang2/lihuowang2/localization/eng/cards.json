@@ -4,5 +4,9 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_STRIKE.smartDescription": "Deal {Damage:diff()} damage.",
   "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.title": "Template Defend",
   "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.description": "Gain {Block:diff()} Block.",
-  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.smartDescription": "Gain {Block:diff()} Block."
+  "LIHUOWANG2_CARD_LIHUOWANG2_DEFEND.smartDescription": "Gain {Block:diff()} Block.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_SEARCH.title": "Da Qian Lu - Search",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_SEARCH.description": "Return up to {Amount:diff()} [red]Da Qian Lu[/red] cards of your choice from the [gold]exhaust pile[/gold] to your hand.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_SEARCH.smartDescription": "Return up to {Amount:diff()} [red]Da Qian Lu[/red] cards of your choice from the [gold]exhaust pile[/gold] to your hand.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_SEARCH.selectionScreenPrompt": "Select Da Qian Lu cards to return to hand"
 }

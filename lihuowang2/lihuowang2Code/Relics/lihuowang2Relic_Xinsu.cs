@@ -129,4 +129,13 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
         await base.AfterCombatEnd(room);
     }
 
+    // 塔1彩蛋：进入最终胜利房间时播放「成仙」BGM（对应 Xinsu.java 的 TrueVictoryRoom 检查）
+    public override async Task AfterRoomEntered(MegaCrit.Sts2.Core.Rooms.AbstractRoom room)
+    {
+        if (room.GetType().Name.IndexOf("Victory", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            Lihuowang2MusicUtil.PlayVictoryMusic("chengxian.mp3");
+
+        await base.AfterRoomEntered(room);
+    }
+
 }

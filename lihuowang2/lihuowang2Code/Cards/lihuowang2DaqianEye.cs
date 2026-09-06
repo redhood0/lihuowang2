@@ -6,6 +6,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
+using lihuowang2.Tags;
+using STS2RitsuLib.CardTags;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -28,6 +30,11 @@ public class lihuowang2DaqianEye : ModCardTemplate
 
     // 自己失去的生命值（无视格挡的真实 HP 损失）
     private const decimal SelfHpLossAmount = 8m;
+
+    // 大千录 tag
+    protected override HashSet<CardTag> CanonicalTags => [
+        DaqianTags.DaqianLu
+    ];
 
     // 这是格挡牌（UI 会据此识别）
     public override bool GainsBlock => true;
@@ -52,7 +59,7 @@ public class lihuowang2DaqianEye : ModCardTemplate
     {
     }
 
-    // 打出时的效果逻辑：失去生命，获得格挡，获得能量
+    // 打出时的效果逻辑：先失去生命（若血量不够会先死亡，后续不执行），再获得格挡和能量
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 1. 自己失去 8 点生命（Unblockable：无视格挡的真实 HP 损失）

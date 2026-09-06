@@ -6,6 +6,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
+using lihuowang2.Tags;
+using STS2RitsuLib.CardTags;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -30,6 +32,11 @@ public class lihuowang2DaqianNail : ModCardTemplate
     // 失去的生命值（无视格挡的真实 HP 损失）
     private const decimal HpLossAmount = 3m;
 
+    // 大千录 tag
+    protected override HashSet<CardTag> CanonicalTags => [
+        DaqianTags.DaqianLu
+    ];
+
     // 卡图资源。对应 lihuowang2/images/cards/lihuowang2DaqianNail.png（缺失时用占位图）。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
@@ -48,18 +55,19 @@ public class lihuowang2DaqianNail : ModCardTemplate
     {
     }
 
-    // 打出时的效果逻辑：对目标造成伤害，同时自己失去 3 点生命
+    // 打出时的效果逻辑：先自己失去 3 点生命，再对目标造成伤害
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 1. 对目标造成基础伤害
+        // 1. 自己失去 3 点生命（Unblockable：无视格挡的真实 HP 损失）。
+        //    放在最前面：若血量不够会先死亡，后续效果不再执行。
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, HpLossAmount, ValueProp.Unblockable,
+            Owner.Creature, this, cardPlay);
+
+        // 2. 对目标造成基础伤害
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
-
-        // 2. 自己失去 3 点生命（Unblockable：无视格挡的真实 HP 损失）
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, HpLossAmount, ValueProp.Unblockable,
-            Owner.Creature, this, cardPlay);
     }
 
     // 升级后的效果逻辑：基础伤害 15 → 18

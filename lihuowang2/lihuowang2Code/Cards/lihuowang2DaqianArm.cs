@@ -53,6 +53,8 @@ public class lihuowang2DaqianArm : ModCardTemplate
     // Damage = 造成的伤害（27，升级 +4 → 31）；Vulnerable = 给予的易伤层数（升级后 2）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(27m, ValueProp.Move),
+        // PowerVar 默认变量名是 power 类型名（VulnerablePower），
+        // 模板 DynamicVars.Vulnerable 也按此名访问，二者必须保持一致。
         new PowerVar<VulnerablePower>(1m)
     ];
 
@@ -68,7 +70,12 @@ public class lihuowang2DaqianArm : ModCardTemplate
     // 打出时的效果逻辑
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 1. 玩家从手牌选 1 张牌来消耗（此牌自身已带 Exhaust，打出后会自动进消耗堆）
+        // 1. 自己失去 10 点生命（Unblockable：无视格挡的真实 HP 损失）。
+        //    放在最前面：若血量不够会先死亡，后续效果不再执行。
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, SelfHpLossAmount,
+            ValueProp.Unblockable, Owner.Creature, this, cardPlay);
+
+        // 2. 玩家从手牌选 1 张牌来消耗（此牌自身已带 Exhaust，打出后会自动进消耗堆）
         IEnumerable<CardModel> selected = await CardSelectCmd.FromHand(
             choiceContext,
             Owner,
@@ -82,19 +89,15 @@ public class lihuowang2DaqianArm : ModCardTemplate
 
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        // 2. 对目标造成伤害
+        // 3. 对目标造成伤害
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
 
-        // 3. 给予目标易伤
+        // 4. 给予目标易伤
         await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target,
             DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
-
-        // 4. 自己失去 10 点生命（Unblockable：无视格挡的真实 HP 损失）
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, SelfHpLossAmount,
-            ValueProp.Unblockable, Owner.Creature, this, cardPlay);
     }
 
     // 升级后的效果逻辑：伤害 27 → 31；易伤 1 → 2 层

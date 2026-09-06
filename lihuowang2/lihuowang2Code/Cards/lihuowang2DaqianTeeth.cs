@@ -6,6 +6,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
+using lihuowang2.Tags;
+using STS2RitsuLib.CardTags;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -29,6 +31,11 @@ public class lihuowang2DaqianTeeth : ModCardTemplate
     // 自己失去的生命值（无视格挡的真实 HP 损失）
     private const decimal SelfHpLossAmount = 3m;
 
+    // 大千录 tag
+    protected override HashSet<CardTag> CanonicalTags => [
+        DaqianTags.DaqianLu
+    ];
+
     // 卡图资源。对应 lihuowang2/images/cards/lihuowang2DaqianTeeth.png（缺失时用占位图）。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
@@ -49,20 +56,21 @@ public class lihuowang2DaqianTeeth : ModCardTemplate
     {
     }
 
-    // 打出时的效果逻辑：随机对敌人造成伤害多次，同时自己失去 3 点生命
+    // 打出时的效果逻辑：先自己失去 3 点生命，再随机攻击敌人多次
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 1. 随机攻击敌人：每次命中随机选一个敌人，共攻击 {Repeat} 次，每次造成 {Damage} 点伤害
+        // 1. 自己失去 3 点生命（Unblockable）。
+        //    放在最前面：若血量不够会先死亡，后续效果不再执行。
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, SelfHpLossAmount,
+            ValueProp.Unblockable, Owner.Creature, this, cardPlay);
+
+        // 2. 随机攻击敌人：每次命中随机选一个敌人，共攻击 {Repeat} 次，每次造成 {Damage} 点伤害
         int hits = (int)DynamicVars.Repeat.BaseValue;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .WithHitCount(hits)
             .TargetingRandomOpponents(Owner.Creature.CombatState!)
             .Execute(choiceContext);
-
-        // 2. 自己失去 3 点生命（Unblockable：无视格挡的真实 HP 损失）
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, SelfHpLossAmount,
-            ValueProp.Unblockable, Owner.Creature, this, cardPlay);
     }
 
     // 升级后的效果逻辑：随机攻击次数 4 → 5
