@@ -1,10 +1,12 @@
 ﻿using lihuowang2.Characters;
+using lihuowang2.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Cards;
@@ -12,7 +14,7 @@ namespace lihuowang2.Cards;
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 // RegisterCharacterStarterCard 会把它追加进 lihuowang2Character 的初始卡组。
 [RegisterCard(typeof(lihuowang2CardPool))]
-// [RegisterCharacterStarterCard(typeof(lihuowang2Character), 1)]
+[RegisterCharacterStarterCard(typeof(lihuowang2Character), 1)]
 public class lihuowang2Bite: ModCardTemplate
 {
     // 基础耗能
@@ -38,9 +40,9 @@ public class lihuowang2Bite: ModCardTemplate
         // BannerTexturePath: "" // 横幅（不同类型）
     
 
-    // 卡牌基础数值
+    // 卡牌基础数值（基础伤害）。升级后 +1（4 → 5）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(12, ValueProp.Move)
+        new DamageVar(4, ValueProp.Move)
     ];
 
     public lihuowang2Bite() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -50,16 +52,20 @@ public class lihuowang2Bite: ModCardTemplate
     // 打出时的效果逻辑
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        // 若攻击者（Owner）处于疯癫状态，则额外攻击一次（共攻击 2 次）
+        int hits = Owner.Creature.HasPower<CrazyPower>(1) ? 2 : 1;
+
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this,cardPlay)
-            // .FromCard(this, cardPlay) // 测试版
+            .FromCard(this, cardPlay)
+            .WithHitCount(hits)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
     }
 
-    // 升级后的效果逻辑
+    // 升级后的效果逻辑：获得「保留」；基础伤害 4 → 5（疯癫加成随之变为 +5）
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4);
+        CardCmd.ApplyKeyword(this, CardKeyword.Retain);
+        DynamicVars.Damage.UpgradeValueBy(1);
     }
 }

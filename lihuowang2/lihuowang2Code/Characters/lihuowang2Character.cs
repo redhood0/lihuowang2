@@ -51,6 +51,8 @@ public sealed class
             RestSiteAnimPath: RestSiteScenePath),
         Ui: new CharacterUiAssetSet(
             // 人物头像路径。
+            IconPath: $"{ImageRoot}/lihuowang2_character_icon.png",
+            
             IconTexturePath: $"{ImageRoot}/lihuowang2_character_icon.png",
             // 人物头像轮廓。
             IconOutlineTexturePath: $"{ImageRoot}/lihuowang2_character_icon_outline.png",
