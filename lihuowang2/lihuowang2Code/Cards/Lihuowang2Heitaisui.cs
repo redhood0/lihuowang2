@@ -13,6 +13,7 @@ namespace lihuowang2.Cards;
 
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册，加入 lihuowang2CardPool，可在奖励中出现。
 [RegisterCard(typeof(lihuowang2CardPool))]
+[RegisterCharacterStarterCard(typeof(lihuowang2Character), 1)]
 public sealed class Lihuowang2Heitaisui : ModCardTemplate
 {
     // 基础耗能。

@@ -6,8 +6,9 @@ namespace lihuowang2.Characters;
 
 public sealed class lihuowang2CardPool : TypeListCardPoolModel
 {
+    // 卡框染色：战士风格但更偏鲜红（压低绿/蓝，避免砖红感）。
     private static readonly Material? PoolFrameTintMaterial =
-        MaterialUtils.CreateRgbShaderMaterial(0.42f, 0.65f, 0.72f);
+        MaterialUtils.CreateRgbShaderMaterial(0.96f, 0.14f, 0.12f);
 
     // Title 和 EnergyColorName 是池子的稳定标识，不是玩家看到的角色名。
     // 自定义角色卡、遗物、药水池保持同一个 EnergyColorName，方便实验室和文本统一读取能量图标。
@@ -19,8 +20,9 @@ public sealed class lihuowang2CardPool : TypeListCardPoolModel
     public override string? BigEnergyIconPath => $"{Entry.ResPath}/images/characters/energy_big.png";
     public override string? TextEnergyIconPath => $"{Entry.ResPath}/images/characters/energy_text.png";
 
-    public override Color DeckEntryCardColor => lihuowang2Character.ThemeColor;
-    public override Color EnergyOutlineColor => new(0.08f, 0.18f, 0.24f);
+    // 铁甲参考值：DeckEntryCardColor=#D62000，EnergyOutlineColor=#802020
+    public override Color DeckEntryCardColor => new(0.84f, 0.13f, 0f);
+    public override Color EnergyOutlineColor => new(0.50f, 0.13f, 0.13f);
     public override Material? PoolFrameMaterial => PoolFrameTintMaterial;
 
     // false 表示这是角色专属卡池，不是事件/状态那类无色卡池。

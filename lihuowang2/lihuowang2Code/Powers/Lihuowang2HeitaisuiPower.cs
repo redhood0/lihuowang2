@@ -51,8 +51,7 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
     // 单层触发流程：先抽1张，再选1张手牌消耗；若消耗的是诅咒则获得3点格挡
     private async Task TriggerOnce(PlayerChoiceContext choiceContext, Player player)
     {
-        // 1. 先抽 1 张
-        await CardPileCmd.Draw(choiceContext, DrawPerLayer, player);
+       
 
         // 2. 让玩家从手牌选 1 张来消耗（此时手牌已包含刚抽到的那张）
         IEnumerable<CardModel> selected = await CardSelectCmd.FromHand(
@@ -61,7 +60,7 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
             new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1),
             filter: null,
             source: this);
-
+        
         CardModel? card = selected.FirstOrDefault();
         if (card == null) return;
 
@@ -69,6 +68,9 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
         bool isCurse = card.Type == CardType.Curse;
         await CardCmd.Exhaust(choiceContext, card);
 
+        // 1. 先抽 1 张
+        await CardPileCmd.Draw(choiceContext, DrawPerLayer, player);
+        
         // 3.5 触手牌被黑太岁吃掉时回血（原版 triggerOnExhaust）
         if (card is lihuowang2ImNotSick)
         {

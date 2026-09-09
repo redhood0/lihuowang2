@@ -1,11 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -26,6 +30,10 @@ public class lihuowang2BreakSwordAttack : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
+    // 悬停时展示“虚弱”的关键字说明（与断臂展示“易伤”的做法一致）。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<WeakPower>()];
+
     // Damage = 伤害（6，升级 +3）；Weak = 目标正在攻击时给予的虚弱（1，升级 +1 → 2）
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6m, ValueProp.Move),
@@ -36,18 +44,31 @@ public class lihuowang2BreakSwordAttack : ModCardTemplate
     {
     }
 
-    // 施加 Weak 层虚弱，并造成（基础伤害 +6）的伤害。
-    // 注：StS1 原版条件是"目标正在攻击"，STS2 暂无直接读取敌人攻击意图的稳定 API，暂按无条件触发实现。
+    // 破剑式：造成基础伤害；若目标本回合的意图是攻击（含单次/多次攻击），额外造成 6 点伤害并施加 1 层虚弱。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target!,
-            DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+        Creature target = cardPlay.Target!;
 
-        decimal damage = DynamicVars.Damage.BaseValue + 6m;
-        await DamageCmd.Attack(damage)
-            .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target!)
-            .Execute(choiceContext);
+        // 读取敌人意图：Monster.NextMove.Intents 里是否有 AttackIntent（Single/MultiAttack 都是它的子类）。
+        bool intendsToAttack = target.Monster?.NextMove?.Intents.Any(intent => intent is AttackIntent) ?? false;
+
+        if (intendsToAttack)
+        {
+            await PowerCmd.Apply<WeakPower>(choiceContext, target,
+                DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue + 6m)
+                .FromCard(this, cardPlay)
+                .Targeting(target)
+                .Execute(choiceContext);
+        }
+        else
+        {
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .FromCard(this, cardPlay)
+                .Targeting(target)
+                .Execute(choiceContext);
+        }
     }
 
     protected override void OnUpgrade()
