@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
+using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -27,6 +28,10 @@ public class lihuowang2ChangePosition : ModCardTemplate
     // 虚无 + 消耗；升级后移除「虚无」
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust];
 
+     // 悬停时展示“虚弱”的关键字说明（与断臂展示“易伤”的做法一致）。
+        protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+            [HoverTipFactory.FromPower<IntangiblePower>()];
+    
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 

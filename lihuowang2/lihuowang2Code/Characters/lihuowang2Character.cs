@@ -11,7 +11,7 @@ namespace lihuowang2.Characters;
 public sealed class
     lihuowang2Character : ModCharacterTemplate<lihuowang2CardPool, lihuowang2RelicPool, lihuowang2PotionPool>
 {
-    public static readonly Color ThemeColor = new(0.42f, 0.65f, 0.72f);
+    public static readonly Color ThemeColor = new(0.55f, 0.08f, 0.09f);
 
     private const string SceneRoot = $"{Entry.ResPath}/scenes/characters";
     private const string ImageRoot = $"{Entry.ResPath}/images/characters";
@@ -24,8 +24,8 @@ public sealed class
     // 角色名称颜色。
     public override Color NameColor => ThemeColor;
 
-    // 能量图标轮廓颜色。
-    public override Color EnergyLabelOutlineColor => new(0.08f, 0.18f, 0.24f);
+    // 能量图标轮廓颜色（采用杀戮尖塔2战士的血红描边）。
+    public override Color EnergyLabelOutlineColor => new(0.55f, 0.08f, 0.09f);
 
     // 地图绘制颜色。
     public override Color MapDrawingColor => ThemeColor;

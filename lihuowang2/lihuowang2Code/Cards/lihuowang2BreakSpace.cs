@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -41,19 +42,19 @@ public class lihuowang2BreakSpace : ModCardTemplate
     {
         Player? player = Owner.Creature.Player;
 
-        IReadOnlyList<Creature> enemies = Owner.Creature.CombatState!.Enemies;
+        // 1. 清空格挡（用快照副本遍历，防止敌人中途被移除导致枚举异常）
+        Creature[] enemies = Owner.Creature.CombatState!.Enemies.ToArray();
         foreach (Creature enemy in enemies)
         {
-            // 1. 清空格挡
             if (enemy.Block > 0)
                 await CreatureCmd.LoseBlock(choiceContext, enemy, enemy.Block, Owner.Creature);
-
-            // 2. 造成伤害
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this, cardPlay)
-                .Targeting(enemy)
-                .Execute(choiceContext);
         }
+
+        // 2. 对全体敌人造成伤害（TargetingAllOpponents 自带群体打击特效，且内部处理敌人阵亡）
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this, cardPlay)
+            .TargetingAllOpponents(Owner.Creature.CombatState!)
+            .Execute(choiceContext);
 
         // 3. 弃牌堆放入 1 张虚空
         if (player != null)
