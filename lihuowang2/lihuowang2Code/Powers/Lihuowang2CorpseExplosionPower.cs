@@ -1,3 +1,8 @@
+// ===== 暂时停用（尸爆）=====
+// 幽灵环（游老爷）已不再施加此 power，卡面说明里也没有它；这里整块注释掉，power 不会被注册进游戏。
+// 后面要用时：去掉下面块的注释，并同步恢复 lihuowang2GhostRing.cs 里的 Apply 调用（含 lihuowang2.Powers 的 using）即可。
+/*
+
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -42,3 +47,5 @@ public class Lihuowang2CorpseExplosionPower : ModPowerTemplate
         await base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
     }
 }
+
+*/

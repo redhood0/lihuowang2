@@ -50,8 +50,7 @@ public class lihuowang2Huiniangjia : ModCardTemplate
         Creature target = cardPlay.Target!;
         Player? player = Owner.Creature.Player;
 
-        // BGM：回娘家（离火）
-        Lihuowang2MusicUtil.PlayCardMusic("lihuo.mp3");
+        
 
         // 1. 点燃 3 层（黑手遗物加成已由 DianranPower 内部处理）
         await DianranPower.ApplyIgnite(choiceContext, [target], 3m, Owner.Creature, this);
@@ -66,7 +65,10 @@ public class lihuowang2Huiniangjia : ModCardTemplate
             .FromCard(this, cardPlay)
             .Targeting(target)
             .Execute(choiceContext);
-
+        
+        // BGM：回娘家（离火）
+        Lihuowang2MusicUtil.PlayCardMusic("lihuo.mp3");
+        
         // 3. 若因此击杀：把一张「悔恨」加入牌组
         if (target.IsDead && player != null)
             await CardPileCmd.AddCursesToDeck([ModelDb.Card<Regret>()], player);

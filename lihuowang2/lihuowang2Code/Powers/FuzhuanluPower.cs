@@ -12,7 +12,7 @@ namespace lihuowang2.Powers;
 
 // 符篆录：每当你打出一张符篆牌（当前为「神行符」等）时抽 Amount 张牌；
 // 打出次数累计超过 3 次后，额外将 1 张「大千录·剜眼」加入手牌。
-[RegisterPower]
+
 public class FuzhuanluPower : ModPowerTemplate
 {
     // 类型：Buff

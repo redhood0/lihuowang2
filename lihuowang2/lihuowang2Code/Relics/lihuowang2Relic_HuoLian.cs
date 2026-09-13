@@ -28,7 +28,9 @@ public class lihuowang2Relic_HuoLian : ModRelicTemplate
 
     public override async Task BeforeCombatStart()
     {
-        await CardPileCmd.AddToCombatAndPreview<Burn>(Owner.Creature, PileType.Draw, 3, Owner!);
+        // 洗入抽牌堆：随机位置
+        await CardPileCmd.AddToCombatAndPreview<Burn>(Owner.Creature, PileType.Draw, 3, Owner!,
+            CardPilePosition.Random);
         await base.BeforeCombatStart();
     }
 }

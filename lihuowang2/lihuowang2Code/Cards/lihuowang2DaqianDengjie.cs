@@ -33,10 +33,13 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // Draw = 抽牌数(4，升级 +2)；Threshold = 血量低于该值触发绝境(8，升级 +2)
+    // Draw = 抽牌数(4，升级 +2)；Threshold = 血量低于该值触发绝境(8，升级 +2)；
+    // Energy = 绝境爆发获得的能量(2)。描述里出现的每个 {名字} 都必须在 CanonicalVars 里有同名变量，
+    // 否则 SmartFormat 会抛异常，整条描述会退化成未替换的原文。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Draw", 4m),
-        new DynamicVar("Threshold", 8m)
+        new DynamicVar("Threshold", 8m),
+        new EnergyVar(2)
     ];
 
     // 悬停提示：描述里出现的易伤 / 无实体 / 再生，以及登阶遗物。

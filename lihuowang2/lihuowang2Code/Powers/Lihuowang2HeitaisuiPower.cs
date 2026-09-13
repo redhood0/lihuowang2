@@ -84,7 +84,8 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
 
                 CardModel? clone = cs.CreateCard<lihuowang2ImNotSick>(player);
                 if (clone != null)
-                    await CardPileCmd.AddGeneratedCardToCombat(clone, PileType.Draw, player);
+                    await CardPileCmd.AddGeneratedCardToCombat(clone, PileType.Draw, player,
+                        CardPilePosition.Random);
             }
         }
         else if (card is lihuowang2LianQi)

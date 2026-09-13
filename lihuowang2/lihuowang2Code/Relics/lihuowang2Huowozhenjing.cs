@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Relics;
 
-// 火袄真经：每当你打出一张状态牌时，将其消耗并回复 3 点生命。
+// 火袄真经：每当你打出一张状态牌时，将其消耗并回复 2 点生命。
 [RegisterRelic(typeof(lihuowang2RelicPool))]
 public class lihuowang2Huowozhenjing : ModRelicTemplate
 {
@@ -23,7 +23,7 @@ public class lihuowang2Huowozhenjing : ModRelicTemplate
         IconOutlinePath: $"{Entry.ResPath}/images/relics/lihuowang2Huowozhenjing.png",
         BigIconPath: $"{Entry.ResPath}/images/relics/lihuowang2Huowozhenjing.png");
 
-    // 打出一张卡牌后：若是状态牌则消耗它并回 3 血
+    // 打出一张卡牌后：若是状态牌则消耗它并回 2 血
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel? card = cardPlay.Card;

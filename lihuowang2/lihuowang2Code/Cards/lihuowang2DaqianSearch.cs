@@ -10,6 +10,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using lihuowang2.Characters;
+using lihuowang2.Tags;
+using STS2RitsuLib.CardTags;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -36,6 +38,11 @@ public class lihuowang2DaqianSearch : ModCardTemplate
     public lihuowang2DaqianSearch() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+
+    // 大千录 tag（寻本身也属于大千录系列，可被自己回收）
+    protected override HashSet<CardTag> CanonicalTags => [
+        DaqianTags.DaqianLu
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -68,16 +75,9 @@ public class lihuowang2DaqianSearch : ModCardTemplate
             await CardPileCmd.Add(card, PileType.Hand);
     }
 
-    // 是否属于大千录系列（含本体与五行/有福同享等带 Tag 的衍生牌）
-    private static bool IsDaqianlu(CardModel card) => card switch
-    {
-        lihuowang2Daqianlu or lihuowang2DaqianSearch or
-        lihuowang2DaqianArm or lihuowang2DaqianEye or lihuowang2DaqianFinger or
-        lihuowang2DaqianFireSkin or lihuowang2DaqianNail or lihuowang2DaqianRibs or
-        lihuowang2DaqianSkin or lihuowang2DaqianTeeth or lihuowang2DaqianWuxing or
-        lihuowang2DaqianYoufutongxiang => true,
-        _ => false
-    };
+    // 是否属于大千录系列：凡带「大千录」Tag 的牌都算
+    // （本体、寻、五行、有福同享及剜眼/肋间/皮/指甲/指/牙/手臂/火皮等衍生牌均已挂牌）
+    private static bool IsDaqianlu(CardModel card) => card.Tags.Contains(DaqianTags.DaqianLu);
 
     // 升级：费用 1 → 0，回手上限 +1
     protected override void OnUpgrade()

@@ -20,9 +20,9 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIN_ZHUO_JIAN.title": "心灼剑",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIN_ZHUO_JIAN.description": "每场战斗开始时，将一张[red]破碎虚空斩[/red]加入手牌。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIN_ZHUO_JIAN.flavor": "剑身烫得握不住，却总想再来一刀。",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINZHUOFANGCHUI.title": "心灼法锤",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINZHUOFANGCHUI.description": "每场战斗开始时，获得[blue]1[/blue]层[red]无实体[/red]。",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINZHUOFANGCHUI.flavor": "一锤下去，先把自己敲没了影。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINZHUO_FANGCHUI.title": "心灼法锤",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINZHUO_FANGCHUI.description": "每场战斗开始时，获得[blue]1[/blue]层[red]无实体[/red]。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINZHUO_FANGCHUI.flavor": "一锤下去，先把自己敲没了影。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_TONGQIANJIAN.title": "铜钱剑",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_TONGQIANJIAN.description": "胜利时：每持有一枚[gold]铜钱[/gold]，获得[blue]10~15[/blue]随机金币。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_TONGQIANJIAN.flavor": "剑从钱眼里穿过，钱就从敌人身上流出来。",
@@ -38,7 +38,7 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.title": "骰子18",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.description": "[gold]右键[/gold]：消耗[blue]1[/blue]点能量，抽[blue]1~6[/blue]张牌；若掷到[red]6[/red]，获得[red]混乱[/red]且此遗物[red]破损[/red]。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.flavor": "十八面的骰子，掷出六就像掷出命。",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PINGWA.title": "平娃",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PINGWA.description": "[gold]右键[/gold]：消耗[blue]1[/blue]点能量，[gold]预见[/gold][blue]4[/blue]。处于[red]丹阳子化[/red]时免费。",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PINGWA.flavor": "小哑巴只会点头，点头就是四。"
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.title": "平娃",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.description": "[gold]右键[/gold]：消耗[blue]1[/blue]点能量，[gold]预见[/gold][blue]4[/blue]。处于[red]丹阳子化[/red]时免费。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.flavor": "小哑巴只会点头，点头就是四。"
 }

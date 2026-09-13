@@ -7,7 +7,7 @@ namespace lihuowang2;
 public static class Lihuowang2MusicUtil
 {
     // 卡片 BGM 的默认音量倍率（1 = 原声）。想统一调小/调大卡片 BGM 只改这里。
-    public const float DefaultCardMusicVolume = 0.5f;
+    public const float DefaultCardMusicVolume = 0.1f;
 
     /// <summary>卡片触发 BGM（战斗内作用域，战斗结束自动清理）。</summary>
     /// <param name="fileName">audio/music 目录下的文件名。</param>
