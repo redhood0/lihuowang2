@@ -9,13 +9,14 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
-using lihuowang2.Powers;
+// using lihuowang2.Powers; // 只有尸爆 power 用到；该 power 暂时停用（见 Lihuowang2CorpseExplosionPower.cs）
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Cards;
 
-// 幽灵环：自损 5 点生命上限，换来对目标的重创 + 尸爆 + 迟缓。
+// 幽灵环（游老爷）：自损 5 点生命上限，换来对目标的重创 + 迟缓。
+// （原「尸爆」效果暂时停用，power 代码保留在 Lihuowang2CorpseExplosionPower.cs 的注释块里。）
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2GhostRing : ModCardTemplate
 {
@@ -28,10 +29,10 @@ public class lihuowang2GhostRing : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // Damage = 伤害（25，升级 +7 → 32）；Slow = 迟缓层数（0，升级 +1）
+    // Damage = 伤害（25，升级 +7 → 32）；Slow = 迟缓层数（1，升级 +1 → 2）
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(25m, ValueProp.Move),
-        new DynamicVar("Slow", 0m)
+        new DynamicVar("Slow", 1m)
     ];
 
     public lihuowang2GhostRing() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -60,13 +61,11 @@ public class lihuowang2GhostRing : ModCardTemplate
         if (self.CurrentHp > newMax)
             self.CurrentHp = newMax;
 
-        // 2. 尸爆：敌人死亡时对其余敌人造成其最大生命的伤害
-        await PowerCmd.Apply<Lihuowang2CorpseExplosionPower>(choiceContext, target, 1m, self, this);
+        // 2. 尸爆：暂时停用（power 本体见 Lihuowang2CorpseExplosionPower.cs，已整块注释，后面要用再一起放开）
+        // await PowerCmd.Apply<Lihuowang2CorpseExplosionPower>(choiceContext, target, 1m, self, this);
 
-        // 3. 迟缓（升级后才有效果）
-        decimal slow = DynamicVars["Slow"].BaseValue;
-        if (slow > 0m)
-            await PowerCmd.Apply<SlowPower>(choiceContext, target, slow, self, this);
+        // 3. 迟缓：基础 1 层，升级后 2 层（与卡面说明一致）
+        await PowerCmd.Apply<SlowPower>(choiceContext, target, DynamicVars["Slow"].BaseValue, self, this);
 
         // 4. 造成伤害
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
@@ -75,7 +74,7 @@ public class lihuowang2GhostRing : ModCardTemplate
             .Execute(choiceContext);
     }
 
-    // 升级：伤害 25 → 32；迟缓 0 → 1
+    // 升级：伤害 25 → 32；迟缓 1 → 2
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(7);

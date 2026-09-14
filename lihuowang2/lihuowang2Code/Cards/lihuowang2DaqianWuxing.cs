@@ -54,7 +54,7 @@ public class lihuowang2DaqianWuxing : ModCardTemplate
 
     // 关键字：消耗（打出后进入消耗堆）
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
+        // CardKeyword.Exhaust
     ];
 
     public lihuowang2DaqianWuxing() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)

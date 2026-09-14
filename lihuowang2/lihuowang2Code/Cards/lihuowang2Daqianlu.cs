@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Combat;
@@ -8,7 +9,10 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using lihuowang2.Characters;
+using lihuowang2.Tags;
+using STS2RitsuLib.CardTags;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -31,6 +35,11 @@ public class lihuowang2Daqianlu : ModCardTemplate
     {
     }
 
+    // 大千录 tag（本体，寻/有福同享等衍生牌按此 tag 判定归属）
+    protected override HashSet<CardTag> CanonicalTags => [
+        DaqianTags.DaqianLu
+    ];
+
     // 将 4 张随机大千录牌加入抽牌堆（权重与原版一致）
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -39,12 +48,17 @@ public class lihuowang2Daqianlu : ModCardTemplate
         if (player == null || combatState == null)
             return;
 
+        // 先收集本批加入的牌，最后统一播一次预览动画
+        List<CardPileAddResult> added = new(4);
         for (int i = 0; i < 4; i++)
         {
             CardModel? card = CreateRandomDaqian(combatState, player, Random.Shared.Next(16));
             if (card != null)
-                await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, player);
+                added.Add(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, player,
+                    CardPilePosition.Random));
         }
+
+        await PreviewPileAdd(added);
 
         // 绝境彩蛋：仅剩 1 点生命且能量打空时，把 0 费「登阶」塞回手牌
         if (Owner.Creature.CurrentHp <= 1 && Owner.PlayerCombatState!.Energy <= 0)
@@ -56,6 +70,18 @@ public class lihuowang2Daqianlu : ModCardTemplate
                 await CardPileCmd.AddGeneratedCardToCombat(dengjie, PileType.Hand, player);
             }
         }
+    }
+
+    // 播放「卡牌加入牌堆」的预览动画（与引擎 CardPileCmd.AddToCombatAndPreview 内部一致：
+    // 卡牌从屏幕中央出现，停留后再飞向对应牌堆）
+    private static async Task PreviewPileAdd(IReadOnlyList<CardPileAddResult> results)
+    {
+        if (results.Count == 0)
+            return;
+
+        CardPreviewStyle style = results.Count <= 5 ? CardPreviewStyle.HorizontalLayout : CardPreviewStyle.MessyLayout;
+        CardCmd.PreviewCardPileAdd(results, 1.2f, style);
+        await Cmd.Wait(1f);
     }
 
     private static CardModel? CreateRandomDaqian(ICombatState combatState, Player player, int roll)

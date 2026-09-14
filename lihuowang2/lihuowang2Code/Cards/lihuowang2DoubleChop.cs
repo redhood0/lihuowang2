@@ -27,7 +27,7 @@ public class lihuowang2DoubleChop : ModCardTemplate
 
     // 伤害 10，升级 +3
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(10m, ValueProp.Move)
+        new DamageVar(9m, ValueProp.Move)
     ];
 
     public lihuowang2DoubleChop() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
+using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -34,6 +35,10 @@ public class lihuowang2DaLiDan : ModCardTemplate
     // 卡图资源。对应 lihuowang2/images/cards/lihuowang2DaLiDan.png（缺失时用占位图）。
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+    
+    // 悬停时展示“虚弱”的关键字说明（与断臂展示“易伤”的做法一致）。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<StrengthPower>()];
 
     // 数值：Block = 格挡（3，升级 +2 → 5）；Str = 力量（2，升级 +1 → 3）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [

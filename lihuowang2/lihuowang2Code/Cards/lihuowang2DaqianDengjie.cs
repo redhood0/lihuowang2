@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -32,10 +33,23 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // Draw = 抽牌数(4，升级 +2)；Threshold = 血量低于该值触发绝境(8，升级 +2)
+    // Draw = 抽牌数(4，升级 +2)；Threshold = 血量低于该值触发绝境(8，升级 +2)；
+    // Energy = 绝境爆发获得的能量(2)。描述里出现的每个 {名字} 都必须在 CanonicalVars 里有同名变量，
+    // 否则 SmartFormat 会抛异常，整条描述会退化成未替换的原文。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Draw", 4m),
-        new DynamicVar("Threshold", 8m)
+        new DynamicVar("Threshold", 8m),
+        new EnergyVar(2)
+    ];
+
+    // 悬停提示：描述里出现的易伤 / 无实体 / 再生，以及登阶遗物。
+    // （[gold]消耗[/gold] 由 CanonicalKeywords 里的 Exhaust 自动补。）
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<IntangiblePower>(),
+        HoverTipFactory.FromPower<RegenPower>(),
+        .. HoverTipFactory.FromRelic<lihuowang2Relic_Dengjie>()
     ];
 
     public lihuowang2DaqianDengjie() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -48,9 +62,6 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
         if (player == null)
             return;
 
-        // BGM：苍蜣登阶
-        Lihuowang2MusicUtil.PlayCardMusic("dengjie.mp3");
-
         // 1. 抽牌
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].BaseValue, player);
 
@@ -58,20 +69,28 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
         IReadOnlyList<Creature> enemies = Owner.Creature.CombatState!.Enemies;
         await PowerCmd.Apply<VulnerablePower>(choiceContext, enemies, 99m, Owner.Creature, this);
 
-        // 3. 血量低于门槛：绝境爆发
-        if (Owner.Creature.CurrentHp >= (int)DynamicVars["Threshold"].BaseValue)
+        // 3. 血量低于门槛：绝境爆发（只有满足条件才播 BGM）
+        if (Owner.Creature.CurrentHp > (int)DynamicVars["Threshold"].BaseValue)
             return;
+
+        // BGM：苍蜣登阶（音量走 Lihuowang2MusicUtil.DefaultCardMusicVolume，默认 50%）
+        Lihuowang2MusicUtil.PlayCardMusic("dengjie.mp3");
 
         await PlayerCmd.GainEnergy(2m, player);
         await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
 
-        // 拥有登阶遗物时：登阶 +1 并闪光；否则只吃回复（无法在中途给予遗物，近似处理）
-        var dengjieRelic = player.GetRelic<lihuowang2Relic_Dengjie>();
-        if (dengjieRelic != null)
+        // 没有登阶遗物就先把它拿到手（遗物自带计数器，初始即登阶 1），已有则登阶 +1。
+        lihuowang2Relic_Dengjie? dengjieRelic = player.GetRelic<lihuowang2Relic_Dengjie>();
+        if (dengjieRelic == null)
+        {
+            dengjieRelic = await RelicCmd.Obtain<lihuowang2Relic_Dengjie>(player);
+        }
+        else
         {
             dengjieRelic.StepUp();
-            dengjieRelic.Flash();
         }
+
+        dengjieRelic?.Flash();
 
         await PowerCmd.Apply<RegenPower>(choiceContext, Owner.Creature, 8m, Owner.Creature, this);
     }

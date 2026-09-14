@@ -9,6 +9,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
 using lihuowang2.Powers;
+using lihuowang2.Tags;
+using STS2RitsuLib.CardTags;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -48,6 +50,11 @@ public class lihuowang2DaqianYoufutongxiang : ModCardTemplate
     public lihuowang2DaqianYoufutongxiang() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+
+    // 大千录 tag
+    protected override HashSet<CardTag> CanonicalTags => [
+        DaqianTags.DaqianLu
+    ];
 
     // 打出：给自己挂「有福同享」层数（倍率）
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

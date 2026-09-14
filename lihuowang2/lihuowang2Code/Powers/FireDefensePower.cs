@@ -24,8 +24,8 @@ public class FireDefensePower : ModPowerTemplate
 
     // 图标先用现成 Heitaisui 占位，有正式图后替换路径
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: $"{Entry.ResPath}/images/powers/Heitaisui32.png",
-        BigIconPath: $"{Entry.ResPath}/images/powers/Heitaisui84.png");
+        IconPath: $"{Entry.ResPath}/images/powers/dianran32.png",
+        BigIconPath: $"{Entry.ResPath}/images/powers/dianran84.png");
 
     // 被敌人攻击时：给所有敌人 1 层点燃
     public override async Task BeforeDamageReceived(PlayerChoiceContext choiceContext, Creature target,

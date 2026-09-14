@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using lihuowang2.Characters;
+using lihuowang2.Keywords;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -26,6 +27,10 @@ public class lihuowang2Guankou : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    // 关键字：预见。像原版「消耗」那样把关键字交给引擎，悬停卡牌时自动带上关键词说明。
+    // 关键词本体在 Keywords/Lihuowang2Keywords.cs 注册，说明文本在 card_keywords 表。
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [Lihuowang2ForeseeKeyword.Value];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Magic", 1m)

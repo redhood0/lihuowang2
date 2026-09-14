@@ -47,9 +47,9 @@ public class lihuowang2FindInFire : ModCardTemplate
         // 1. 抽牌
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].BaseValue, Owner.Creature.Player!);
 
-        // 2. 抽牌堆加入 2 张灼烧
+        // 2. 洗入 2 张灼烧到抽牌堆（随机位置）
         await CardPileCmd.AddToCombatAndPreview<Burn>(Owner.Creature, PileType.Draw, 2,
-            Owner.Creature.Player);
+            Owner.Creature.Player, CardPilePosition.Random);
     }
 
     // 升级：抽牌 3 → 4

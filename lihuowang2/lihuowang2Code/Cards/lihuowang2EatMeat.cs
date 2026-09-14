@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using lihuowang2.Characters;
 using lihuowang2.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -35,6 +36,14 @@ public class lihuowang2EatMeat : ModCardTemplate
     public lihuowang2EatMeat() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    
+    // 悬停时展示给予的易伤能力说明。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<StrengthPower>(),
+            HoverTipFactory.FromPower<DexterityPower>(),
+            HoverTipFactory.FromPower<BufferPower>(),
+            HoverTipFactory.FromPower<Lihuowang2DanyangziPower>(),
+        ];      
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
