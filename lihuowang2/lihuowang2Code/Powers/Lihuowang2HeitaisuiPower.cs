@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -71,30 +70,17 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
         // 1. 先抽 1 张
         await CardPileCmd.Draw(choiceContext, DrawPerLayer, player);
         
-        // 3.5 触手牌被黑太岁吃掉时回血（原版 triggerOnExhaust）
-        if (card is lihuowang2ImNotSick)
-        {
-            // 我没病：疯狂进手 + 自身复制体洗回抽牌堆
-            ICombatState? cs = player.Creature.CombatState;
-            if (cs != null)
-            {
-                CardModel? madness = cs.CreateCard<lihuowang2Madness>(player);
-                if (madness != null)
-                    await CardPileCmd.AddGeneratedCardToCombat(madness, PileType.Hand, player);
-
-                CardModel? clone = cs.CreateCard<lihuowang2ImNotSick>(player);
-                if (clone != null)
-                    await CardPileCmd.AddGeneratedCardToCombat(clone, PileType.Draw, player,
-                        CardPilePosition.Random);
-            }
-        }
-        else if (card is lihuowang2LianQi)
+        // 3.5 被消耗牌的额外效果。
+        // 注：「我没病」不在这里判——它的效果已挪到卡牌自己的 AfterCardExhausted，
+        // 任何消耗来源都会触发，这里再判一次就重复了。
+        if (card is lihuowang2LianQi)
         {
             await PlayerCmd.GainEnergy(1m, player);
         }
         else if (card is lihuowang2TentacleSlash or lihuowang2TentacleBind or
                  lihuowang2TentacleMend or lihuowang2TentacleEatGhost)
         {
+            // 触手牌被黑太岁吃掉时回血（原版 triggerOnExhaust）
             await CreatureCmd.Heal(Owner, card.IsUpgraded ? 4m : 3m);
         }
 
