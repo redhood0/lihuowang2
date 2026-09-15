@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Cards;
 
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
-[RegisterCard(typeof(lihuowang2CardPool))]
+// [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2Lost : ModCardTemplate
 {
     private const int energyCost = 0;

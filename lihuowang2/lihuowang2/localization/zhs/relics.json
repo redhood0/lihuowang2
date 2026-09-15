@@ -12,7 +12,7 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_BLACKHAND.description": "你施加[red]点燃[/red]时，额外增加[blue]1[/blue]层。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_BLACKHAND.flavor": "灰烬里的手，也在往火里添柴。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_HUOWOZHENJING.title": "火袄真经",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_HUOWOZHENJING.description": "你打出的状态牌会被消耗，每张回复 [blue]3[/blue] 点生命。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_HUOWOZHENJING.description": "你打出的[blue]状态[/blue]牌会被[gold]消耗[/gold]，每张回复 [blue]3[/blue] 点生命。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_HUOWOZHENJING.flavor": "袄里的经文滚烫，把脏污烧成灰。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_RENPI.title": "替身人皮",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_RENPI.description": "防止下一次致命伤害：回复最大生命[blue]50%[/blue]的生命，然后[red]破损[/red]。可用[blue]替身人皮[/blue]卡[gold]充能[/gold]。",
@@ -36,9 +36,9 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_TONGJING.description": "每当你获得[red]易伤[/red]或[red]虚弱[/red]时，对所有敌人施加等量。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_TONGJING.flavor": "镜面反照，伤痕自己受着，也分给所有人。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.title": "骰子18",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.description": "[gold]右键[/gold]：消耗[blue]1[/blue]点能量，抽[blue]1~6[/blue]张牌；若掷到[red]6[/red]，获得[red]混乱[/red]且此遗物[red]破损[/red]。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.description": "[gold]右键[/gold]：[gold]消耗[/gold][blue]1[/blue]点能量，抽[blue]1~6[/blue]张牌；若掷到[red]6[/red]，获得[red]混乱[/red]且此遗物[red]破损[/red]。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.flavor": "十八面的骰子，掷出六就像掷出命。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.title": "平娃",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.description": "[gold]右键[/gold]：消耗[blue]1[/blue]点能量，[gold]预见[/gold][blue]4[/blue]。处于[red]丹阳子化[/red]时免费。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.description": "[gold]右键[/gold]：[gold]消耗[/gold][blue]1[/blue]点能量，[gold]预见[/gold][blue]4[/blue]。处于[red]丹阳子化[/red]时免费。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.flavor": "小哑巴只会点头，点头就是四。"
 }

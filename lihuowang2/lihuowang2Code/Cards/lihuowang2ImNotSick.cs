@@ -63,10 +63,10 @@ public class lihuowang2ImNotSick : ModCardTemplate
         }
 
         // 自身复制体洗回抽牌堆（随机位置）
-        CardModel? clone = combatState.CreateCard<lihuowang2ImNotSick>(player);
-        if (clone != null)
-            await CardPileCmd.AddGeneratedCardToCombat(clone, PileType.Draw, player,
-                CardPilePosition.Random);
+        // CardModel? clone = combatState.CreateCard<lihuowang2ImNotSick>(player);
+        // if (clone != null)
+        //     await CardPileCmd.AddGeneratedCardToCombat(clone, PileType.Draw, player,
+        //         CardPilePosition.Random);
 
         await base.AfterCardExhausted(choiceContext, card, causedByEthereal);
     }

@@ -44,7 +44,7 @@ public class lihuowang2Lihuo : ModCardTemplate
 
     // 卡牌基础数值：Layers = 移除层数（1，升级 +1 → 2）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar(LayersVarName, 1m)
+        new DynamicVar(LayersVarName, 2m)
     ];
 
     public lihuowang2Lihuo() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -94,6 +94,6 @@ public class lihuowang2Lihuo : ModCardTemplate
     // 升级：移除层数 1 → 2
     protected override void OnUpgrade()
     {
-        DynamicVars[LayersVarName].UpgradeValueBy(1);
+        DynamicVars[LayersVarName].UpgradeValueBy(3);
     }
 }

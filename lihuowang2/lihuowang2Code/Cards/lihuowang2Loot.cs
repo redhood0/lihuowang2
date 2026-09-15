@@ -16,7 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Cards;
 
 // 搜刮：攻击并捡钱。有煞气时拿的 = 煞气层数（升级翻倍）；没有煞气时先攒一层再拿钱。
-[RegisterCard(typeof(lihuowang2CardPool))]
+// [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2Loot : ModCardTemplate
 {
     private const int energyCost = 1;

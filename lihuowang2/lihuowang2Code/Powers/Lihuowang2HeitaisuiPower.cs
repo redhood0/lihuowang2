@@ -71,14 +71,10 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
         await CardPileCmd.Draw(choiceContext, DrawPerLayer, player);
         
         // 3.5 被消耗牌的额外效果。
-        // 注：「我没病」不在这里判——它的效果已挪到卡牌自己的 AfterCardExhausted，
+        // 注：「我没病」「炼气」不在这里判——它们的效果已挪到卡牌自己的 AfterCardExhausted，
         // 任何消耗来源都会触发，这里再判一次就重复了。
-        if (card is lihuowang2LianQi)
-        {
-            await PlayerCmd.GainEnergy(1m, player);
-        }
-        else if (card is lihuowang2TentacleSlash or lihuowang2TentacleBind or
-                 lihuowang2TentacleMend or lihuowang2TentacleEatGhost)
+        if (card is lihuowang2TentacleSlash or lihuowang2TentacleBind or
+            lihuowang2TentacleMend or lihuowang2TentacleEatGhost)
         {
             // 触手牌被黑太岁吃掉时回血（原版 triggerOnExhaust）
             await CreatureCmd.Heal(Owner, card.IsUpgraded ? 4m : 3m);

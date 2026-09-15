@@ -55,7 +55,7 @@ public class lihuowang2Madness : ModCardTemplate
             candidates = others;
 
         CardModel chosen = candidates[Random.Shared.Next(candidates.Count)];
-        chosen.SetToFreeThisTurn();
+        chosen.SetToFreeThisCombat();
     }
 
     // 升级：费用 1 → 0

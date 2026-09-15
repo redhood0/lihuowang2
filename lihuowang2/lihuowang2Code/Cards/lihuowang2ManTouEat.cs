@@ -44,7 +44,7 @@ public class lihuowang2ManTouEat : ModCardTemplate
 
         // 2. 馒头可能"死掉"：未升级 65% 概率自我消耗；升级后只有 20%
         int roll = Random.Shared.Next(100);
-        bool willExplode = IsUpgraded ? roll <= 20 : roll <= 65;
+        bool willExplode = IsUpgraded ? roll <= 10 : roll <= 75;
         if (willExplode)
             ExhaustOnNextPlay = true;
     }

@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -34,6 +35,19 @@ public class CrazyPower : ModPowerTemplate
     [
         new IntVar(ExtraTurnsVarName, 1m)
     ];
+
+    // 描述里用了 {ExtraTurns} 这个自定义变量。
+    // 引擎默认的「dumb」悬停（卡牌 hover、牌库等）只注入 Amount 等通用变量，不注入能力自己的 DynamicVars，
+    // 那样 {ExtraTurns} 会解析失败、整条文本退化成原文，所以这里补上。
+    public override LocString Description
+    {
+        get
+        {
+            LocString description = base.Description;
+            DynamicVars.AddTo(description);
+            return description;
+        }
+    }
 
     // 再次施加时刷新持续时间
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power,
