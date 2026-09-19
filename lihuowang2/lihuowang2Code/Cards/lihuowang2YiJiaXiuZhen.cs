@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using lihuowang2.Characters;
@@ -31,6 +32,13 @@ public class lihuowang2YiJiaXiuZhen : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    // Energy = 获得的能量（1）。卡面描述用的是 {Energy:energyIcons()}，
+    // 这个格式化器只认 EnergyVar（要读它的 PreviewValue 和 ColorPrefix 来决定画几个、什么颜色的能量图标），
+    // 变量缺失或声明成普通 DynamicVar 都会抛异常，导致整条描述退化成未替换的原文。
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new EnergyVar(1)
+    ];
 
     public lihuowang2YiJiaXiuZhen() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {

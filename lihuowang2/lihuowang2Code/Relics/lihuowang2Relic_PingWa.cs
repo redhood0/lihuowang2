@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -20,6 +21,11 @@ public class lihuowang2Relic_PingWa : ModRelicTemplate, IModRightClickableRelic
         IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
+
+    // 悬停时附上「预见」关键词说明（仅用于显示，不给遗物加玩法关键字）。
+    // 关键词本体见 Keywords/Lihuowang2Keywords.cs，文本在 card_keywords 表的
+    // LIHUOWANG2_KEYWORD_FORESEE.title / .description。
+    protected override IEnumerable<string> RegisteredKeywordIds => ["LIHUOWANG2_KEYWORD_FORESEE"];
 
     private static bool HasDanyang(MegaCrit.Sts2.Core.Entities.Players.Player player)
         => player.Creature.HasPower<Lihuowang2DanyangziPower>();

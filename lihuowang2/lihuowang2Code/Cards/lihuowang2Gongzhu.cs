@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Cards;
 
 // 李岁（公主形态）：固有能力牌，回合自动产资源 + 塞 0 费黑太岁。
-[RegisterCard(typeof(lihuowang2CardPool))]
+// [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2Gongzhu : ModCardTemplate
 {
     private const int energyCost = 2;
