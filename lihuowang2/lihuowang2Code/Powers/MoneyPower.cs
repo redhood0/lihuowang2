@@ -20,7 +20,7 @@ public class MoneyPower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Counter;
 
     // 铜钱层数上限
-    public const int MaxCopper = 5;
+    public const int MaxCopper = 99;
 
     // 图标先用现成 Heitaisui 占位，有正式图后替换路径
     public override PowerAssetProfile AssetProfile => new(
