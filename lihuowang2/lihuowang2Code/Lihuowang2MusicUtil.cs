@@ -18,6 +18,12 @@ public static class Lihuowang2MusicUtil
     /// <summary>胜利场景 BGM（房间作用域）。</summary>
     /// <param name="volume">音量倍率：1 = 100%，0.5 = 50%。</param>
     public static void PlayVictoryMusic(string fileName = "chengxian.mp3", float volume = DefaultCardMusicVolume)
+        => PlayRoomMusic(fileName, volume);
+
+    /// <summary>房间 BGM（房间作用域，离开房间时随作用域一起清理）。例如进商店时放的「坐忘道」。</summary>
+    /// <param name="fileName">audio/music 目录下的文件名。</param>
+    /// <param name="volume">音量倍率：1 = 100%，0.5 = 50%。不传则用 DefaultCardMusicVolume。</param>
+    public static void PlayRoomMusic(string fileName, float volume = DefaultCardMusicVolume)
         => PlayMusic($"audio/music/{fileName}", AudioLifecycleScope.Room, volume);
 
     private static void PlayMusic(string relativePath, AudioLifecycleScope scope, float volume)

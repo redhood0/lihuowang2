@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using lihuowang2.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -69,16 +68,9 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
 
         // 1. 先抽 1 张
         await CardPileCmd.Draw(choiceContext, DrawPerLayer, player);
-        
-        // 3.5 被消耗牌的额外效果。
-        // 注：「我没病」「炼气」不在这里判——它们的效果已挪到卡牌自己的 AfterCardExhausted，
-        // 任何消耗来源都会触发，这里再判一次就重复了。
-        if (card is lihuowang2TentacleSlash or lihuowang2TentacleBind or
-            lihuowang2TentacleMend or lihuowang2TentacleEatGhost)
-        {
-            // 触手牌被黑太岁吃掉时回血（原版 triggerOnExhaust）
-            await CreatureCmd.Heal(Owner, card.IsUpgraded ? 4m : 3m);
-        }
+
+        // 3.5 「我没病」「炼气」「触手」系列被消耗时的额外效果都在卡牌自己的 AfterCardExhausted 里，
+        // 任何消耗来源都会触发（包括这里），所以能力这边不再判一次，避免重复结算。
 
         // 4. 若消耗的是诅咒，则获得格挡
         if (isCurse)
