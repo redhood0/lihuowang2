@@ -14,6 +14,10 @@ namespace lihuowang2.Cards;
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册，加入 lihuowang2CardPool，可在奖励中出现。
 [RegisterCard(typeof(lihuowang2CardPool))]
 [RegisterCharacterStarterCard(typeof(lihuowang2Character), 1)]
+// 官方遗物「古老牙齿」（ArchaicTooth）的效果是"把初始卡超越成先祖卡"（战士：重击 Bash → 破击 Break）。
+// 这里把本角色的初始卡 黑太岁 注册成 李岁公主：拿到古老牙齿时，RitsuLib 会让那张遗物
+// 在卡组里找到黑太岁并转化成李岁公主（升级状态、附魔都会由引擎一起带过去）。
+[RegisterArchaicToothTranscendence(typeof(lihuowang2LisuiGongzhu))]
 public sealed class Lihuowang2Heitaisui : ModCardTemplate
 {
     // 基础耗能。

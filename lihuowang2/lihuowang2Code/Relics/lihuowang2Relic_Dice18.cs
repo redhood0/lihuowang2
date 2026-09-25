@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using lihuowang2.Characters;
@@ -24,6 +27,25 @@ public class lihuowang2Relic_Dice18 : ModRelicTemplate, IModRightClickableRelic
         IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
+
+    // 遗物文案：平时显示 .normalDescription，破损（UsedUp）后换成 .brokenDescription 的彩蛋。
+    // 引擎渲染遗物文本读的是 DynamicVar 的 ToString()（官方的 StringVar / CalculatedVar 都是这么供值的），
+    // 所以在变量里按状态返回不同文本就行，不用打补丁；relics 表里的 .description 写成 {RelicText} 当占位。
+    private sealed class RelicTextVar : StringVar
+    {
+        public RelicTextVar() : base("RelicText") { }
+
+        public override string ToString()
+        {
+            string entry = _owner?.Id.Entry ?? string.Empty;
+            bool usedUp = _owner is lihuowang2Relic_Dice18 { IsUsedUp: true };
+            LocString? text = LocString.GetIfExists("relics",
+                entry + (usedUp ? ".brokenDescription" : ".normalDescription"));
+            return text?.GetRawText() ?? string.Empty;
+        }
+    }
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new RelicTextVar()];
 
     public bool CanHandleRightClickLocal(ModRightClickContext context)
         => context.Player.Creature != null && !_usedUp;

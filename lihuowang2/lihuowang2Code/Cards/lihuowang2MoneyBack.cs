@@ -44,7 +44,7 @@ public class lihuowang2MoneyBack : ModCardTemplate
 
     // 数值：Factor = 每枚铜钱的格挡/金币倍率（16，升级 +4 → 20）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(16m, ValueProp.Move)
+        new BlockVar(20m, ValueProp.Move)
     ];
 
     public lihuowang2MoneyBack() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -85,6 +85,6 @@ public class lihuowang2MoneyBack : ModCardTemplate
     // 升级：倍率 16 → 20
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4);
+        DynamicVars.Block.UpgradeValueBy(8);
     }
 }

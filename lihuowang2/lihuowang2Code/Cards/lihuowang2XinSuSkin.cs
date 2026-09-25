@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
@@ -30,6 +31,11 @@ public class lihuowang2XinSuSkin : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    // 悬停提示：描述里出现的「替身人皮」（濒死时挡下一次致命伤害并回复一半最大生命，
+    // 破损后靠本牌再充能）。FromRelic 返回的是一组提示，所以用展开语法并进列表。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [.. HoverTipFactory.FromRelic<lihuowang2Relic_Renpi>()];
 
     public lihuowang2XinSuSkin() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {

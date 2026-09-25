@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
@@ -16,7 +17,7 @@ namespace lihuowang2.Cards;
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2ImSick : ModCardTemplate
 {
-    private const int energyCost = 2;
+    private const int energyCost = 1;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.Self;
@@ -24,6 +25,10 @@ public class lihuowang2ImSick : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    // 悬停提示：描述里出现的「疯癫」
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<CrazyPower>()];
 
     public lihuowang2ImSick() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {

@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Cards;
 
-// 炼气：获得格挡；若被黑太岁消耗则获得 1 点能量（回能由 Lihuowang2HeitaisuiPower 接管触发）。
+// 炼气：获得格挡；若被消耗（任何来源）则获得 1 点能量。
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2LianQi : ModCardTemplate
 {
@@ -39,6 +39,19 @@ public class lihuowang2LianQi : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+    }
+
+    // 被消耗时触发：任何来源消耗它都会回 1 点能量。
+    // 引擎会把战斗内所有卡牌都算作 hook 监听者，所以这里能收到"自己被抓去消耗"的回调。
+    // （原来这句写在 Lihuowang2HeitaisuiPower 里，只有黑太岁吃得掉才给能量，已删掉避免双重给能。）
+    public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card,
+        bool causedByEthereal)
+    {
+        if (card != this)
+            return;
+
+        await PlayerCmd.GainEnergy(1m, Owner);
+        await base.AfterCardExhausted(choiceContext, card, causedByEthereal);
     }
 
     // 升级：格挡 7 → 10

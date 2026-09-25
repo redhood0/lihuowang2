@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using lihuowang2.Characters;
+using lihuowang2.Keywords;
+using lihuowang2.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -25,6 +27,11 @@ public class lihuowang2ZhuBuBiHuang : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
+    // 关键字：预见（悬停卡牌时会像「消耗」那样带上关键词说明）。
+    // 关键词本体在 Keywords/Lihuowang2Keywords.cs 注册，文本在 card_keywords 表的
+    // LIHUOWANG2_KEYWORD_FORESEE.title / .description。
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [Lihuowang2ForeseeKeyword.Value];
+
     // Magic = 预见数（3，升级 +2）；Draw = 抽牌数（1，升级 +1）
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Magic", 3m),
@@ -34,6 +41,8 @@ public class lihuowang2ZhuBuBiHuang : ModCardTemplate
     public lihuowang2ZhuBuBiHuang() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
+    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Cards;
 
 // 李岁（狗形态）：固有。获得黑太岁+人工制品；每回合对全体敌人 AOE；触手牌增益。
-[RegisterCard(typeof(lihuowang2CardPool))]
+// [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2Lisui_dog : ModCardTemplate
 {
     private const int energyCost = 1;

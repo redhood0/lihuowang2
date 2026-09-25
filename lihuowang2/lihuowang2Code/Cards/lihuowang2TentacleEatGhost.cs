@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using lihuowang2.Characters;
@@ -27,6 +28,15 @@ public class lihuowang2TentacleEatGhost : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    // 悬停提示：打出条件里的「黑太岁」（Lihuowang2HeitaisuiPower）
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<Lihuowang2HeitaisuiPower>()];
+
+    // Heal = 被消耗时回复的生命（3，升级 +1 → 4）
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("Heal", 3m)
+    ];
 
     public lihuowang2TentacleEatGhost() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
@@ -62,8 +72,21 @@ public class lihuowang2TentacleEatGhost : ModCardTemplate
         await CardPileCmd.Draw(choiceContext, 1m + toEat.Count, player);
     }
 
-    // 升级：无数值变化（描述随升级启用吃状态牌）
+    // 被消耗时回复生命（任何来源的消耗都算）。
+    // 不要在别处（例如黑太岁能力里）再判一次，否则会重复回血。
+    public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card,
+        bool causedByEthereal)
+    {
+        if (card != this)
+            return;
+
+        await CreatureCmd.Heal(Owner.Creature, DynamicVars["Heal"].BaseValue);
+        await base.AfterCardExhausted(choiceContext, card, causedByEthereal);
+    }
+
+    // 升级：吃牌范围加上状态牌（见 OnPlay）；被消耗时回血 3 → 4
     protected override void OnUpgrade()
     {
+        DynamicVars["Heal"].UpgradeValueBy(1);
     }
 }

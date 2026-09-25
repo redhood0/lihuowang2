@@ -37,7 +37,7 @@ public class lihuowang2ShaQiInside : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // 数值：ShaQi = 获得煞气层数（5，升级 +2 → 7）。
+    // 数值：ShaQi = 没有煞气时获得的层数（5，升级 +2 → 7）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("ShaQi", 5m)
     ];
@@ -46,14 +46,24 @@ public class lihuowang2ShaQiInside : ModCardTemplate
     {
     }
 
-    // 打出：获得煞气
+    // 打出：已有煞气则翻倍（升级后变为 3 倍）；没有煞气则直接获得 5 层（升级 7 层）
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        ShaQiPower? shaqi = Owner.Creature.GetPower<ShaQiPower>();
+        if (shaqi != null && shaqi.Amount > 0)
+        {
+            // 翻倍 / 三倍 = 再补上 (倍率 - 1) × 当前层数
+            int multiplier = IsUpgraded ? 3 : 2;
+            await PowerCmd.Apply<ShaQiPower>(choiceContext, Owner.Creature,
+                shaqi.Amount * (multiplier - 1), Owner.Creature, this);
+            return;
+        }
+
         await PowerCmd.Apply<ShaQiPower>(choiceContext, Owner.Creature,
             DynamicVars["ShaQi"].BaseValue, Owner.Creature, this);
     }
 
-    // 升级：煞气 5 → 7
+    // 升级：没煞气时的层数 5 → 7；已有煞气时倍率 2 → 3（见 OnPlay）
     protected override void OnUpgrade()
     {
         DynamicVars["ShaQi"].UpgradeValueBy(2);
