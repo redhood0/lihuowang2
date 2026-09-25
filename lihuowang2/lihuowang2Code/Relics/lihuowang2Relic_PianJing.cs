@@ -18,7 +18,7 @@ public class lihuowang2Relic_PianJing : ModRelicTemplate
 {
     private bool _usedUp;
 
-    public override RelicRarity Rarity => RelicRarity.Shop;
+    public override RelicRarity Rarity => RelicRarity.Common;
 
     // 破损后图标变灰、钩子不再生效
     public override bool IsUsedUp => _usedUp;
@@ -37,7 +37,7 @@ public class lihuowang2Relic_PianJing : ModRelicTemplate
     // 房间作用域：离开商店时会随作用域一起清理，不会盖住后面的正常 BGM。
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
-        if (room is MerchantRoom)
+        if (room is MerchantRoom && !_usedUp)
         {
             Flash();
             Lihuowang2MusicUtil.PlayRoomMusic("zuowangdao.mp3");
