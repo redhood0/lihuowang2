@@ -72,7 +72,15 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
 
     public override async   Task AfterPlayerTurnStartEarly(PlayerChoiceContext choiceContext, Player player)
     {
-        await CardPileCmd.AddToCombatAndPreview<Doubt>(player.Creature, PileType.Hand, 1, player);
+        // 多人：Hook.PlayerTurnStart 会对「每个玩家的回合开始」把场上所有遗物都通知一遍，
+        // 所以必须自己判断这次轮到的玩家是不是遗物持有者，否则会把疑虑塞进队友手里。
+        if (player != Owner)
+        {
+            await base.AfterPlayerTurnStartEarly(choiceContext, player);
+            return;
+        }
+
+        await CardPileCmd.AddToCombatAndPreview<Doubt>(Owner.Creature, PileType.Hand, 1, Owner);
         // 生成的疑虑是直接放进手牌的，不会触发抽牌钩子，因此在这里直接计入
         await CountDoubtAndTryTriggerCrazy(choiceContext);
         await base.AfterPlayerTurnStartEarly(choiceContext, player);
@@ -96,8 +104,8 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     //这里写方法，每抽到3张疑虑，获得Crazypower的buff
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        // 只统计真正抽到手的疑虑
-        if (card is not Doubt) return;
+        // 只统计真正抽到手的疑虑，而且必须是自己的（same reason：队友抽牌也会通知到本遗物）
+        if (card is not Doubt || card.Owner != Owner) return;
 
         await CountDoubtAndTryTriggerCrazy(choiceContext);
     }
