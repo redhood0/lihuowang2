@@ -14,6 +14,12 @@ namespace lihuowang2.Cards;
 // 卡组里的初始卡「黑太岁」会被超越成这张牌（映射注册见 Lihuowang2Heitaisui 上的
 // [RegisterArchaicToothTranscendence]）。
 [RegisterCard(typeof(lihuowang2CardPool))]
+// 尘封古籍（达弗事件里的先古遗物）候选：本角色的先古卡必须在这里登记一份。
+// 否则 DustyTome.SetupForPlayer 的候选池 =「本角色先古卡 - 所有超越卡」= 空，
+// 取 .Id 时直接空引用崩溃，表现为进达弗事件卡住/报 NullReferenceException。
+// RitsuLib 的补丁会优先取这里登记的候选，从而绕开引擎那段会崩的逻辑
+// （见 STS2RitsuLib.Relics.Patches.DustyTomeSetupForPlayerPatch）。
+[RegisterDustyTomeCard(typeof(lihuowang2Character))]
 public sealed class lihuowang2LisuiGongzhu : ModCardTemplate
 {
     private const int energyCost = 1;
