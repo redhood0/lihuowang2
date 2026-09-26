@@ -47,9 +47,16 @@ public class lihuowang2Relic_Dengjie : ModRelicTemplate
 
     // 每回合开始时，抽一张牌。
     // 这里使用 DynamicVars.Cards.IntValue，保证效果和本地化显示保持一致。
+    // 注意：本遗物的文案里没有「抽牌」（只有计数器 + 战斗开始给再生），
+    // 所以这段效果保持注释状态；方法入口留着，以后想加直接放开即可。
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, player);
+        // 多人注意：Hook.PlayerTurnStart 会为「每个玩家的回合开始」通知全场所有遗物，
+        // 若以后启用，必须判断轮到的是不是遗物持有者，否则会替队友白抽牌。
+        // if (player == Owner)
+        //     await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, player);
+
+        await base.AfterPlayerTurnStart(choiceContext, player);
     }
     
     // 战斗开始时

@@ -38,6 +38,10 @@ public sealed class lihuowang2Relic : ModRelicTemplate
     // 这里使用 DynamicVars.Cards.IntValue，保证效果和本地化显示保持一致。
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, player);
+        // 多人：同上，只有持有者的回合才抽牌。
+        if (player == Owner)
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, player);
+
+        await base.AfterPlayerTurnStart(choiceContext, player);
     }
 }

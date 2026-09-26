@@ -25,7 +25,11 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     private int _doubtDrawnCount;
 
     // 稀有度。
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Starter;
+
+    // 不进商店：商店生成遗物时会按这个属性过滤
+    // （MerchantRelicEntry.FillSlot 里的 r.IsAllowedInShops），默认 true。
+    public override bool IsAllowedInShops => false;
 
     // 计数器：只在积累了疑虑后才显示，默认（0）不显示
     public override bool ShowCounter => _doubtDrawnCount > 0;

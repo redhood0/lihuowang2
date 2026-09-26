@@ -27,6 +27,10 @@ public class lihuowang2Relic_PianJing : ModRelicTemplate
     public override bool ShowCounter => !_usedUp;
     public override int DisplayAmount => 1;
 
+    // 不进商店：商店生成遗物时会按这个属性过滤
+    // （MerchantRelicEntry.FillSlot 里的 r.IsAllowedInShops），默认 true。
+    public override bool IsAllowedInShops => false;
+    
     public override RelicAssetProfile AssetProfile => new(
         IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",

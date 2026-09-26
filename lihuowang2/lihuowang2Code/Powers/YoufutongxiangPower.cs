@@ -40,7 +40,13 @@ public class YoufutongxiangPower : ModPowerTemplate
         Flash();
 
         decimal reflect = amount * base.Amount;
-        IReadOnlyList<Creature> enemies = Owner.CombatState!.Enemies;
+
+        // 关键：先做快照再逐个结算。CombatState.Enemies 直接返回战斗中的实时列表(_enemies)，
+        // 边遍历边造成伤害时，一旦有敌人被打死（以及死亡触发的移出/召唤/尸爆等），
+        // 列表版本号就会变化，下一次 MoveNext 会抛 InvalidOperationException；
+        // 这个异常发生在异步伤害钩子里，游戏不会弹错，而是表现为战斗卡死。
+        // （同 lihuowang2BreakSpace.cs 里的做法："用快照副本遍历，防止敌人中途被移除导致枚举异常"）
+        IReadOnlyList<Creature> enemies = Owner.CombatState!.Enemies.ToArray();
         foreach (Creature enemy in enemies)
         {
             if (enemy.IsDead)

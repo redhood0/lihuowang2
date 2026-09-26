@@ -47,11 +47,15 @@ public sealed class Lihuowang2Heitaisui : ModCardTemplate
     {
     }
 
-    // 打出时：给 Owner 施加持续能力（能力牌打出自会进入消耗堆）。
+    // 打出时：给 Owner 施加持续能力（能力牌打出自会进入消耗堆），并把战斗形象换成「黑太岁」形态。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<Lihuowang2HeitaisuiPower>(
             choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+
+        // 形象变化：lhw_character.png → lhw_trans01.png。
+        // 只影响本地战斗场景的那具身体；新战斗会重新实例化场景，能力被移除时也会还原（见 Power.AfterRemoved）。
+        Lihuowang2VisualUtil.SetBodyTexture(Owner.Creature, Lihuowang2VisualUtil.HeitaisuiBodyPath);
     }
 
     // 升级后：获得「固有」（开局在手）。

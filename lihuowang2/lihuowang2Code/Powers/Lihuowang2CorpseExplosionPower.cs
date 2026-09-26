@@ -35,7 +35,8 @@ public class Lihuowang2CorpseExplosionPower : ModPowerTemplate
         if (creature == Owner && !wasRemovalPrevented)
         {
             decimal burstDamage = creature.MaxHp;
-            foreach (Creature enemy in Owner.CombatState!.Enemies)
+            // 快照遍历：边遍历边造成伤害会把死亡的敌人移出 Enemies，导致枚举异常
+            foreach (Creature enemy in Owner.CombatState!.Enemies.ToArray())
             {
                 if (enemy == creature || enemy.IsDead)
                     continue;

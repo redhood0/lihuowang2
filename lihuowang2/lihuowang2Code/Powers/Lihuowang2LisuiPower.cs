@@ -41,7 +41,7 @@ public class Lihuowang2LisuiPower : ModPowerTemplate
 
         Flash();
 
-        IReadOnlyList<Creature> enemies = Owner.CombatState!.Enemies;
+        IReadOnlyList<Creature> enemies = Owner.CombatState!.Enemies.ToArray();
         foreach (Creature enemy in enemies)
         {
             if (enemy.IsDead)

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -75,5 +76,12 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
         // 4. 若消耗的是诅咒，则获得格挡
         if (isCurse)
             await CreatureCmd.GainBlock(Owner, BlockOnCurse, ValueProp.Move, null);
+    }
+
+    // 能力被移除时（例如「迷失」把黑太岁移除）把战斗形象还原成默认
+    public override Task AfterRemoved(Creature oldOwner)
+    {
+        Lihuowang2VisualUtil.ResetBodyTexture(oldOwner);
+        return base.AfterRemoved(oldOwner);
     }
 }
