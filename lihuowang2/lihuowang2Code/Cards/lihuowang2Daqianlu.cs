@@ -48,11 +48,15 @@ public class lihuowang2Daqianlu : ModCardTemplate
         if (player == null || combatState == null)
             return;
 
-        // 先收集本批加入的牌，最后统一播一次预览动画
+        // 先收集本批加入的牌，最后统一播一次预览动画。
+        // 多人同步：随机必须走引擎的确定性随机流（种子会随存档同步给所有客户端），
+        // 用 Random.Shared 各端算出的牌不一样，会直接报"不同步"。
+        // CombatCardGeneration = 官方给"战斗内生成卡牌"（如攻击药水）准备的流。
         List<CardPileAddResult> added = new(4);
         for (int i = 0; i < 4; i++)
         {
-            CardModel? card = CreateRandomDaqian(combatState, player, Random.Shared.Next(16));
+            CardModel? card = CreateRandomDaqian(combatState, player,
+                player.RunState.Rng.CombatCardGeneration.NextInt(16));
             if (card != null)
                 added.Add(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, player,
                     CardPilePosition.Random));

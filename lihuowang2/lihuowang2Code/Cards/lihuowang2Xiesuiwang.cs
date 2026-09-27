@@ -78,7 +78,8 @@ public class lihuowang2Xiesuiwang : ModCardTemplate
             }
             else
             {
-                toExhaust = handCards[Random.Shared.Next(handCards.Count)];
+                // 多人同步：随机选牌走引擎的确定性随机流（官方"战斗内随机选牌"流）
+                toExhaust = player.RunState.Rng.CombatCardSelection.NextItem(handCards);
             }
         }
 

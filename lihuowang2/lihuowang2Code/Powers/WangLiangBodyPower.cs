@@ -21,7 +21,9 @@ public class WangLiangBodyPower : ModPowerTemplate
     // 叠加：Counter，层数 = 每 2 张诅咒给予的力量
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    // 已「进入手牌」的诅咒计数（满 2 张结算一次并清零）
+    // 已「进入手牌」的诅咒计数（满 2 张结算一次并清零）。
+    // 故意不加 [SavedProperty]：该特性只对遗物生效（战斗内 Power 只有 {id, amount} 进快照），
+    // 加了也不会被存档或同步，反而误导后人。详见 DanLuPower 里同一条注释。
     private int _curseEnteredHand;
 
     // 图标先用现成 Heitaisui 占位，有正式图后替换路径

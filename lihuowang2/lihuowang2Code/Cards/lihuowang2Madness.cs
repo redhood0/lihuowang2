@@ -54,7 +54,9 @@ public class lihuowang2Madness : ModCardTemplate
         if (candidates.Count == 0)
             candidates = others;
 
-        CardModel chosen = candidates[Random.Shared.Next(candidates.Count)];
+        // 多人同步：随机选牌要用引擎的确定性随机流（官方"战斗内随机选牌"流，
+        // 官方 True Grit 之类用的就是它）。Random.Shared 各端结果不同 → 报"不同步"。
+        CardModel chosen = player.RunState.Rng.CombatCardSelection.NextItem(candidates);
         chosen.SetToFreeThisCombat();
     }
 

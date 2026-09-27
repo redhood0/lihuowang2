@@ -28,7 +28,8 @@ public class lihuowang2Relic_Tongqianjian : ModRelicTemplate
         MoneyPower? copper = Owner.Creature.GetPower<MoneyPower>();
         if (copper != null && copper.Amount > 0m && Owner.Creature.Player != null)
         {
-            decimal gold = copper.Amount * Random.Shared.Next(10, 16);
+            // 多人同步：随机金额走引擎的确定性随机流（Niche 隔离，不会消耗掉奖励流）
+            decimal gold = copper.Amount * Owner.Creature.Player!.RunState.Rng.Niche.NextInt(10, 16);
             await PlayerCmd.GainGold(gold, Owner.Creature.Player);
         }
 

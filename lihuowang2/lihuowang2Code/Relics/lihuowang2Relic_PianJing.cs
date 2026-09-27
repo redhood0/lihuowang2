@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using lihuowang2.Characters;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -17,6 +18,22 @@ namespace lihuowang2.Relics;
 public class lihuowang2Relic_PianJing : ModRelicTemplate
 {
     private bool _usedUp;
+
+    // 破损状态的存档出口：[SavedProperty] 的属性会被引擎写进本局存档并在读档时回填，
+    // 否则「保存退出 → 继续游戏」后骗经会恢复成可用（又能白拿一张职业卡）。
+    // RelicModel.Status 本身不入档，所以破损时要在 setter 里把灰色状态补回来
+    // （写法同官方蜥蜴尾巴 LizardTail.WasUsed）。
+    [SavedProperty(SerializationCondition.SaveIfNotTypeDefault)]
+    public bool UsedUp
+    {
+        get => _usedUp;
+        private set
+        {
+            _usedUp = value;
+            if (_usedUp)
+                Status = RelicStatus.Disabled;
+        }
+    }
 
     public override RelicRarity Rarity => RelicRarity.Common;
 
@@ -73,8 +90,7 @@ public class lihuowang2Relic_PianJing : ModRelicTemplate
         if (_usedUp || player != Owner)
             return;
 
-        _usedUp = true;
-        Status = RelicStatus.Disabled;
+        UsedUp = true;   // 走存档属性（setter 里会置为 Disabled）
         Flash();
         InvokeDisplayAmountChanged();
 

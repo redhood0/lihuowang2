@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using lihuowang2.Characters;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Interactions.RightClick;
@@ -19,6 +20,22 @@ namespace lihuowang2.Relics;
 public class lihuowang2Relic_Dice18 : ModRelicTemplate, IModRightClickableRelic
 {
     private bool _usedUp;
+
+    // 破损状态的存档出口：没有它的话「保存退出 → 继续游戏」后骰子会复活
+    // （而且文案也会退回 .normalDescription）。
+    // 注意：RelicModel.Status 本身不入档，所以 setter 里要顺手把灰色状态补回来
+    // （官方蜥蜴尾巴 LizardTail.WasUsed 就是这么写的）。
+    [SavedProperty(SerializationCondition.SaveIfNotTypeDefault)]
+    public bool UsedUp
+    {
+        get => _usedUp;
+        private set
+        {
+            _usedUp = value;
+            if (_usedUp)
+                Status = RelicStatus.Disabled;
+        }
+    }
 
     public override RelicRarity Rarity => RelicRarity.Uncommon;
     public override bool IsUsedUp => _usedUp;
@@ -62,16 +79,16 @@ public class lihuowang2Relic_Dice18 : ModRelicTemplate, IModRightClickableRelic
         // 消耗 1 点能量
         await PlayerCmd.LoseEnergy(1m, player);
 
-        // 掷骰 1~6
-        int roll = Random.Shared.Next(1, 7);
+        // 掷骰 1~6。多人同步：必须走引擎的确定性随机流；
+        // Niche 是官方留给"一次性杂项随机"的流，隔离使用不会扰动官方流的序列。
+        int roll = player.RunState.Rng.Niche.NextInt(1, 7);
 
         // 掷到 6：获得混乱并破损
         if (roll == 6)
         {
             await PowerCmd.Apply<ConfusedPower>(
                 context.PlayerChoiceContext, player.Creature, 1m, player.Creature, null);
-            _usedUp = true;
-            Status = RelicStatus.Disabled;
+            UsedUp = true;   // 走存档属性（setter 里会置为 Disabled）
         }
 
         // 抽 roll 张牌

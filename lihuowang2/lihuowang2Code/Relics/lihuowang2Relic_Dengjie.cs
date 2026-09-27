@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -17,6 +18,20 @@ public class lihuowang2Relic_Dengjie : ModRelicTemplate
     private const int MaxSteps = 10;
     // 计数器当前值，默认 1
     private int _stepCount = 1;
+
+    // 登阶计数的存档出口：[SavedProperty] 的属性会被引擎写进本局存档并在读档时回填，
+    // 没有它的话「保存退出 → 继续游戏」会把计数器退回到字段初始值 1（玩家看到的现象）。
+    // 官方同类遗物（蜥蜴尾巴 WasUsed、古老牙齿 StarterCard）都是这个写法。
+    [SavedProperty]
+    public int StepCount
+    {
+        get => _stepCount;
+        private set
+        {
+            _stepCount = value;
+            InvokeDisplayAmountChanged();
+        }
+    }
 
     // 始终显示计数器数字
     public override bool ShowCounter => true;
@@ -105,8 +120,7 @@ public class lihuowang2Relic_Dengjie : ModRelicTemplate
     {
         if (_stepCount >= MaxSteps)
             return;
-        _stepCount++;
-        InvokeDisplayAmountChanged();
+        StepCount = _stepCount + 1;   // 走属性，顺带刷新计数器显示
     }
 
 }

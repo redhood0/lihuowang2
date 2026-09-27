@@ -43,7 +43,8 @@ public class lihuowang2ManTouEat : ModCardTemplate
             DynamicVars["Magic"].BaseValue, Owner.Creature, this);
 
         // 2. 馒头可能"死掉"：未升级 65% 概率自我消耗；升级后只有 20%
-        int roll = Random.Shared.Next(100);
+        // 多人同步：概率判定要走引擎的确定性随机流（Niche 是官方留给一次性杂项随机的流，隔离不扰动官方流）
+        int roll = Owner.RunState.Rng.Niche.NextInt(100);
         bool willExplode = IsUpgraded ? roll <= 10 : roll <= 75;
         if (willExplode)
             ExhaustOnNextPlay = true;

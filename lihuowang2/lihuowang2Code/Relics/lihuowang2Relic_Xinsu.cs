@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -24,6 +25,24 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     // 本场战斗内累计抽到的疑虑数量，满3张后清零。跨回合累计，不跨战斗。
     private int _doubtDrawnCount;
 
+    // 计数器的存档/同步出口。遗物是引擎里唯一支持 [SavedProperty] 的模型
+    // （引擎自己的 49 个用法全是遗物），而且这项数据会同时出现在两个通道里：
+    //  1. 本局存档（SerializableRelic.Props）；
+    //  2. 多人战斗快照（NetFullCombatState.FromRun 里 relic.ToSerializable()）——
+    //     断线重连的客户端靠它把计数恢复成和主机一致。没有它的话，重连方会从 0 重新累计，
+    //     攒满 3 张疑虑触发疯癫的时机就和队友不同（轻则行为不一致，重则校验和不同步）。
+    // 跨战斗不残留：BeforeCombatStart / AfterCombatEnd 仍会把它清零。
+    [SavedProperty]
+    public int DoubtDrawnCount
+    {
+        get => _doubtDrawnCount;
+        private set
+        {
+            _doubtDrawnCount = value;
+            UpdateCounterDisplay();
+        }
+    }
+
     // 稀有度。
     public override RelicRarity Rarity => RelicRarity.Starter;
 
@@ -32,10 +51,10 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     public override bool IsAllowedInShops => false;
 
     // 计数器：只在积累了疑虑后才显示，默认（0）不显示
-    public override bool ShowCounter => _doubtDrawnCount > 0;
+    public override bool ShowCounter => DoubtDrawnCount > 0;
 
     // 计数器显示的数字，与累计的疑虑数量一致
-    public override int DisplayAmount => _doubtDrawnCount;
+    public override int DisplayAmount => DoubtDrawnCount;
 
     // protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromCardWithCardHoverTips<Soul>();
 
@@ -100,8 +119,7 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     // 每场战斗开始时清零，使统计只在单场战斗内累计
     public override async Task BeforeCombatStart()
     {
-        _doubtDrawnCount = 0;
-        UpdateCounterDisplay();
+        DoubtDrawnCount = 0;
         await base.BeforeCombatStart();
     }
 
@@ -117,13 +135,12 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     // 累计1张疑虑，满3张时施加疯癫并清零
     private async Task CountDoubtAndTryTriggerCrazy(PlayerChoiceContext choiceContext)
     {
-        _doubtDrawnCount++;
-        UpdateCounterDisplay();
+        // 走属性而不是字段：setter 里会顺手刷新计数器显示
+        DoubtDrawnCount++;
 
-        if (_doubtDrawnCount < 3) return;
+        if (DoubtDrawnCount < 3) return;
 
-        _doubtDrawnCount = 0;
-        UpdateCounterDisplay();
+        DoubtDrawnCount = 0;
         await PowerCmd.Apply<CrazyPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, null);
     }
 
@@ -136,8 +153,7 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     // 战斗结束后清空计数器（不跨战斗保留）
     public override async Task AfterCombatEnd(CombatRoom room)
     {
-        _doubtDrawnCount = 0;
-        UpdateCounterDisplay();
+        DoubtDrawnCount = 0;
         await base.AfterCombatEnd(room);
     }
 

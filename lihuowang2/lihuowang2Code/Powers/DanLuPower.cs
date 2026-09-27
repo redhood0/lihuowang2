@@ -24,7 +24,12 @@ public class DanLuPower : ModPowerTemplate
         IconPath: $"{Entry.ResPath}/images/powers/danlu32.png",
         BigIconPath: $"{Entry.ResPath}/images/powers/danlu84.png");
 
-    // 开炉次数（第 4 炉起有几率炸出炸炉诅咒）
+    // 开炉次数（第 4 炉起有几率炸出炸炉诅咒）。
+    // 故意不加 [SavedProperty]：引擎的 [SavedProperty] 只有**遗物**支持
+    // （引擎里 49 处用法全是遗物，SerializableRelic.Props 才会带上它）；
+    // 战斗内的 Power 在存档和多人战斗快照（NetFullCombatState）里都只有 {id, amount} 会同步，
+    // 所以加在这里是死代码。官方自己的计数型 Power（ConfusedPower / SandpitPower /
+    // SlothPower / TenderPower）同样用普通字段。
     private int _turns = 0;
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
@@ -45,7 +50,8 @@ public class DanLuPower : ModPowerTemplate
     // 抽奖：0-250 大力丹；251-500 润血丹；之后按剩余区间给辟谷丹，开炉越久越可能给炸炉
     private async Task GiveReward(PlayerChoiceContext choiceContext, Player player)
     {
-        int n = Random.Shared.Next(0, 1000);
+        // 多人同步：开炉随机必须走引擎的确定性随机流（CombatCardGeneration = 战斗内生成卡牌）
+        int n = player.RunState.Rng.CombatCardGeneration.NextInt(0, 1000);
         if (n <= 10)
         {
             await CardPileCmd.AddToCombatAndPreview<lihuowang2YangShouDan>(Owner, PileType.Hand, 1, player);
