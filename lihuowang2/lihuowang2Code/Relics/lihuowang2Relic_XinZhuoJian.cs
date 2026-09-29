@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using lihuowang2.Cards;
 using lihuowang2.Characters;
@@ -20,6 +22,11 @@ public class lihuowang2Relic_XinZhuoJian : ModRelicTemplate
         IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
+
+    // 悬停提示：遗物描述里出现的「破碎虚空斩」，直接把这张牌的预览挂在遗物上。
+    // 用带卡牌自身提示的版本（FromCardWithCardHoverTips），这样以后这张牌加了关键词也会自动带出来。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        HoverTipFactory.FromCardWithCardHoverTips<lihuowang2BreakSpace>();
 
     public override async Task BeforeCombatStart()
     {

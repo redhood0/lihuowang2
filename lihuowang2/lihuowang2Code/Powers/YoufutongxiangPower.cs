@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
@@ -39,7 +40,16 @@ public class YoufutongxiangPower : ModPowerTemplate
 
         Flash();
 
-        decimal reflect = amount * base.Amount;
+        // 只反射「实际失去的生命」：名义伤害可能远超当前生命（例如大千录·置闰五行的 999999 自伤，
+        // 或血量只剩 99 时吃到 9999 的自伤），这种时候玩家只会掉到 0 血，所以按 min(伤害, 当前生命) 计算。
+        // 说明：这里收到的 amount 已经是引擎修正后的值（Hook.BeforeDamageReceived 传的是 modifiedAmount），
+        // 且自伤带 Unblockable（不吃格挡、也不受只对 Move 伤害生效的减伤影响），
+        // 因此唯一还需要自己钳制的就是"不能超过当前生命"这一层。
+        decimal hpLoss = Math.Min(amount, Owner.CurrentHp);
+        if (hpLoss <= 0m)
+            return;
+
+        decimal reflect = hpLoss * base.Amount;
 
         // 关键：先做快照再逐个结算。CombatState.Enemies 直接返回战斗中的实时列表(_enemies)，
         // 边遍历边造成伤害时，一旦有敌人被打死（以及死亡触发的移出/召唤/尸爆等），

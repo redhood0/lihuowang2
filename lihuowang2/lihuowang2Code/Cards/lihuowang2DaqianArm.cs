@@ -70,12 +70,10 @@ public class lihuowang2DaqianArm : ModCardTemplate
     // 打出时的效果逻辑
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 1. 自己失去 10 点生命（Unblockable：无视格挡的真实 HP 损失）。
-        //    放在最前面：若血量不够会先死亡，后续效果不再执行。
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, SelfHpLossAmount,
-            ValueProp.Unblockable, Owner.Creature, this, cardPlay);
-
-        // 2. 玩家从手牌选 1 张牌来消耗（此牌自身已带 Exhaust，打出后会自动进消耗堆）
+        // 1. 玩家从手牌选 1 张牌来消耗（此牌自身已带 Exhaust，打出后会自动进消耗堆）。
+        //    刻意放在自伤之前：联机时若自伤把自己打死，后面这个"等待玩家选择"就永远得不到回应，
+        //    这张牌的 Action 不会结束、回合也无法结束（引擎不会替死者取消待处理的选择）。
+        //    另外卡面文案本来就是"先消耗 1 张手牌，再失去生命"，这样也和文案一致。
         IEnumerable<CardModel> selected = await CardSelectCmd.FromHand(
             choiceContext,
             Owner,
@@ -86,6 +84,10 @@ public class lihuowang2DaqianArm : ModCardTemplate
         CardModel? card = selected.FirstOrDefault();
         if (card != null)
             await CardCmd.Exhaust(choiceContext, card);
+
+        // 2. 自己失去 10 点生命（Unblockable：无视格挡的真实 HP 损失）
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, SelfHpLossAmount,
+            ValueProp.Unblockable, Owner.Creature, this, cardPlay);
 
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 

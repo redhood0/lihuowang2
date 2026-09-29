@@ -75,7 +75,7 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
 
         // 4. 若消耗的是诅咒，则获得格挡
         if (isCurse)
-            await CreatureCmd.GainBlock(Owner, BlockOnCurse, ValueProp.Move, null);
+            await CreatureCmd.GainBlock(Owner, BlockOnCurse, ValueProp.Unpowered, null);
     }
 
     // 能力被移除时（例如「迷失」把黑太岁移除）把战斗形象还原成默认

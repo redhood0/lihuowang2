@@ -18,6 +18,10 @@
         <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
         <ModOutputDir>$(Sts2Dir)\mods\$(MSBuildProjectName)\</ModOutputDir>
         <ModPckPath>$(ModOutputDir)$(MSBuildProjectName).pck</ModPckPath>
+        <!-- MinionLib（随从库）的 NuGet 包会通过 buildTransitive target 把
+             MinionLib.dll / MinionLib.pck / MinionLib.json 复制到 $(ModsPath)/MinionLib/。
+             这里从本机 Sts2Dir 推导，避免把机器专属路径写进仓库。 -->
+        <ModsPath Condition="'$(ModsPath)' == ''">$(Sts2Dir)\mods\</ModsPath>
         <!-- 本机测试时 RitsuLib 包/构建逻辑会使用这个目录把 RitsuLib 部署到游戏 mods/STS2-RitsuLib。 -->
         <!-- Local test builds use this directory when RitsuLib package/build logic deploys RitsuLib to game mods/STS2-RitsuLib. -->
         <RitsuLibDeployDir Condition="'$(RitsuLibDeployDir)' == ''">$(Sts2Dir)\mods\STS2-RitsuLib</RitsuLibDeployDir>
@@ -42,6 +46,11 @@
         <PackageReference Include="Krafs.Publicizer" Version="2.3.2" PrivateAssets="all" />
         <!-- 主线 RitsuLib（STS2 0.105.0+），跟踪 NuGet 最新版本。兼容分支和 manifest 版本对齐规则见 README。 -->
         <PackageReference Include="STS2.RitsuLib" GeneratePathProperty="true" Version="0.5.17" />
+        <!-- MinionLib：随从 / 组件卡牌库。包内含 Source Generator，检测到本项目引用了
+             RitsuLib（程序集 STS2-RitsuLib）后会在 lihuowang2.RitsuAdapters 下生成
+             ModMinionTemplate / ModComponentsCardTemplate / ModActionTemplate 等适配类。
+             注意：不要改成引用 GitHub Release 的 DLL，否则拿不到 analyzer 与 buildTransitive target。 -->
+        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.6.3" />
     </ItemGroup>
 
     <ItemGroup>

@@ -31,7 +31,8 @@ public class lihuowang2DaqianYoufutongxiang : ModCardTemplate
     // 是否在卡牌图鉴中显示
     private const bool shouldShowInCardLibrary = true;
 
-    // 伤害倍率变量名，本地化里用 {Share:diff()} 显示；升级 2 → 3
+    // 倍率变量名（不再显示在卡面上，只作为「有福同享」能力的层数传入）：
+    // 初始 1（等量），升级后 2（双倍）
     private const string ShareVarName = "Share";
 
     // 悬停时展示有福同享效果说明。
@@ -42,9 +43,9 @@ public class lihuowang2DaqianYoufutongxiang : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // 卡牌基础数值：Share = 反伤倍率（2，升级 +1 → 3）。
+    // 卡牌基础数值：Share = 反伤倍率（1 = 等量，升级 +1 → 2 = 双倍）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar(ShareVarName, 2m)
+        new DynamicVar(ShareVarName, 1m)
     ];
 
     public lihuowang2DaqianYoufutongxiang() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -63,7 +64,7 @@ public class lihuowang2DaqianYoufutongxiang : ModCardTemplate
             DynamicVars[ShareVarName].BaseValue, Owner.Creature, this);
     }
 
-    // 升级：倍率 2 → 3
+    // 升级：倍率 1 → 2（等量 → 双倍）
     protected override void OnUpgrade()
     {
         DynamicVars[ShareVarName].UpgradeValueBy(1);

@@ -29,8 +29,12 @@ public class lihuowang2ImNotSick : ModCardTemplate
 
     // 悬停提示：描述里出现的「疯狂」牌。用它自带的悬停（含关键词）版本，
     // 所以疯狂身上的「消耗」也会顺带出现在本牌的 hover 里。
+    // upgrade 跟随本体升级状态：升级版「我没病」给的是升级过的疯狂（费用 1 → 0），
+    // 所以 hover 也必须显示「疯狂+」，否则和实际拿到手的牌不一致。
+    // 注：RitsuLib 的 ExtraHoverTips 每次访问都重新构造列表（不缓存），
+    // 所以这里读 IsUpgraded 在升级后能正常刷新。
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<lihuowang2Madness>();
+        HoverTipFactory.FromCardWithCardHoverTips<lihuowang2Madness>(IsUpgraded);
 
     public lihuowang2ImNotSick() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
