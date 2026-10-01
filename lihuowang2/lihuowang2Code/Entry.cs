@@ -33,6 +33,10 @@ public partial class Entry
         // 新增内容类后，只要 attribute 写对，通常不需要在入口里手动逐个注册。
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
 
+        // 模组设置（设置中心里的开关 + settings.json 持久化）。
+        // 必须在 ModTypeDiscoveryHub 之后：设置页要挂在已注册的内容包上。
+        Lihuowang2ModSettings.Initialize();
+
         Logger.Info("lihuowang2 initialized.");
     }
 }

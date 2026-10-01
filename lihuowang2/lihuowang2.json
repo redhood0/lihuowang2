@@ -4,12 +4,13 @@
   "pck_name": "lihuowang2",
   "author": "red dragon",
   "description": "这是塔1，还是塔2，我分不清...",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "has_pck": true,
   "has_dll": true,
   "affects_gameplay": true,
   "min_game_version": "0.111.0",
   "dependencies": [
-    { "id": "STS2-RitsuLib", "version": "0.5.17" }
+    { "id": "STS2-RitsuLib", "version": "0.5.17" },
+    { "id": "MinionLib", "min_version": "0.6.3" }
   ]
 }

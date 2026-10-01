@@ -34,7 +34,7 @@ public class lihuowang2BiGuDan : ModCardTemplate
 
     // 数值：Heal = 治疗量（3，升级 +2 → 5）；Energy = 下回合能量（1，升级 +1 → 2）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Heal", 3m),
+        new DynamicVar("Heal", 1m),
         new DynamicVar("Energy", 1m)
     ];
 
@@ -58,7 +58,7 @@ public class lihuowang2BiGuDan : ModCardTemplate
     // 升级：治疗 3 → 5；能量 1 → 2
     protected override void OnUpgrade()
     {
-        DynamicVars["Heal"].UpgradeValueBy(2);
+        DynamicVars["Heal"].UpgradeValueBy(1);
         DynamicVars["Energy"].UpgradeValueBy(1);
     }
 }

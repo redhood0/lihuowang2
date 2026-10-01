@@ -10,6 +10,12 @@ riderModule.iml
 *.DotSettings
 *.DotSettings.user
 
+# AI 助手工作区（记忆/临时产物，不入库）
+.workbuddy/
+.codebuddy/
+.dodwork/
+.dodwork-runtime/
+
 # Godot generated files
 .godot/
 *.uid

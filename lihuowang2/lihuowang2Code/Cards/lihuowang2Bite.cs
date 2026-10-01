@@ -28,6 +28,13 @@ public class lihuowang2Bite: ModCardTemplate
     // 是否在卡牌图鉴中显示
     private const bool shouldShowInCardLibrary = true;
 
+    // 攻击段数：基础 1 段；处于「疯癫」时额外多打 1 段（共 2 段）。
+    private const int baseHitCount = 1;
+    private const int maniaBonusHitCount = 1;
+
+    // 命中特效。咬类攻击在引擎里用的就是 vfx/vfx_bite（斩类才是 vfx/vfx_attack_slash）。
+    private const string hitFxPath = "vfx/vfx_bite";
+
     // 卡图资源。
     // 如果你按这行代码写，文件名就对应 lihuowang2/images/cards/lihuowang2Strike.png。
     // 这里的 res://lihuowang2/... 是 Godot 资源路径，对应的是你的资源文件夹名字。
@@ -49,16 +56,21 @@ public class lihuowang2Bite: ModCardTemplate
     {
     }
 
-    // 打出时的效果逻辑
+    // 打出时的效果逻辑。
+    // 与官方 TwinStrike（双重打击）同款的多段写法：先把段数算出来，再交给 WithHitCount
+    // 在一次攻击命令里连打，而不是循环调用多次 DamageCmd.Attack（那样会播多遍完整攻击动作）。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+
         // 若攻击者（Owner）处于疯癫状态，则额外攻击一次（共攻击 2 次）
-        int hits = Owner.Creature.HasPower<CrazyPower>(1) ? 2 : 1;
+        int hits = baseHitCount + (Owner.Creature.HasPower<CrazyPower>(1) ? maniaBonusHitCount : 0);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this, cardPlay)
             .WithHitCount(hits)
-            .Targeting(cardPlay.Target!)
+            .FromCard(this, cardPlay)
+            .Targeting(cardPlay.Target)
+            .WithHitFx(hitFxPath)
             .Execute(choiceContext);
     }
 

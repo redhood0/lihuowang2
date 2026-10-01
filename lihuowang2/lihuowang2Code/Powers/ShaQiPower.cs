@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Powers;
 
 // 煞气：你的普通攻击伤害 +层数；
-// 当煞气 ≥ 5 时，每个自己回合开始时给所有敌人 1 层易伤，并且你无法再获得格挡。
+// 当煞气 ≥ 5 时，每个自己回合开始时给所有敌人 1 层易伤，并且你无法从卡牌中获得格挡。
 [RegisterPower]
 public class ShaQiPower : ModPowerTemplate
 {
@@ -40,13 +40,16 @@ public class ShaQiPower : ModPowerTemplate
         return base.Amount;
     }
 
-    // 煞气 ≥ 5 时无法获得格挡。
-    // 走「乘算」那一档：所有格挡来源（卡牌/能力/遗物）都会经过 Hook.ModifyBlock，
-    // 返回 0 就等于拿不到格挡；顺带卡面预览也会显示 0 格挡，和实际一致。
+    // 煞气 ≥ 5 时无法从「卡牌」获得格挡（能力/遗物给的格挡照常生效）。
+    // 判定依据是 cardSource：引擎文档写明「Card that will be adding the block.
+    // Null if the block is coming from something other than a card (like a Relic)」，
+    // 所以 cardSource != null 就代表这一笔格挡来自卡牌。
+    // 走「乘算」那一档：格挡结算统一经过 Hook.ModifyBlock，返回 0 即拿不到；
+    // 手牌预览时 cardSource 也有值（cardPlay 才是 null），所以卡面会显示 0 格挡，和实际一致。
     public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props,
         CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (target == Owner && base.Amount >= 5)
+        if (target == Owner && base.Amount >= 5 && cardSource != null)
             return 0m;
         return 1m;
     }

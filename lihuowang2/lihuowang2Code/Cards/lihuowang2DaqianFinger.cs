@@ -41,8 +41,11 @@ public class lihuowang2DaqianFinger : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     // 卡牌基础数值（对目标造成的无视格挡伤害）。升级后 +4（22 → 26）。
+    // 必须同时带 Move：Unblockable 只表示"不吃格挡"，而"有力量攻击"的判定是
+    // HasFlag(Move) && !HasFlag(Unpowered)。少了 Move 会变成——无视格挡生效，
+    // 但易伤/力量/煞气/疯狂等加成统统不参与（卡面预览也走同一套 props，所以数字同样不涨）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(22, ValueProp.Unblockable)
+        new DamageVar(22, ValueProp.Unblockable | ValueProp.Move)
     ];
 
     // 默认关键字：保留、消耗
@@ -62,9 +65,11 @@ public class lihuowang2DaqianFinger : ModCardTemplate
         await CreatureCmd.Damage(choiceContext, Owner.Creature, SelfHpLossAmount,
             ValueProp.Unblockable, Owner.Creature, this, cardPlay);
 
-        // 2. 对目标造成无视格挡的伤害（Unblockable，不受护甲影响）
+        // 2. 对目标造成无视格挡的伤害。
+        //    Unblockable = 不吃格挡；Move = 算作"攻击伤害"，
+        //    这样易伤 / 力量 / 煞气 / 疯狂等加成照常生效（之前漏了 Move）。
         await CreatureCmd.Damage(choiceContext, cardPlay.Target!, DynamicVars.Damage.BaseValue,
-            ValueProp.Unblockable, Owner.Creature, this, cardPlay);
+            ValueProp.Unblockable | ValueProp.Move, Owner.Creature, this, cardPlay);
     }
 
     // 升级后的效果逻辑：无视格挡伤害 22 → 26

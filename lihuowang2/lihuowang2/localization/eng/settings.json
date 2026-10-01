@@ -1,0 +1,7 @@
+{
+  "LIHUOWANG2_SETTINGS_PAGE_TITLE": "Li Huowang Mod",
+  "LIHUOWANG2_SETTINGS_PAGE_DESC": "Settings for the Li Huowang mod.",
+  "LIHUOWANG2_SETTINGS_SECTION_MUSIC": "Music",
+  "LIHUOWANG2_SETTINGS_MUSIC_PLAY_LABEL": "Play special BGM",
+  "LIHUOWANG2_SETTINGS_MUSIC_PLAY_DESC": "When disabled, cards and rooms that normally trigger the mod's special BGM stay silent (the game's own soundtrack is unaffected)."
+}

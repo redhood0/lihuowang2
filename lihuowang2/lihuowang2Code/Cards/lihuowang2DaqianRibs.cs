@@ -56,7 +56,7 @@ public class lihuowang2DaqianRibs : ModCardTemplate
     // 卡牌基础数值：
     // Damage = 对每个敌人造成的伤害（25）；Vulnerable = 易伤层数（1）；Weak = 虚弱层数（1）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(25m, ValueProp.Move),
+        new DamageVar(18m, ValueProp.Move),
         // PowerVar 默认变量名是 power 类型名（VulnerablePower / WeakPower），
         // 模板 DynamicVars.Vulnerable / DynamicVars.Weak 也按此名访问，二者必须保持一致。
         new PowerVar<VulnerablePower>(2m),

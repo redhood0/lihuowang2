@@ -28,6 +28,12 @@ public static class Lihuowang2MusicUtil
 
     private static void PlayMusic(string relativePath, AudioLifecycleScope scope, float volume)
     {
+        // 玩家可以在「模组设置 → 李火旺模组 → 音乐」里关掉特殊 BGM（默认开启）。
+        // 这里是模组所有特殊 BGM 的唯一出口（卡牌 BGM / 房间 BGM / 胜利 BGM 都走它），
+        // 所以只在这一处判断即可全覆盖；选择会被存进 settings.json，下次启动复用。
+        if (!Lihuowang2ModSettings.PlaySpecialMusic)
+            return;
+
         GameAudioService.Shared.PlayMusic(
             AudioSource.StreamingResourceMusic($"{Entry.ResPath}/{relativePath}"),
             new AudioPlaybackOptions

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -28,6 +29,12 @@ public class lihuowang2GhostRing : ModCardTemplate
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
+
+    // 悬停提示：描述里出现的「迟缓」。
+    // 迟缓是官方能力（SlowPower），文案直接取官方 powers 表，不需要自己写；
+    // 和「触手·缠绕」给官方 StranglePower 挂 hover 的做法一致。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<SlowPower>()];
 
     // Damage = 伤害（25，升级 +7 → 32）；Slow = 迟缓层数（1，升级 +1 → 2）
     protected override IEnumerable<DynamicVar> CanonicalVars => [
