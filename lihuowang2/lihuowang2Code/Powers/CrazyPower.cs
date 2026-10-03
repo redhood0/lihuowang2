@@ -82,13 +82,19 @@ public class CrazyPower : ModPowerTemplate
             multiplier = 1.5m;
         }
         // 防御端：别人打我 → 受到伤害 -25%。
-        // 判定同时接受两种口径，避免因「power 到底挂在哪个 creature 实例上」而漏判：
-        //   - target == Owner ：标准情况，power 挂在受击者身上
-        //   - target.IsPlayer：受击者就是玩家本体（Creature.IsPlayer => Player != null）
+        //
+        // ⚠⚠ 判定必须**完全确定性**：同一笔伤害在所有客户端必须算出同一个值，否则联机直接判「状态分歧」。
+        //   所以这里只能认 target == Owner（power 挂在受击者身上，所有客户端都是同一个 creature 实例）。
+        //   绝对不要用「本机判定」：
+        //     - LocalContext.IsMe(target.Player)：只有受击者自己的机器返回 true → 那台机器算 0.75，
+        //       队友的机器对同一笔伤害算 1.0 → HP/格挡两端不同 → 校验和分歧（这就是之前"双人不同步"的原因）；
+        //     - target.IsPlayer：队友的 creature 同样满足 IsPlayer，而且怪物意图是引擎按「本机玩家」算的，
+        //       用它会把我的疯癫套到队友的意图数字上。
+        //   单人下 target == Owner 与上述口径完全等价，所以行为没有任何变化。
         // 不限制 props（卡面写的是「受到伤害减少25%」，中毒/持续伤害等非攻击伤害也该吃）。
         // dealer == target 视为自伤（自伤牌、点燃反噬），不减。
         // 与其它乘算修正相乘叠加（例如易伤 1.5：0.75 × 1.5 = 1.125）。
-        else if (target != null && (target == Owner || target.IsPlayer) && dealer != target)
+        else if (target == Owner && dealer != target)
         {
             multiplier = 0.75m;
         }
@@ -96,13 +102,16 @@ public class CrazyPower : ModPowerTemplate
         return multiplier;
     }
 
-    // 已知行为（2026-10-01 确认，待优化）：减伤会同步反映到「怪物意图」的数字上。
+    // 已知行为（2026-10-01 确认，2026-10-02 修多人不同步）：减伤会反映到「本机玩家看到的怪物意图」数字上。
     //
     // 原因：意图的伤害数字走的是同一套伤害钩子 ——
     //   SingleAttackIntent / MultiAttackIntent.GetSingleDamage() 会调用
     //   Hook.ModifyDamage(..., me.Creature, owner, DamageCalc(), ValueProp.Move, null, null, All, None, out _)
-    //   即「target = 玩家、dealer = 怪物、cardSource = null」，与本文件的减伤分支完全吻合，
-    //   于是意图显示的数字就是实际会打在格挡/生命上的数字（10 点攻击显示 7）。比原值更准，暂时保留。
+    //   即「target = 本机玩家、dealer = 怪物、cardSource = null」，与上面的减伤分支吻合，
+    //   于是本机看到的意图数字就是实际会打在格挡/生命上的数字（10 点攻击显示 7）。比原值更准，保留。
+    // ⚠ 该路径的 target 是「各客户端自己的玩家」，所以意图数字天然是「各看各的」（引擎设计如此，
+    //   官方减伤遗物也一样）；但这只影响显示，**不能因此把判定改成 IsMe/LocalContext** ——
+    //   那会让真正结算那一笔伤害也变成"按机器"计算，两端数值不同直接触发状态分歧。
     //
     // 以后若要「意图显示原值、实际减伤」，可选方案（都不完美，需要时再评估）：
     //   A. 把减伤挪回 ModifyHpLostBeforeOsty（格挡之后）：意图不受影响，但会退回

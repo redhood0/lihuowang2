@@ -60,6 +60,7 @@ public class lihuowang2TentacleSlash : ModCardTemplate
             .FromCard(this, cardPlay)
             .WithHitCount(2)
             .Targeting(cardPlay.Target!)
+            .WithHitFx("vfx/vfx_thrash")   // 命中特效：抽打（触手鞭打）
             .Execute(choiceContext);
     }
 

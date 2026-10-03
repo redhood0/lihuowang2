@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Cards;
 
-// 炼气：获得格挡；若被消耗（任何来源）则获得 1 点能量。
+// 炼气：获得格挡；若被消耗（任何来源）则获得能量（基础 1 点，升级后 2 点）。
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2LianQi : ModCardTemplate
 {
@@ -22,6 +22,10 @@ public class lihuowang2LianQi : ModCardTemplate
     private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
+
+    // 被消耗时获得的能量：基础 1 点，升级后 2 点。
+    private const int baseEnergyGain = 1;
+    private const int upgradedEnergyGain = 2;
 
     public override bool GainsBlock => true;
 
@@ -41,7 +45,7 @@ public class lihuowang2LianQi : ModCardTemplate
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
-    // 被消耗时触发：任何来源消耗它都会回 1 点能量。
+    // 被消耗时触发：任何来源消耗它都会回能量（升级前 1 点，升级后 2 点）。
     // 引擎会把战斗内所有卡牌都算作 hook 监听者，所以这里能收到"自己被抓去消耗"的回调。
     // （原来这句写在 Lihuowang2HeitaisuiPower 里，只有黑太岁吃得掉才给能量，已删掉避免双重给能。）
     public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card,
@@ -50,11 +54,11 @@ public class lihuowang2LianQi : ModCardTemplate
         if (card != this)
             return;
 
-        await PlayerCmd.GainEnergy(1m, Owner);
+        await PlayerCmd.GainEnergy(IsUpgraded ? upgradedEnergyGain : baseEnergyGain, Owner);
         await base.AfterCardExhausted(choiceContext, card, causedByEthereal);
     }
 
-    // 升级：格挡 7 → 10
+    // 升级：格挡 7 → 10；被消耗时的能量 1 → 2
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(3);

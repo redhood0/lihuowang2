@@ -56,6 +56,7 @@ public class lihuowang2MoonWindSword : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(target)
+            .WithHitFx("vfx/vfx_giant_horizontal_slash")   // 命中特效：大横扫（明月清风的剑风）
             .Execute(choiceContext);
 
         if (target.IsDead)

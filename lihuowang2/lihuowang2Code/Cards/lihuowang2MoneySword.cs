@@ -82,6 +82,7 @@ public class lihuowang2MoneySword : ModCardTemplate
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .FromCard(this, cardPlay)
                 .Targeting(cardPlay.Target!)
+                .WithHitFx("vfx/vfx_coin_explosion_regular")   // 命中特效：铜钱迸射（撒币）
                 .Execute(choiceContext);
         }
 

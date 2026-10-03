@@ -58,7 +58,11 @@ public class lihuowang2YiJiaXiuZhen : ModCardTemplate
         if (chosen == null)
             return;
 
-        await CardPileCmd.Add(chosen, PileType.Exhaust);
+        // ⚠ 必须用 CardCmd.Exhaust，不能用 CardPileCmd.Add(card, PileType.Exhaust)：
+        //   后者只是把牌挪进消耗堆，不会调用 Hook.AfterCardExhausted ——
+        //   于是「我没病（被消耗时给疯狂）」「炼气（被消耗时给能量）」「触手系列（被消耗时回血）」
+        //   这类"被消耗时触发"的牌全部哑火。CardCmd.Exhaust 内部 = 挪进消耗堆 + 记历史 + 触发钩子。
+        await CardCmd.Exhaust(choiceContext, chosen);
 
         // 2. 获得 1 点能量
         await PlayerCmd.GainEnergy(1m, player);

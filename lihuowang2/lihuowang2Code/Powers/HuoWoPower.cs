@@ -13,15 +13,15 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Powers;
 
 // 怜悯（火袄真经赋予的护持）：
-// 战斗期间让「灼伤」变成可以打出的牌，每回合的额度是「怜悯层数 × 2」张，每打出一张回复 4 点生命。
-// 卡面说明：获得1层怜悯 / 每回合可以打出怜悯层数2倍的灼伤 / 灼伤会回复4点生命。
+// 战斗期间让「灼伤」变成可以打出的牌，每回合的额度是「怜悯层数 × 1」张，每打出一张回复 3 点生命。
+// 卡面说明：获得4层怜悯 / 每回合可以打出怜悯层数的灼伤 / 灼伤会回复3点生命。
 [RegisterPower]
 public class HuoWoPower : ModPowerTemplate
 {
     // 每层怜悯每回合多允许打出的灼伤数
     private const int BurnsPerStack = 1;
     // 每张打出的灼伤回复的生命
-    private const int HealPerBurn = 4;
+    private const int HealPerBurn = 3;
 
     // 类型：Buff
     public override PowerType Type => PowerType.Buff;
@@ -65,7 +65,7 @@ public class HuoWoPower : ModPowerTemplate
         return Task.CompletedTask;
     }
 
-    // 打出灼伤：回复 2 点生命
+    // 打出灼伤：回复 3 点生命
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card is not Burn || Owner.Player == null)

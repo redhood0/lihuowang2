@@ -22,7 +22,7 @@ public class lihuowang2DaqianTeeth : ModCardTemplate
     // 卡牌类型
     private const CardType type = CardType.Attack;
     // 卡牌稀有度
-    private const CardRarity rarity = CardRarity.Uncommon;
+    private const CardRarity rarity = CardRarity.Common ;
     // 目标类型（RandomEnemy：随机敌人，无需玩家选择目标）
     private const TargetType targetType = TargetType.RandomEnemy;
     // 是否在卡牌图鉴中显示
@@ -41,15 +41,17 @@ public class lihuowang2DaqianTeeth : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     // 卡牌基础数值：
-    // Damage = 每次随机命中的伤害（4）；Repeat = 随机攻击的次数（升级后 +1 → 5）。
+    // Damage = 每次随机命中的伤害（3，升级不变化）；Repeat = 随机攻击的次数（4，升级 +1 → 5）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(4, ValueProp.Move),
+        new DamageVar(3, ValueProp.Move),
         new RepeatVar(4)
     ];
 
-    // 默认关键字：消耗
+    // 默认关键字：保留、消耗
+    // （两个关键字都会由引擎自动追加到卡面：保留显示在描述上方、消耗显示在描述下方，
+    //   所以中英文描述里都不需要再手写。）
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
+        CardKeyword.Retain, CardKeyword.Exhaust
     ];
 
     public lihuowang2DaqianTeeth() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -70,10 +72,11 @@ public class lihuowang2DaqianTeeth : ModCardTemplate
             .FromCard(this, cardPlay)
             .WithHitCount(hits)
             .TargetingRandomOpponents(Owner.Creature.CombatState!)
+            .WithHitFx("vfx/vfx_bite")   // 命中特效：撕咬（拔牙）
             .Execute(choiceContext);
     }
 
-    // 升级后的效果逻辑：随机攻击次数 4 → 5
+    // 升级后的效果逻辑：随机攻击次数 4 → 5（每次伤害仍是 3）
     protected override void OnUpgrade()
     {
         DynamicVars.Repeat.UpgradeValueBy(1);

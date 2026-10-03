@@ -91,6 +91,7 @@ public class lihuowang2Xiesuiwang : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
+            .WithHitFx("vfx/vfx_bloody_impact")   // 命中特效：血光冲击（邪祟）
             .Execute(choiceContext);
     }
 

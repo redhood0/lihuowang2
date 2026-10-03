@@ -43,7 +43,7 @@ public class lihuowang2DaqianNail : ModCardTemplate
 
     // 卡牌基础数值（基础伤害）。升级后 +3（15 → 18）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(15, ValueProp.Move)
+        new DamageVar(14, ValueProp.Move)
     ];
 
     // 默认关键字：保留、消耗（在只读 canonical 模型上声明，不能在构造函数里 ApplyKeyword）
@@ -67,12 +67,13 @@ public class lihuowang2DaqianNail : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
+            .WithHitFx("vfx/vfx_rock_shatter")   // 命中特效：碎裂（裂甲）
             .Execute(choiceContext);
     }
 
     // 升级后的效果逻辑：基础伤害 15 → 18
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars.Damage.UpgradeValueBy(4);
     }
 }

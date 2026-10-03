@@ -27,6 +27,11 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
+    // 绝境爆发给的无实体层数。
+    // ⚠ 改这个数字时，记得同步 cards.json 里本牌描述（中英各 .description / .smartDescription）的
+    //   「[blue]N[/blue]层无实体」——本地化文本里的数字是手写的，不会跟着代码走。
+    private const int IntangibleStacks = 2;
+
     // 打出后消耗
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
@@ -77,7 +82,10 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
         Lihuowang2MusicUtil.PlayCardMusic("dengjie.mp3");
 
         await PlayerCmd.GainEnergy(2m, player);
-        await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+
+        // 无实体层数由 IntangibleStacks 决定（当前 2 层）。
+        await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature, IntangibleStacks,
+            Owner.Creature, this);
 
         // 没有登阶遗物就先把它拿到手（遗物自带计数器，初始即登阶 1），已有则登阶 +1。
         lihuowang2Relic_Dengjie? dengjieRelic = player.GetRelic<lihuowang2Relic_Dengjie>();

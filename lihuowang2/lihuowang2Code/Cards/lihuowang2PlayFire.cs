@@ -41,7 +41,7 @@ public class lihuowang2PlayFire : ModCardTemplate
 
     // 数值：Damage = 全体伤害（11，升级 +4）；Ignite = 点燃层数（1，升级 +1）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(11m, ValueProp.Move),
+        new DamageVar(12m, ValueProp.Move),
         new DynamicVar("Ignite", 1m)
     ];
 
@@ -56,6 +56,7 @@ public class lihuowang2PlayFire : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .TargetingAllOpponents(Owner.Creature.CombatState!)
+            .WithHitFx("vfx/vfx_fire_burst")   // 命中特效：火焰爆燃（玩火）
             .Execute(choiceContext);
 
         // 2. 弃牌堆加入 2 张灼烧

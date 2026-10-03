@@ -64,6 +64,7 @@ public class lihuowang2Huiniangjia : ModCardTemplate
         await DamageCmd.Attack(damage)
             .FromCard(this, cardPlay)
             .Targeting(target)
+            .WithHitFx("vfx/vfx_fire_burst")   // 命中特效：火焰爆燃（点燃叠满后的爆发）
             .Execute(choiceContext);
         
         // BGM：回娘家（离火）

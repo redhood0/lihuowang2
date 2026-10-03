@@ -33,6 +33,17 @@ public class lihuowang2CurseZhalu : ModCardTemplate
     {
     }
 
+    // 衍生牌标记：不能被"战斗内随机生成/发现"类效果抽到。
+    // 引擎注释原文：Used primarily to filter cards out of random in-combat generation effects.
+    public override bool CanBeGeneratedInCombat => false;
+
+    // 衍生牌标记：不进修正器牌池（官方注释点名 AscendersBane / 远古诅咒就是靠这个从 Cursed Run 里排除的）。
+    public override bool CanBeGeneratedByModifiers => false;
+
+    // 诅咒不可升级：与官方诅咒一致（Doubt / Writhe / AscendersBane 都是 MaxUpgradeLevel => 0），
+    // 免得营火之类把它升成没有任何实际效果的「炸炉+」。
+    public override int MaxUpgradeLevel => 0;
+
     // 诅咒无法打出
     protected override bool IsPlayable => false;
 

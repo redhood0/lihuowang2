@@ -42,6 +42,7 @@ public class lihuowang2MaJiang : ModCardTemplate
             await DamageCmd.Attack(dmg)
                 .FromCard(this, cardPlay)
                 .Targeting(cardPlay.Target!)
+                .WithHitFx("vfx/vfx_attack_blunt")   // 命中特效：钝击（掷出的牌砸人）
                 .Execute(choiceContext);
         }
 

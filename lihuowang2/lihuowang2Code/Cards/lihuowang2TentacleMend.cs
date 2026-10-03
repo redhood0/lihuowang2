@@ -36,7 +36,7 @@ public class lihuowang2TentacleMend : ModCardTemplate
 
     // Block = 每次格挡（3，升级 +1 → 4）；Heal = 被消耗时回复的生命（3，升级 +1 → 4）
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(3m, ValueProp.Move),
+        new BlockVar(4m, ValueProp.Move),
         new DynamicVar("Heal", 3m)
     ];
 
@@ -77,7 +77,7 @@ public class lihuowang2TentacleMend : ModCardTemplate
     // 升级：格挡 3 → 4；被消耗时回血 3 → 4
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(1);
+        DynamicVars.Block.UpgradeValueBy(2);
         DynamicVars["Heal"].UpgradeValueBy(1);
     }
 }

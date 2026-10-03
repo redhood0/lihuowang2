@@ -56,6 +56,7 @@ public class lihuowang2ZiHuiJianZhan : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
+            .WithHitFx("vfx/vfx_flying_slash")   // 命中特效：剑气飞斩（紫穗剑斩）
             .Execute(choiceContext);
     }
 

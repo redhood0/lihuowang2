@@ -31,6 +31,18 @@ public sealed class QiuChiBao : ModMinionTemplate
     // 一定早于 MinionAnimCmd.Rearrange()。
     static QiuChiBao()
     {
+        EnsureLayoutRegistered();
+    }
+
+    // 幂等注册：静态构造（最早时机）与 OnSummon（保证早于 Rearrange）各调一次，实际只会注册一次。
+    private static bool _layoutRegistered;
+
+    private static void EnsureLayoutRegistered()
+    {
+        if (_layoutRegistered)
+            return;
+
+        _layoutRegistered = true;
         MinionLayoutManager.Register(new QiuChiBaoLayout(), priority: 20);
     }
 
@@ -84,6 +96,11 @@ public sealed class QiuChiBao : ModMinionTemplate
     public override async Task OnSummon(PlayerChoiceContext choiceContext, Player owner,
         MinionSummonOptions options)
     {
+        // 摆位注册兜底（幂等）：MinionCmd.AddMinion 的顺序是
+        // 「PlayerCmd.AddPet<T> → OnSummon → MinionAnimCmd.Rearrange()」，
+        // 在这里注册一定早于本次 Rearrange，摆位必定生效（静态构造不保证跑到）。
+        EnsureLayoutRegistered();
+
         // 修真：存活期间召唤者最大能量 -层数，随从死亡时随能力一起归还
         await PowerCmd.Apply<XiuZhenPower>(choiceContext, Creature, 1m, owner.Creature,
             options.Source);

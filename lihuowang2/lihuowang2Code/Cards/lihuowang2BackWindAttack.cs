@@ -54,6 +54,7 @@ public class lihuowang2BackWindAttack : ModCardTemplate
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .FromCard(this, cardPlay)
                 .Targeting(cardPlay.Target!)
+                .WithHitFx("vfx/vfx_flying_slash")   // 命中特效：飞斩（回风）
                 .Execute(choiceContext);
         }
     }
@@ -61,7 +62,7 @@ public class lihuowang2BackWindAttack : ModCardTemplate
     // 升级：费用 1 → 0；伤害 4 → 5
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        // EnergyCost.UpgradeBy(-1);
         DynamicVars.Damage.UpgradeValueBy(1);
     }
 }

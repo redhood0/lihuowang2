@@ -18,7 +18,7 @@ namespace lihuowang2.Powers;
 public class Lihuowang2StoneBookPower : ModPowerTemplate
 {
     // 每层提供的格挡
-    private const decimal BlockPerStack = 6m;
+    private const decimal BlockPerStack = 5m;
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;

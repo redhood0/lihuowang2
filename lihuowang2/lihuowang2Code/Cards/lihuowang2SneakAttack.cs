@@ -51,6 +51,7 @@ public class lihuowang2SneakAttack : ModCardTemplate
         await DamageCmd.Attack(damage)
             .FromCard(this, cardPlay)
             .Targeting(target)
+            .WithHitFx("vfx/vfx_dramatic_stab")   // 命中特效：突刺（偷袭）
             .Execute(choiceContext);
     }
 

@@ -95,6 +95,7 @@ public class lihuowang2DaqianArm : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
+            .WithHitFx("vfx/vfx_heavy_blunt")   // 命中特效：重击（断臂的沉重一击）
             .Execute(choiceContext);
 
         // 4. 给予目标易伤
@@ -105,7 +106,7 @@ public class lihuowang2DaqianArm : ModCardTemplate
     // 升级后的效果逻辑：伤害 27 → 31；易伤 1 → 2 层
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4);
+        DynamicVars.Damage.UpgradeValueBy(7);
         DynamicVars.Vulnerable.UpgradeValueBy(1);
     }
 }

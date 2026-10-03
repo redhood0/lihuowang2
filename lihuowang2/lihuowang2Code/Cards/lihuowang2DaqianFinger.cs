@@ -70,11 +70,17 @@ public class lihuowang2DaqianFinger : ModCardTemplate
         //    这样易伤 / 力量 / 煞气 / 疯狂等加成照常生效（之前漏了 Move）。
         await CreatureCmd.Damage(choiceContext, cardPlay.Target!, DynamicVars.Damage.BaseValue,
             ValueProp.Unblockable | ValueProp.Move, Owner.Creature, this, cardPlay);
+
+        // 命中特效：突刺（断指）。
+        // 这张牌走的是 CreatureCmd.Damage（因为要 Unblockable + Move），没有 AttackCommand 可挂
+        // .WithHitFx，所以手动播一次官方特效；VfxCmd 内部已做 TestMode / 目标已死 / 节点判空，
+        // 且只是本地表现，联机安全。
+        VfxCmd.PlayOnCreature(cardPlay.Target!, "vfx/vfx_dramatic_stab");
     }
 
     // 升级后的效果逻辑：无视格挡伤害 22 → 26
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4);
+        DynamicVars.Damage.UpgradeValueBy(6);
     }
 }

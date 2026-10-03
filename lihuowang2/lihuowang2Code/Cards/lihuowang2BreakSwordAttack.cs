@@ -60,6 +60,7 @@ public class lihuowang2BreakSwordAttack : ModCardTemplate
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue + 6m)
                 .FromCard(this, cardPlay)
                 .Targeting(target)
+                .WithHitFx("vfx/vfx_attack_slash")   // 命中特效：斩击（破剑式）
                 .Execute(choiceContext);
         }
         else
@@ -67,6 +68,7 @@ public class lihuowang2BreakSwordAttack : ModCardTemplate
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .FromCard(this, cardPlay)
                 .Targeting(target)
+                .WithHitFx("vfx/vfx_attack_slash")   // 命中特效：斩击（破剑式）
                 .Execute(choiceContext);
         }
     }
@@ -74,6 +76,6 @@ public class lihuowang2BreakSwordAttack : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3);
-        DynamicVars["Weak"].UpgradeValueBy(1);
+        // DynamicVars["Weak"].UpgradeValueBy(1);
     }
 }

@@ -30,16 +30,24 @@ public static class Lihuowang2ModSettings
     private static ModDataStoreCache<Lihuowang2SettingsData>? _cache;
 
     /// <summary>
-    /// 是否播放模组特殊 BGM。默认 true；初始化完成前也按 true 处理
+    /// 是否播放模组特殊 BGM。默认 true；Initialize() 之前也按 true 处理
     /// （宁可多放一次，也不要因为初始化时序把音乐吞掉）。
     /// </summary>
     public static bool PlaySpecialMusic
     {
         get
         {
+            // ⚠ 这里**不能**用 cache.HasValue 做短路（踩过坑：玩家反馈"设置 BGM 失效"）：
+            //   HasValue 的语义是"这个缓存包装器当前是否已经实例化过值"（RitsuLib 原话：
+            //   "Gets whether this wrapper currently holds a cached instance."），首次访问时它必然
+            //   是 false；而一旦在此处 return，就永远不会去读 cache.Value → 值永远不会被惰性加载，
+            //   于是玩家存在 settings.json 里的「关闭」被当成「开启」：
+            //   关掉后当场有效（写值时会顺带实例化），但**重启游戏后又开始放**（= 设置失效）。
+            //   cache.Value 自己会按需从存储加载（ModDataStoreCache.Value → ModDataStore.Get<T>），
+            //   所以直接读它即可，既读得到玩家的设置，又保持"没有值就是默认 true"的语义。
             ModDataStoreCache<Lihuowang2SettingsData>? cache = _cache;
-            if (cache == null || !cache.HasValue)
-                return true;
+            if (cache == null)
+                return true;   // Initialize() 还没跑（极早期）：先按默认值「开启」
 
             return cache.Value.PlaySpecialMusic;
         }

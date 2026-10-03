@@ -29,7 +29,7 @@ public class lihuowang2HuoWoZhenJin : ModCardTemplate
     // 是否在卡牌图鉴中显示
     private const bool shouldShowInCardLibrary = true;
 
-    // 悬停提示：「怜悯」效果（由 HuoWoPower 实现：每回合可打出层数×2 的灼伤，每张回 4 血）
+    // 悬停提示：「怜悯」效果（由 HuoWoPower 实现：每回合可打出层数的灼伤，每张回 3 血）
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromPower<HuoWoPower>()];
 
@@ -37,7 +37,7 @@ public class lihuowang2HuoWoZhenJin : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
     
-    // 数值：Damage = 全体伤害（11，升级 +4）；Ignite = 点燃层数（1，升级 +1）。
+    // 数值：LianmingNum = 施加的「怜悯」层数（4，升级不变化）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("LianmingNum", 4m)
     ];

@@ -28,24 +28,28 @@ public class lihuowang2Dodge : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // Block = 每次格挡（4，升级 +2 → 6），共获得两次
+    // 格挡次数：固定 3 次，不随升级变化，所以写成常量。
+    private const int blockTimes = 3;
+
+    // Block = 每次格挡（3，升级 +1 → 4），共获得 3 次
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(4m, ValueProp.Move)
+        new BlockVar(3m, ValueProp.Move)
     ];
 
     public lihuowang2Dodge() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
     }
 
-    // 获得两次格挡
+    // 获得 3 次格挡（每次分别结算，可分别吃敏捷加成）
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < blockTimes; i++)
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
+    // 升级：每次格挡 3 → 4（次数不变，仍是 3 次）
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2);
+        DynamicVars.Block.UpgradeValueBy(1);
     }
 }

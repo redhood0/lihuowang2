@@ -47,6 +47,7 @@ public class lihuowang2XueXinKaoWen : ModCardTemplate
             .FromCard(this, cardPlay)
             .WithHitCount(hitCount)
             .Targeting(cardPlay.Target!)
+            .WithHitFx("vfx/vfx_scratch")   // 命中特效：抓挠（连续拷问）
             .Execute(choiceContext);
     }
 

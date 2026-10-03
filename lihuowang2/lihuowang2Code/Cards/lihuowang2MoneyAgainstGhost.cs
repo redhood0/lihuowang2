@@ -88,7 +88,9 @@ public class lihuowang2MoneyAgainstGhost : ModCardTemplate
 
         if (chosen != null)
         {
-            await CardPileCmd.Add(chosen, PileType.Exhaust);
+            // ⚠ 用 CardCmd.Exhaust（不是 CardPileCmd.Add(card, PileType.Exhaust)）：
+            //   前者会触发 Hook.AfterCardExhausted，后者的"被消耗时"效果（我没病/炼气/触手系列）不会生效。
+            await CardCmd.Exhaust(choiceContext, chosen);
 
             // 4. 消耗的是诅咒：再获得一次格挡（原版效果）
             if (chosen.Type == CardType.Curse)

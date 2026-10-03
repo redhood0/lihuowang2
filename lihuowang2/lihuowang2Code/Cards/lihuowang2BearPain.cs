@@ -49,6 +49,6 @@ public class lihuowang2BearPain : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3);
+        DynamicVars.Block.UpgradeValueBy(4);
     }
 }

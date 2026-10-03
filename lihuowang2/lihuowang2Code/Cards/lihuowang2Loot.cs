@@ -63,6 +63,7 @@ public class lihuowang2Loot : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
+            .WithHitFx("vfx/vfx_coin_explosion_small")   // 命中特效：金币迸溅（搜刮）
             .Execute(choiceContext);
     }
 

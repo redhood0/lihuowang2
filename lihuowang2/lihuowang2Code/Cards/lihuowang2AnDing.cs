@@ -27,9 +27,10 @@ public class lihuowang2AnDing : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // Heal = 治疗量（4，升级 +1 → 5）
+    // Heal = 治疗量（4，升级不提升）；Energy = 解除疯癫时获得的能量（2，升级 +1 → 3）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Heal", 4m)
+        new DynamicVar("Heal", 4m),
+        new EnergyVar(2)
     ];
 
     // 关键字：消耗
@@ -41,7 +42,7 @@ public class lihuowang2AnDing : ModCardTemplate
     {
     }
 
-    // 回复生命；若处于疯癫则解除疯癫并获得 1 点能量
+    // 回复生命；若处于疯癫则解除疯癫并获得能量（基础 2 点，升级后 3 点）
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.Heal(Owner.Creature, DynamicVars["Heal"].BaseValue);
@@ -52,14 +53,14 @@ public class lihuowang2AnDing : ModCardTemplate
             await PowerCmd.Remove(crazy);
             Player? player = Owner.Creature.Player;
             if (player != null)
-                await PlayerCmd.GainEnergy(1m, player);
+                await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, player);
         }
     }
 
-    // 升级：治疗 4 → 5；获得保留
+    // 升级：获得保留；能量 2 → 3
     protected override void OnUpgrade()
     {
-        DynamicVars["Heal"].UpgradeValueBy(1);
         CardCmd.ApplyKeyword(this, CardKeyword.Retain);
+        // DynamicVars.Energy.UpgradeValueBy(1);
     }
 }

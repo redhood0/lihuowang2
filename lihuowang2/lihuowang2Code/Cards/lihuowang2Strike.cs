@@ -59,6 +59,7 @@ public sealed class lihuowang2Strike : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target)
+            .WithHitFx("vfx/vfx_attack_blunt")   // 命中特效：钝击（官方最常用的打击特效）
             .Execute(choiceContext);
     }
 

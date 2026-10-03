@@ -33,6 +33,9 @@ public class lihuowang2DaqianFireSkin : ModCardTemplate
     // 是否在卡牌图鉴中显示
     private const bool shouldShowInCardLibrary = true;
 
+    // 群攻段数：固定 2 段（升级只涨每段伤害，不涨段数），所以写成常量。
+    private const int aoeHitCount = 2;
+
     // 大千录 tag
     protected override HashSet<CardTag> CanonicalTags => [
         DaqianTags.DaqianLu
@@ -46,10 +49,14 @@ public class lihuowang2DaqianFireSkin : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // 数值：Damage = 每次全体伤害（24，升级 +9）；SelfLoss = 自伤（22）。
+    // 数值：
+    // Damage   = 每次全体伤害（12，升级 +4 → 16）；
+    // Ignite   = 点燃层数（4，升级 +2 → 6）；
+    // SelfLoss = 自伤（16，升级不变化）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(24m, ValueProp.Move),
-        new DynamicVar("SelfLoss", 22m)
+        new DamageVar(12m, ValueProp.Move),
+        new DynamicVar("Ignite", 4m),
+        new DynamicVar("SelfLoss", 16m)
     ];
 
     // 关键字：消耗
@@ -61,34 +68,37 @@ public class lihuowang2DaqianFireSkin : ModCardTemplate
     {
     }
 
-    // 打出：先自伤 22，对全体敌人造成两次伤害，点燃所有敌人 3 层，弃牌堆加入 2 张灼烧。
+    // 打出：先自伤 16，对全体敌人造成两次伤害，点燃所有敌人（Ignite 层），弃牌堆加入 2 张灼烧。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 1. 先自伤（若血不够会先死亡，后续不执行）
         await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars["SelfLoss"].BaseValue,
             ValueProp.Unblockable, Owner.Creature, this, cardPlay);
 
-        // 2. 对全体敌人造成两次伤害
-        for (int i = 0; i < 2; i++)
-        {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this, cardPlay)
-                .TargetingAllOpponents(Owner.Creature.CombatState!)
-                .Execute(choiceContext);
-        }
+        // 2. 对全体敌人造成两次伤害。
+        //    与官方群攻多段牌「匕首雨」（DaggerSpray）同款写法：一次攻击命令跑完 2 段，
+        //    而不是循环调用两次 DamageCmd.Attack（那样会播两遍完整攻击动作）。
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(aoeHitCount)
+            .FromCard(this, cardPlay)
+            .TargetingAllOpponents(Owner.Creature.CombatState!)
+            .WithHitFx("vfx/vfx_fire_burst")   // 命中特效：火焰爆燃（烈火焚身）
+            .Execute(choiceContext);
 
-        // 3. 点燃所有敌人 3 层（受「黑手」遗物加成）
+        // 3. 点燃所有敌人（层数取 Ignite；受「黑手」遗物加成）
         IReadOnlyList<Creature> enemies = Owner.Creature.CombatState!.Enemies;
-        await DianranPower.ApplyIgnite(choiceContext, enemies, 3m, Owner.Creature, this);
+        await DianranPower.ApplyIgnite(choiceContext, enemies,
+            DynamicVars["Ignite"].BaseValue, Owner.Creature, this);
 
         // 4. 弃牌堆加入 2 张灼烧
         await CardPileCmd.AddToCombatAndPreview<Burn>(Owner.Creature, PileType.Discard, 2,
             Owner.Creature.Player);
     }
 
-    // 升级：伤害 24 → 33
+    // 升级：每次伤害 12 → 16；点燃 4 → 6（自伤与灼烧张数不变）
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(9);
+        DynamicVars.Damage.UpgradeValueBy(4);
+        DynamicVars["Ignite"].UpgradeValueBy(2);
     }
 }

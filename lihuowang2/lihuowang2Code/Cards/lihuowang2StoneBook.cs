@@ -55,6 +55,6 @@ public class lihuowang2StoneBook : ModCardTemplate
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
-        AddKeyword(CardKeyword.Innate);
+        // AddKeyword(CardKeyword.Innate);
     }
 }

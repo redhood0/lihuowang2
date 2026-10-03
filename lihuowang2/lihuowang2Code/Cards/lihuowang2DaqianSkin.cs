@@ -48,7 +48,7 @@ public class lihuowang2DaqianSkin : ModCardTemplate
 
     // 卡牌基础数值：StrengthLoss = 敌人失去的力量（8，升级 +2 → 10）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar(StrengthLossVarName, 8m)
+        new DynamicVar(StrengthLossVarName, 12m)
     ];
 
     // 默认关键字：保留、消耗（此牌打出后自身也会进消耗堆）
@@ -79,6 +79,6 @@ public class lihuowang2DaqianSkin : ModCardTemplate
     // 升级后的效果逻辑：敌人失去力量 8 → 10
     protected override void OnUpgrade()
     {
-        DynamicVars[StrengthLossVarName].UpgradeValueBy(2);
+        DynamicVars[StrengthLossVarName].UpgradeValueBy(3);
     }
 }

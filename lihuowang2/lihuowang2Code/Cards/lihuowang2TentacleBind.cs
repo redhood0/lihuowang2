@@ -64,6 +64,7 @@ public class lihuowang2TentacleBind : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
+            .WithHitFx("vfx/vfx_chain")   // 命中特效：锁链（束缚）
             .Execute(choiceContext);
 
         // 勒颈 2 层

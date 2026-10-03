@@ -51,6 +51,11 @@ public class lihuowang2Bite: ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4, ValueProp.Move)
     ];
+    
+    // 关键字：保留、消耗
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Retain
+    ];
 
     public lihuowang2Bite() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {
@@ -77,7 +82,7 @@ public class lihuowang2Bite: ModCardTemplate
     // 升级后的效果逻辑：获得「保留」；基础伤害 4 → 5（疯癫加成随之变为 +5）
     protected override void OnUpgrade()
     {
-        CardCmd.ApplyKeyword(this, CardKeyword.Retain);
-        DynamicVars.Damage.UpgradeValueBy(1);
+        
+        DynamicVars.Damage.UpgradeValueBy(2);
     }
 }

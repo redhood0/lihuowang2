@@ -22,7 +22,7 @@ public class lihuowang2DaqianEye : ModCardTemplate
     // 卡牌类型
     private const CardType type = CardType.Skill;
     // 卡牌稀有度
-    private const CardRarity rarity = CardRarity.Common;
+    private const CardRarity rarity = CardRarity.Uncommon;
     // 目标类型（Self：只对自己）
     private const TargetType targetType = TargetType.Self;
     // 是否在卡牌图鉴中显示
@@ -50,9 +50,11 @@ public class lihuowang2DaqianEye : ModCardTemplate
         new EnergyVar(1)
     ];
 
-    // 默认关键字：消耗
+    // 默认关键字：保留、消耗
+    // （两个关键字都由引擎自动追加到卡面：保留在描述上方、消耗在描述下方，
+    //   所以中英文描述里都不需要再手写。）
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
+        CardKeyword.Retain, CardKeyword.Exhaust
     ];
 
     public lihuowang2DaqianEye() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)

@@ -78,6 +78,7 @@ public class lihuowang2GhostRing : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(target)
+            .WithHitFx("vfx/vfx_gaze")   // 命中特效：凝视（游老爷的阴森一眼）
             .Execute(choiceContext);
     }
 

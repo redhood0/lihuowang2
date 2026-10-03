@@ -16,7 +16,7 @@ namespace lihuowang2.Cards;
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2YangShouDan : ModCardTemplate
 {
-    private const int energyCost = 3;
+    private const int energyCost = 2;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Rare;
     private const TargetType targetType = TargetType.Self;
