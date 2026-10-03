@@ -1,4 +1,6 @@
 {
   "LIHUOWANG2_KEYWORD_FORESEE.title": "预见",
-  "LIHUOWANG2_KEYWORD_FORESEE.description": "查看你抽牌堆顶部若干张牌。\n你可以选择丢弃其中的任意张。"
+  "LIHUOWANG2_KEYWORD_FORESEE.description": "查看你抽牌堆顶部若干张牌。\n你可以选择丢弃其中的任意张。",
+  "LIHUOWANG2_KEYWORD_DURABILITY.title": "耐久",
+  "LIHUOWANG2_KEYWORD_DURABILITY.description": "耐久牌每次打出后耐久 -1。\n耐久归零时，这张牌会被[gold]消耗[/gold]；否则照常进入弃牌堆。\n卡面的「耐久（X/Y）」中，X 是剩余次数、Y 是总次数。"
 }

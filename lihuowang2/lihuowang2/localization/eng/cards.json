@@ -62,8 +62,8 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_PLAY_FIRE.description": "Deal {Damage:diff()} damage to ALL enemies.\nAdd 2 [red]Burns[/red] to your discard pile.\nApply {Ignite:diff()} [red]Ignite[/red] to ALL enemies.",
   "LIHUOWANG2_CARD_LIHUOWANG2_PLAY_FIRE.smartDescription": "Deal {Damage:diff()} damage to ALL enemies.\nAdd 2 [red]Burns[/red] to your discard pile.\nApply {Ignite:diff()} [red]Ignite[/red] to ALL enemies.",
   "LIHUOWANG2_CARD_LIHUOWANG2_FIND_IN_FIRE.title": "Chestnuts from the Fire",
-  "LIHUOWANG2_CARD_LIHUOWANG2_FIND_IN_FIRE.description": "Draw {Draw:diff()} cards.\nPut 2 [red]Burns[/red] into your draw pile.",
-  "LIHUOWANG2_CARD_LIHUOWANG2_FIND_IN_FIRE.smartDescription": "Draw {Draw:diff()} cards.\nPut 2 [red]Burns[/red] into your draw pile.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_FIND_IN_FIRE.description": "Draw {Draw:diff()} cards.\nAdd 1 [red]Burn[/red] to your discard pile.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_FIND_IN_FIRE.smartDescription": "Draw {Draw:diff()} cards.\nAdd 1 [red]Burn[/red] to your discard pile.",
   "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_FIRE_SKIN.title": "Da Qian Lu: Burning Flesh",
   "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_FIRE_SKIN.description": "Lose {SelfLoss} HP.\nDeal {Damage:diff()} damage to ALL enemies 2 times.\nApply {Ignite:diff()} layers of [red]Ignite[/red] to ALL enemies.\nAdd 2 [red]Burns[/red] to your discard pile.",
   "LIHUOWANG2_CARD_LIHUOWANG2_DAQIAN_FIRE_SKIN.smartDescription": "Lose {SelfLoss} HP.\nDeal {Damage:diff()} damage to ALL enemies 2 times.\nApply {Ignite:diff()} layers of [red]Ignite[/red] to ALL enemies.\nAdd 2 [red]Burns[/red] to your discard pile.",
@@ -180,8 +180,8 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_READ_MIND.description": "If the enemy intends to attack this turn, gain {Block:diff()} [gold]Block[/gold]; otherwise gain {Magic:diff()} [red]Vigor[/red].",
   "LIHUOWANG2_CARD_LIHUOWANG2_READ_MIND.smartDescription": "If the enemy intends to attack this turn, gain {Block:diff()} [gold]Block[/gold]; otherwise gain {Magic:diff()} [red]Vigor[/red].",
   "LIHUOWANG2_CARD_LIHUOWANG2_GHOST_RING.title": "Master You",
-  "LIHUOWANG2_CARD_LIHUOWANG2_GHOST_RING.description": "Lose [blue]5[/blue] Max HP.\nApply {Slow:diff()} [red]Slow[/red] to the target.\nDeal {Damage:diff()} damage.",
-  "LIHUOWANG2_CARD_LIHUOWANG2_GHOST_RING.smartDescription": "Lose [blue]5[/blue] Max HP.\nApply {Slow:diff()} [red]Slow[/red] to the target.\nDeal {Damage:diff()} damage.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_GHOST_RING.description": "Lose [blue]5[/blue] Max HP.\nApply {Slow:diff()} [red]Slow[/red] to the target.\nDeal {Damage:diff()} damage.\n(No Max HP loss while in Danyangzi Transformation.)",
+  "LIHUOWANG2_CARD_LIHUOWANG2_GHOST_RING.smartDescription": "Lose [blue]5[/blue] Max HP.\nApply {Slow:diff()} [red]Slow[/red] to the target.\nDeal {Damage:diff()} damage.\n(No Max HP loss while in Danyangzi Transformation.)",
   "LIHUOWANG2_CARD_LIHUOWANG2_EAT_MEAT.title": "Danyangzi Transformation",
   "LIHUOWANG2_CARD_LIHUOWANG2_EAT_MEAT.description": "Gain {StrDex:diff()} [red]Strength[/red] and [red]Dexterity[/red].\nGain [blue]1[/blue] [gold]Buffer[/gold].\nGain [red]Danyangzi Transformation[/red].",
   "LIHUOWANG2_CARD_LIHUOWANG2_EAT_MEAT.smartDescription": "Gain {StrDex:diff()} [red]Strength[/red] and [red]Dexterity[/red].\nGain [blue]1[/blue] [gold]Buffer[/gold].\nGain [red]Danyangzi Transformation[/red].",
@@ -237,6 +237,6 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_ZHU_BU_BI_HUANG.description": "[gold]Foresee[/gold] {Magic:diff()}.\nDraw {Draw:diff()} cards.",
   "LIHUOWANG2_CARD_LIHUOWANG2_ZHU_BU_BI_HUANG.smartDescription": "[gold]Foresee[/gold] {Magic:diff()}.\nDraw {Draw:diff()} cards.",
   "LIHUOWANG2_CARD_LIHUOWANG2_LISUI_GONGZHU.title": "Princess Suisui",
-  "LIHUOWANG2_CARD_LIHUOWANG2_LISUI_GONGZHU.description": "Under development by the lazy author...",
-  "LIHUOWANG2_CARD_LIHUOWANG2_LISUI_GONGZHU.smartDescription": "(Ancestor card - effect TBD)"
+  "LIHUOWANG2_CARD_LIHUOWANG2_LISUI_GONGZHU.description": "Gain [blue]2[/blue] [blue]Hei Tai Sui[/blue].\n[red]Tentacle[/red] cards deal and grant {Boost:diff()} more damage and [gold]Block[/gold].",
+  "LIHUOWANG2_CARD_LIHUOWANG2_LISUI_GONGZHU.smartDescription": "Gain [blue]2[/blue] [blue]Hei Tai Sui[/blue].\n[red]Tentacle[/red] cards deal and grant {Boost:diff()} more damage and [gold]Block[/gold]."
 }

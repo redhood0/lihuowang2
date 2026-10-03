@@ -41,15 +41,17 @@ public class lihuowang2FindInFire : ModCardTemplate
     {
     }
 
-    // 打出：抽 N 张牌，然后把 2 张灼烧洗入抽牌堆。
+    // 打出：抽 N 张牌，然后加入 1 张灼烧到弃牌堆。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 1. 抽牌
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].BaseValue, Owner.Creature.Player!);
 
-        // 2. 洗入 2 张灼烧到抽牌堆（随机位置）
-        await CardPileCmd.AddToCombatAndPreview<Burn>(Owner.Creature, PileType.Draw, 2,
-            Owner.Creature.Player, CardPilePosition.Random);
+        // 2. 1 张灼烧加入弃牌堆
+        //    （弃牌堆是按顺序码放、不洗牌，所以不需要 CardPilePosition；
+        //      与「玩火」「大千录·烈火焚身」的写法一致。）
+        await CardPileCmd.AddToCombatAndPreview<Burn>(Owner.Creature, PileType.Discard, 1,
+            Owner.Creature.Player);
     }
 
     // 升级：抽牌 3 → 4

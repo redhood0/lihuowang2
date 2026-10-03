@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
-// using lihuowang2.Powers; // 只有尸爆 power 用到；该 power 暂时停用（见 Lihuowang2CorpseExplosionPower.cs）
+using lihuowang2.Powers;   // 丹阳子化（Lihuowang2DanyangziPower）；尸爆 power 仍停用（见 Lihuowang2CorpseExplosionPower.cs）
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -46,13 +46,18 @@ public class lihuowang2GhostRing : ModCardTemplate
     {
     }
 
-    // 生命上限 ≤5 时无法打出（原版保护）
+    // 丹阳子化生效中：本牌不再扣生命上限（见 OnPlay），所以"上限太低打不出"那条保护也就不需要了
+    private bool HasDanyangzi => Owner?.Creature.GetPower<Lihuowang2DanyangziPower>() != null;
+
+    // 生命上限 ≤5 时无法打出（原版保护；丹阳子化时不扣上限，所以不拦）
     protected override bool IsPlayable
     {
         get
         {
             if (Owner?.Creature == null)
                 return true; // 图鉴/预览场景不做限制
+            if (HasDanyangzi)
+                return true;
             return Owner.Creature.MaxHp > 5;
         }
     }
@@ -63,10 +68,14 @@ public class lihuowang2GhostRing : ModCardTemplate
         Creature target = cardPlay.Target!;
 
         // 1. 失去 5 点最大生命（当前生命同步钳制，避免溢出）
-        int newMax = self.MaxHp - 5;
-        self.MaxHp = newMax;
-        if (self.CurrentHp > newMax)
-            self.CurrentHp = newMax;
+        //    丹阳子化期间不扣上限：「游老爷」的新增效果（卡面最后一行有说明）。
+        if (!HasDanyangzi)
+        {
+            int newMax = self.MaxHp - 5;
+            self.MaxHp = newMax;
+            if (self.CurrentHp > newMax)
+                self.CurrentHp = newMax;
+        }
 
         // 2. 尸爆：暂时停用（power 本体见 Lihuowang2CorpseExplosionPower.cs，已整块注释，后面要用再一起放开）
         // await PowerCmd.Apply<Lihuowang2CorpseExplosionPower>(choiceContext, target, 1m, self, this);

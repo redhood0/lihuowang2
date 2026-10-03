@@ -61,5 +61,8 @@
   "LIHUOWANG2_POWER_LIHUOWANG2_GONGZHU_POWER.smartDescription": "每个回合开始时：获得[blue]1[/blue]层[gold]人工制品[/gold]与[blue]1[/blue]枚[gold]铜钱[/gold]，并将一张[blue]0[/blue]费[blue]黑太岁[/blue]加入手牌。",
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.title": "李岁·狗",
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.description": "每个回合开始时对所有敌人造成伤害；[red]触手[/red]牌造成的伤害与获得的[gold]格挡[/gold]提升。",
-  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.smartDescription": "每个回合开始时对所有敌人造成伤害；[red]触手[/red]牌造成的伤害与获得的[gold]格挡[/gold]提升。"
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.smartDescription": "每个回合开始时对所有敌人造成伤害；[red]触手[/red]牌造成的伤害与获得的[gold]格挡[/gold]提升。",
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.title": "岁岁公主",
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.description": "[red]触手[/red]牌造成的[gold]伤害[/gold]与[gold]格挡[/gold]+[blue]{Amount}[/blue]。",
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.smartDescription": "[red]触手[/red]牌造成的[gold]伤害[/gold]与[gold]格挡[/gold]+[blue]{Amount}[/blue]。"
 }

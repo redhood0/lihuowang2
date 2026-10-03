@@ -20,6 +20,12 @@ namespace lihuowang2.Relics;
 // RegisterCharacterStarterRelic 会把它作为 lihuowang2Character 的初始遗物。
 [RegisterRelic(typeof(lihuowang2RelicPool))]
 [RegisterCharacterStarterRelic(typeof(lihuowang2Character))]
+// 官方遗物「欧洛巴斯之触」（TouchOfOrobas）的效果是"把初始遗物精炼成先祖遗物"，
+// 与「古老牙齿」把初始卡超越成先祖卡一一对应。
+// 这里把初始遗物 心素 注册成先祖遗物 一炁·心素：拿到那件祝福时，心素会被替换成一炁·心素。
+// ⚠ 不注册的话，引擎对"它不认识的初始遗物"会走原版回退，把心素换成原版的先祖遗物（头环）——
+//   那就是"欧洛巴斯之触把心素变成头环"这个 bug 的成因。
+[RegisterTouchOfOrobasRefinement(typeof(lihuowang2Relic_YijiXinsu))]
 public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
 {
     // 本场战斗内累计抽到的疑虑数量，满3张后清零。跨回合累计，不跨战斗。
@@ -49,6 +55,13 @@ public sealed class lihuowang2Relic_Xinsu : ModRelicTemplate
     // 不进商店：商店生成遗物时会按这个属性过滤
     // （MerchantRelicEntry.FillSlot 里的 r.IsAllowedInShops），默认 true。
     public override bool IsAllowedInShops => false;
+
+    // 「视为心素」的统一判定入口：携带「心素」或它的先祖版本「一炁·心素」都算心素。
+    // 所有需要心素的门禁都走这里（目前是 替身人皮 牌 lihuowang2XinSuSkin 的 IsPlayable），
+    // 以后再加心素系遗物也只需要在这一个方法里补一行，不用去改每一张心素牌。
+    public static bool HasXinsu(Player player)
+        => player.GetRelic<lihuowang2Relic_Xinsu>() != null
+           || player.GetRelic<lihuowang2Relic_YijiXinsu>() != null;
 
     // 计数器：只在积累了疑虑后才显示，默认（0）不显示
     public override bool ShowCounter => DoubtDrawnCount > 0;

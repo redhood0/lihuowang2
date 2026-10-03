@@ -33,6 +33,9 @@ public partial class Entry
         // 新增内容类后，只要 attribute 写对，通常不需要在入口里手动逐个注册。
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
 
+        // 注：曾经给「怜悯」的灼烧做过"可指定友方目标并给目标回血"（6 个 vanilla 补丁），已按需求回退，
+        // 现在灼烧回到官方行为（不可指定目标，打出后固定回自己血）；相关经验记在 AGENTS.md 的"补丁备忘"里。
+
         // 模组设置（设置中心里的开关 + settings.json 持久化）。
         // 必须在 ModTypeDiscoveryHub 之后：设置页要挂在已注册的内容包上。
         Lihuowang2ModSettings.Initialize();

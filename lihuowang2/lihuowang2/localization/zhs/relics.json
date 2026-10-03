@@ -5,6 +5,9 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.title": "心素",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.description": "在每回合开始时，将[blue]1[/blue]张[red]疑虑[/red]加入你的手牌。每当你抽到[blue]3[/blue]张[red]疑虑[/red]时，获得[gold]疯癫[/gold][blue]1[/blue]回合。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.flavor": "我是谁？我在哪？我没病！！！",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.title": "一炁·心素",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.description": "战斗开始时，获得等同于层数的[gold]能量[/gold]。\n层数达到[blue]{Tier1}[/blue]、[blue]{Tier2}[/blue]、[blue]{Tier3}[/blue]层时，额外 +[blue]{TierEnergy}[/blue]点[gold]最大能量[/gold]（上限[blue]{MaxStacks}[/blue]）\n打出[gold]【修真】[/gold]牌可以积累进度。当前进度：{Progress}",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.flavor": "用神光包裹先天一炁依次过七脉轮，修到顶轮即成司命",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.title": "登阶计数（上限10）",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.description": "在每场战斗开始时，根据登阶次数获得[gold]再生[/gold]，基础获得 [blue]8[/blue] 层[gold]再生[/gold]。登阶次数每增加 [blue]1[/blue]，[gold]再生[/gold]会额外增加前一次增加量的一半。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.flavor": "感谢榜一大哥巴虺打赏的一个火箭",
@@ -48,5 +51,8 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_JIAN_TIAN_SI.flavor": "监天司——列国为应对天灾设立的组织，持有令牌者可以击杀邪祟获得奖赏。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PIAN_JING.title": "骗经",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PIAN_JING.description": "可以以[gold]极低[/gold]的价格从商人处购买[gold]职业卡牌[/gold]（售价[blue]0[/blue]金币）。一旦在商店中进行过消费，本遗物[red]破损[/red]，无法再对下个商人使用。",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PIAN_JING.flavor": "骗经有云——虚虚实实，九假一真。"
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PIAN_JING.flavor": "骗经有云——虚虚实实，九假一真。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIU_MU_RU_YI.title": "朽木如意",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIU_MU_RU_YI.description": "第[blue]3[/blue]回合开始时，随机[gold]击晕[/gold]一个敌人。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIU_MU_RU_YI.flavor": "朽木不可雕也——却偏偏能如人意。"
 }

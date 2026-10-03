@@ -1,4 +1,6 @@
 {
   "LIHUOWANG2_KEYWORD_FORESEE.title": "Foresee",
-  "LIHUOWANG2_KEYWORD_FORESEE.description": "Look at the top cards of your draw pile.\nYou may discard any number of them."
+  "LIHUOWANG2_KEYWORD_FORESEE.description": "Look at the top cards of your draw pile.\nYou may discard any number of them.",
+  "LIHUOWANG2_KEYWORD_DURABILITY.title": "Durability",
+  "LIHUOWANG2_KEYWORD_DURABILITY.description": "A Durability card loses 1 Durability each time it is played.\nWhen it reaches 0, the card is [gold]Exhausted[/gold]; otherwise it is discarded as usual.\nOn the card text, \"Durability (X/Y)\" shows X as remaining uses and Y as total uses."
 }

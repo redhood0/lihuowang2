@@ -102,3 +102,87 @@ This file is for project-specific instructions that DodWork and AI agents should
    代价：BOSS 房里的杂兵也判成 BOSS（宁可少晕，不可晕错）。参考：`Cards/lihuowang2DingShenFu.cs`（定身符）。
 5. **保留/消耗等关键字**只写进 `CanonicalKeywords` 即可：引擎的 `ShouldRetainThisTurn`、卡面文字
    （`CardKeywordOrder.beforeDescription/afterDescription`）都自动读它，不需要额外代码或本地化文本。
+6. **复用官方能力图标**（模组能力还没画专属图时）：别手写/猜资源名，直接从官方模型取路径 ——
+   `ModelDb.Power<官方能力>().IconPath`（图标行小图）+ `.ResolvedBigIconPath`（大图），塞进 `PowerAssetProfile`。
+   参考 `Powers/UniquePower.cs`（借用「爪牙」MinionPower）、`Powers/Lihuowang2DaqianSkinStrengthDown.cs`（借用「尖啸」PiercingWailPower）。
+7. **卡面自定义文本**（要显示"剩余/总"、"随状态变化的一句话"这类内容）：别打补丁 —— 写个 `DynamicVar` 子类并
+   `override string ToString()`（引擎渲染卡面/遗物文本读的就是 `ToString()`，官方 `StringVar` 同款），
+   描述里用 `{变量名}` 引用。参考 `Relics/lihuowang2Relic_Dice18.cs`（`RelicTextVar`）、
+   `Cards/Lihuowang2Durability.cs`（`DurabilityVar` 渲染 "X/Y"）。
+8. **耐久（Durability）机制**（`Cards/Lihuowang2Durability.cs`）：卡牌继承 `DurabilityCardTemplate` + 覆写
+   `MaxDurability`（自己的数值变量覆写 `ExtraVars`，别覆写 `CanonicalVars`）即可自动获得：
+   每次打出耐久 -1、归零即被消耗、进入战斗补满（按场计）；关键字「耐久」与 hover 文本在
+   `Keywords/Lihuowang2Keywords.cs` + `card_keywords.json`。卡面描述里写 `耐久（{Durability}）` 会自动显示 X/Y。
+
+## 模组约定：新增遗物（`lihuowang2/lihuowang2Code/Relics/`）
+
+1. **注册**：`[RegisterRelic(typeof(lihuowang2RelicPool))]` + `ModRelicTemplate`（`lihuowang2RelicPool` 自动收录，不需要手动登记）；
+   稀有度 `RelicRarity`（Rare / Uncommon / Common / Boss / Shop / Event / Ancient）。
+2. **图标**：三个路径都写 `$"{Entry.ResPath}/images/relics/{GetType().Name}.png"`（小图/轮廓/大图同一张），
+   所以**类名 = 图片名**（`lihuowang2Relic_XiuMuRuYi.png`）；缺图时引擎按原版规则回落占位图。
+   新增 PNG 后要用 Godot 打开一次工程生成 `.import`，否则导出 PCK 时不会被导入。
+3. **本地化**：键 = `LIHUOWANG2_RELIC_` + 类名 SCREAMING_SNAKE，`zhs/relics.json` 与 `eng/relics.json` 各写
+   `title` / `description` / `flavor`（遗物多一条 flavor）。
+4. **回合类效果**：用 `AfterPlayerTurnStart(choiceContext, player)`（或 `AfterPlayerTurnStartEarly` / `AfterPlayerTurnStartLate`）
+   + `Owner.PlayerCombatState.TurnNumber` 判回合（引擎在该钩子前已把 TurnNumber 指到当前回合）。
+   ⚠ **必须判 `player == Owner`**：`Hook.PlayerTurnStart` 会把"每个玩家的回合开始"通知给场上所有遗物，
+   不筛就会替队友触发。战斗内一次性效果要自己用 bool 标记 + `BeforeCombatStart` 里重置。
+5. **随机目标**走引擎的确定性随机流：`Owner.RunState.Rng.CombatTargets.NextItem(Owner.Creature.CombatState!.HittableEnemies)`
+   （联机两端一致；`CombatTargets` 就是官方随机选目标用的流）。参考 `Relics/lihuowang2Relic_XiuMuRuYi.cs`（朽木如意）。
+
+## 模组约定：先祖（Ancient）映射 —— 古老牙齿 / 欧洛巴斯之触 / 尘封古籍（**踩过坑**）
+
+**初始卡/初始遗物的"先祖版本"必须显式注册映射**；不注册时引擎会走原版回退，
+把玩家的东西换成**原版的**先祖内容（卡为官方先祖卡，遗物为官方先祖遗物）。
+
+| 获得途径 | 注册方式 | 标在哪 |
+|---|---|---|
+| 古老牙齿 `ArchaicTooth`（初始卡 → 先祖卡） | `[RegisterArchaicToothTranscendence(typeof(先祖卡))]` | **初始卡**类上 |
+| 欧洛巴斯之触 `TouchOfOrobas`（初始遗物 → 先祖遗物） | `[RegisterTouchOfOrobasRefinement(typeof(先祖遗物))]` | **初始遗物**类上 |
+| 尘封古籍 `DustyTome`（先古卡候选） | `[RegisterDustyTomeCard(typeof(角色))]` | 先祖卡上（不登记会让候选池为空 → 进该事件 NullReferenceException 卡住） |
+
+- ⚠ 实测坑（2026-10-03）：**没注册 `TouchOfOrobas` 映射时，欧洛巴斯之触会把初始遗物「心素」直接换成原版的先祖遗物（头环）**，
+  而不是模组自己的先祖遗物。加上 `[RegisterTouchOfOrobasRefinement(typeof(lihuowang2Relic_YijiXinsu))]` 后正常。
+- 先祖稀有度不进普通掉落池：卡 `CardRarity.Ancient`、遗物 `RelicRarity.Ancient`；
+  先祖遗物的 `MerchantCost` 是 `999999999`（商店按 Common/Rare/Shop 取，所以也不会进商店）。
+- 参考：`Cards/Lihuowang2Heitaisui.cs`（黑太岁 → 岁岁公主）、`Relics/lihuowang2Relic_Xinsu.cs`（心素 → 一炁·心素）。
+
+## 备忘：改官方（vanilla）行为要用补丁（**当前未启用**，相关代码已按需求回退）
+
+**只要需求涉及"官方卡/官方模型的既有字段"，就必须打补丁** —— 模组自己的类改不了它们。
+（曾经用 6 个补丁把官方 `Burn`（灼烧）在「怜悯」生效期间改成"可指定自己/随从/队友并给目标回血"，
+后按需求回退：补丁文件已删除、`HuoWoPower` 回到"打出回自己 3 血"、文案也改回原版。
+下面是当时的做法与踩到的坑，需要重做时照这个来。）
+
+1. **写法（走 RitsuLib，不手写 Harmony 样板）**：
+   - 补丁类实现 `STS2RitsuLib.Patching.Models.IPatchMethod`：`PatchId` / `Description` / `IsCritical` + `GetTargets()`；
+     彼此**有依赖**的补丁组（少一个会留下坏状态）标 `IsCritical = true` → 任一处失败会**整体回滚**；
+     彼此独立的可选补丁标 `false`。只要不用 `ApplyRequiredPatcher`，失败就只记日志、**不会禁用整个模组**
+     （`PatchAll()` 的返回值只反映"关键补丁是否失败"，全是可选补丁时即使有失败也返回 true，别拿它当成功判据）；
+   - 目标用 `STS2RitsuLib.Patching.Models.PatchTarget`（是 `PatchTarget` 这个静态类，不是 `ModPatchTarget`！）：
+     `PatchTarget.Getter<CardModel>("TargetType")`、`PatchTarget.Method<CardModel>("IsValidTarget", typeof(Creature))`；
+     **重载方法必须给参数类型**（by-ref 参数要 `.MakeByRefType()`），否则解析歧义；
+   - 补丁方法名必须是 `Prefix` / `Postfix` / `Transpiler` / `Finalizer`（不用写 Harmony 特性），
+     参数用 Harmony 的魔法名：`__instance`、`ref __result`、原参数名（out/ref 参数要写成 `ref`）；
+   - 在 `Entry.Initialize()` 里 `new ModPatcher($"{ModId}.<name>", Logger, "<name>")` →
+     `patcher.RegisterPatch<T>()` → `if (!patcher.PatchAll()) Logger.Warn(...)`。
+2. **引擎的"友方目标"只面向其他玩家**（想给"自己/随从"回血必须绕）。**共有三道闸，缺一道就"选不中任何单位"**：
+  - 闸 1 `CardModel.CanPlay`：`TargetType == AnyAlly && PlayerCreatures.Count(alive) <= 1` → `NoLivingAllies`
+    （`PlayerCreatures = Creatures.Where(c => c.IsPlayer)`；**单人**因此打不出任何友方目标牌，
+    官方友方牌都是 `MultiplayerConstraint.MultiplayerOnly`）；
+  - 闸 2 **目标选择时真正决定"能不能选中"的是 `NTargetManager.AllowedToTargetCreature`**
+    （`MegaCrit.Sts2.Core.Nodes.Combat`，**private**）：AnyAlly 分支要求 `creature.IsPlayer`（随从 `IsPlayer == false` → 挡掉）
+    且 `!LocalContext.IsMe(creature.Player)`（自己 → 挡掉）。⚠ **只改了 TargetType + CanPlay 会出现"能进选目标模式但谁都不让选"**；
+  - 闸 3 控制器/键盘那条路径（`NCardPlay` 子类的 `SingleCreatureTargeting`）另有一份候选列表
+    `PlayerCreatures.Where(c => c.IsHittable && c != owner)`，列表为空会直接 `CancelPlayCard()`。
+  - 好消息：`CardModel.IsValidTarget` 的 AnyAlly 分支只是 `target.Side == Owner.Creature.Side` → **同侧即可**；
+    `NTargetManager.AllowedToTargetCreature` 可以整体接管（PatchTarget 能解析 private），所以"自己/随从/队友"都能合法选中。
+  - 当时的 6 刀（全标 `IsCritical = true` 保证全有或全无）：
+    ① `CardModel.TargetType`（None → AnyAlly）② `CardModel.CanPlay`（清 `NoLivingAllies` + `__result = true`）
+    ③ `CardModel.IsValidTarget`（允许"无目标"，保住自动打出/直接点击）
+    ④ `NTargetManager.StartTargeting(TargetType, Control, ...)`（记住"正在为哪张牌选目标"：
+    `(control as NCard)?.Model`，因为过滤函数拿不到卡牌）
+    ⑤ `NTargetManager.FinishTargeting(bool)`（清掉记录）⑥ `NTargetManager.AllowedToTargetCreature(Creature)`
+    （Prefix 里 `__result = 同侧 && IsAlive; return false;` 跳过原逻辑，仅对 ④ 记下的牌生效）。
+3. **被补丁影响的牌要同步改文案**（中英各 `description` + `smartDescription`）：例如当时改的是
+   `powers.json` 的「怜悯」与 `cards.json` 的「火袄真经」；**回退时同样要改回官方措辞**。

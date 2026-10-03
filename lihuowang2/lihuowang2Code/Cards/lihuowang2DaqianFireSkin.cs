@@ -59,9 +59,11 @@ public class lihuowang2DaqianFireSkin : ModCardTemplate
         new DynamicVar("SelfLoss", 16m)
     ];
 
-    // 关键字：消耗
+    // 关键字：保留 + 消耗
+    // （两个关键字都由引擎自动追加到卡面：保留在描述上方、消耗在描述下方，
+    //   所以中英文描述里都不需要再手写 —— 与「大千录·剜眼」同一写法。）
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
+        CardKeyword.Retain, CardKeyword.Exhaust
     ];
 
     public lihuowang2DaqianFireSkin() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)

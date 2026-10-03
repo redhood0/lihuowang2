@@ -15,3 +15,12 @@ public sealed class Lihuowang2ForeseeKeyword
     // 悬停时引擎会像原版关键词（消耗/固有）那样自动带上这条说明。
     public static CardKeyword Value => ModKeywordRegistry.GetCardKeyword("LIHUOWANG2_KEYWORD_FORESEE");
 }
+
+// 「耐久」：耐久牌每次打出后耐久 -1；耐久归零时这张牌会被「消耗」。
+// 机制本体（数值变量 + 自动扣减/消耗）见 Cards/Lihuowang2Durability.cs 的 DurabilityCardTemplate。
+// 卡面数字「耐久（X/Y）」由 DurabilityVar 提供（描述里写 {Durability}），这里这个关键字只负责 hover 说明。
+[RegisterOwnedCardKeyword("durability")]
+public sealed class Lihuowang2DurabilityKeyword
+{
+    public static CardKeyword Value => ModKeywordRegistry.GetCardKeyword("LIHUOWANG2_KEYWORD_DURABILITY");
+}

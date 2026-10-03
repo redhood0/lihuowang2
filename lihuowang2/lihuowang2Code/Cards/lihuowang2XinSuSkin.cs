@@ -41,7 +41,7 @@ public class lihuowang2XinSuSkin : ModCardTemplate
     {
     }
 
-    // 门禁：需要心素遗物 + 生命 > 一半最大生命
+    // 门禁：需要心素（或它的先祖版本「一炁·心素」，见 lihuowang2Relic_Xinsu.HasXinsu）+ 生命 > 一半最大生命
     protected override bool IsPlayable
     {
         get
@@ -49,7 +49,7 @@ public class lihuowang2XinSuSkin : ModCardTemplate
             if (Owner?.Creature?.Player == null)
                 return true; // 图鉴/预览场景不做限制
             Player player = Owner.Creature.Player;
-            if (player.GetRelic<lihuowang2Relic_Xinsu>() == null)
+            if (!lihuowang2Relic_Xinsu.HasXinsu(player))
                 return false;
             return Owner.Creature.CurrentHp > Owner.Creature.MaxHp / 2;
         }

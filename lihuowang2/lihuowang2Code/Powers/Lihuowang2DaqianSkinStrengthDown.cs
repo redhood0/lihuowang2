@@ -19,10 +19,23 @@ public class Lihuowang2DaqianSkinStrengthDown : TemporaryStrengthPower, IModPowe
     // 来源模型（用于状态栏标题等，指向「大千录·剥皮」这张牌）
     public override AbstractModel OriginModel => ModelDb.Card<lihuowang2DaqianSkin>();
 
-    // 自定义图标（先沿用现成 Heitaisui 32/84，之后有正式图直接替换路径即可）
-    public PowerAssetProfile AssetProfile => new(
-        IconPath: $"{Entry.ResPath}/images/powers/Heitaisui32.png",
-        BigIconPath: $"{Entry.ResPath}/images/powers/Heitaisui84.png");
+    // 图标：复用官方「尖啸」（PiercingWail / 刺耳尖啸）那条"临时力量下降"的官方图标。
+    // 写法与 UniquePower 借用官方「爪牙」(MinionPower) 图标一致 —— 直接从官方模型上取路径，不手写/猜资源名：
+    //   IconPath            = 官方图集精灵（引擎 PowerModel.PackedIconPath，= 图标行里的小图标）
+    //   ResolvedBigIconPath = 官方大图（powers/piercing_wail_power.png；缺失时引擎内部会自己回落到占位图）
+    // 等专属图标画好，换回模组自己的图即可：
+    //   new PowerAssetProfile(IconPath: $"{Entry.ResPath}/images/powers/daqianSkinStrengthDown.png",
+    //                         BigIconPath: $"{Entry.ResPath}/images/powers/daqianSkinStrengthDown.png")
+    public PowerAssetProfile AssetProfile
+    {
+        get
+        {
+            PowerModel wail = ModelDb.Power<PiercingWailPower>();
+            return new PowerAssetProfile(
+                IconPath: wail.IconPath,
+                BigIconPath: wail.ResolvedBigIconPath);
+        }
+    }
 
     public string? CustomIconPath => AssetProfile.IconPath;
 

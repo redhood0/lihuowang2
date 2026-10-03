@@ -10,8 +10,10 @@ using MegaCrit.Sts2.Core.Models;
 using lihuowang2.Characters;
 using lihuowang2.Minions;
 using lihuowang2.Powers;
+using lihuowang2.Tags;
 using MinionLib.Commands;
 using MinionLib.Minion;
+using STS2RitsuLib.CardTags;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -33,6 +35,11 @@ public class lihuowang2XiuZhenQiuChiBao : ModCardTemplate
     // 引擎对卡牌标题/描述也是按 "<Id.Entry>.title/.description" 从 cards 表取的，
     // 这里沿用同一套规则，多出的 .minion.* 给随从 hover 用。
     private const string LocKeyPrefix = "LIHUOWANG2_CARD_LIHUOWANG2_XIU_ZHEN_QIU_CHI_BAO";
+
+    // 修真 tag（供以后"修真"系的检索/联动用；纯机制标记，不显示在卡面，也不需要本地化文案）
+    protected override HashSet<CardTag> CanonicalTags => [
+        XiuZhenTags.XiuZhen
+    ];
 
     // 关键字：消耗
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];

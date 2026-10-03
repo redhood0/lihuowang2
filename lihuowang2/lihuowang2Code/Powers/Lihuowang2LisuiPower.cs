@@ -71,7 +71,9 @@ public class Lihuowang2LisuiPower : ModPowerTemplate
         return Boost;
     }
 
-    private static bool IsTentacle(CardModel? card) => card switch
+    // 「触手牌」名单（岁岁公主的能力 Lihuowang2LisuiGongzhuPower 也用这一份判定，
+    //   所以是 internal 而不是 private —— 新增触手牌时只改这里一处）。
+    internal static bool IsTentacle(CardModel? card) => card switch
     {
         lihuowang2TentacleSlash or lihuowang2TentacleBind or
         lihuowang2TentacleMend or lihuowang2TentacleEatGhost => true,

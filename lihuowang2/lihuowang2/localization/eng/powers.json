@@ -61,5 +61,8 @@
   "LIHUOWANG2_POWER_LIHUOWANG2_GONGZHU_POWER.smartDescription": "At the start of each turn: gain [blue]1[/blue] [gold]Artifact[/gold] and [blue]1[/blue] [gold]Copper Coin[/gold], and add a [blue]0[/blue]-cost [blue]Hei Tai Sui[/blue] to your hand.",
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.title": "Li Sui - Dog",
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.description": "At the start of each turn, deal damage to ALL enemies; [red]Tentacle[/red] cards deal more damage and grant more [gold]Block[/gold].",
-  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.smartDescription": "At the start of each turn, deal damage to ALL enemies; [red]Tentacle[/red] cards deal more damage and grant more [gold]Block[/gold]."
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.smartDescription": "At the start of each turn, deal damage to ALL enemies; [red]Tentacle[/red] cards deal more damage and grant more [gold]Block[/gold].",
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.title": "Li Sui - Princess",
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.description": "[red]Tentacle[/red] cards deal and grant [blue]{Amount}[/blue] more damage and [gold]Block[/gold].",
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.smartDescription": "[red]Tentacle[/red] cards deal and grant [blue]{Amount}[/blue] more damage and [gold]Block[/gold]."
 }
