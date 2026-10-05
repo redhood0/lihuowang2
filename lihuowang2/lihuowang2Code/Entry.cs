@@ -1,7 +1,10 @@
 using System.Reflection;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Models.Relics;
+using lihuowang2.Characters;
 using STS2RitsuLib;
+using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
@@ -32,6 +35,19 @@ public partial class Entry
         // 自动注册扫描会读取当前程序集里的 RegisterCard/RegisterRelic 等 attribute。
         // 新增内容类后，只要 attribute 写对，通常不需要在入口里手动逐个注册。
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+
+        // 借用《杀戮尖塔2》铁甲战士的非初始职业专属遗物（原版模型，稀有度保持原样）。
+        // 这些是引擎自带的 RelicModel，不能改源码挂 [RegisterRelic]，所以在入口用
+        // ModContentRegistry 把它们注入本模组的遗物池，等价于 ModHelper.AddModelToPool。
+        // 初始遗物「燃烧之血」是角色起始遗物，不在此列。
+        ModContentRegistry content = ModContentRegistry.For(ModId);
+        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(RedSkull));          // 红头骨（普通）
+        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(PaperPhrog));        // 纸蛙（罕见）
+        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(SelfFormingClay));   // 自成型黏土（罕见）
+        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(CharonsAshes));      // 卡戎之灰（稀有）
+        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(DemonTongue));       // 恶魔之舌（稀有）
+        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(RuinedHelmet));      // 损毁头盔（稀有）
+        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(Brimstone));         // 硫磺（商店）
 
         // 注：曾经给「怜悯」的灼烧做过"可指定友方目标并给目标回血"（6 个 vanilla 补丁），已按需求回退，
         // 现在灼烧回到官方行为（不可指定目标，打出后固定回自己血）；相关经验记在 AGENTS.md 的"补丁备忘"里。
