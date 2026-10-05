@@ -37,17 +37,27 @@ public partial class Entry
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
 
         // 借用《杀戮尖塔2》铁甲战士的非初始职业专属遗物（原版模型，稀有度保持原样）。
-        // 这些是引擎自带的 RelicModel，不能改源码挂 [RegisterRelic]，所以在入口用
-        // ModContentRegistry 把它们注入本模组的遗物池，等价于 ModHelper.AddModelToPool。
+        //
+        // ⚠ 这里必须用引擎自己的 ModHelper.AddModelToPool，**不要**用 RitsuLib 的
+        //   ModContentRegistry.RegisterRelic —— 两者结果不一样：
+        //     · RegisterRelic：会把模型"收编"为模组所有，并给它分配新条目
+        //       <模组ID>_<类别>_<类名>（日志里能看到 id=LIHUOWANG2_RELIC_RED_SKULL）。
+        //       条目一变，图标和文案就按新条目去查，而模组并没有这些资源，于是：
+        //         图标 → 去 relic_atlas / relic_outline_atlas 找 'lihuowang2_relic_red_skull'
+        //                → Missing sprite，游戏里显示报错图；
+        //         文案 → 去 relics 表找 'LIHUOWANG2_RELIC_RED_SKULL.title/.description'
+        //                → not found，标题/说明为空。
+        //     · AddModelToPool：只是把"类型"追加进卡池，模型仍保留原版身份（RED_SKULL），
+        //       图标与中英文文案全部直接沿用本体资源，不需要我们补图、补文案。
+        //
         // 初始遗物「燃烧之血」是角色起始遗物，不在此列。
-        ModContentRegistry content = ModContentRegistry.For(ModId);
-        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(RedSkull));          // 红头骨（普通）
-        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(PaperPhrog));        // 纸蛙（罕见）
-        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(SelfFormingClay));   // 自成型黏土（罕见）
-        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(CharonsAshes));      // 卡戎之灰（稀有）
-        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(DemonTongue));       // 恶魔之舌（稀有）
-        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(RuinedHelmet));      // 损毁头盔（稀有）
-        content.RegisterRelic(typeof(lihuowang2RelicPool), typeof(Brimstone));         // 硫磺（商店）
+        ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(RedSkull));          // 红头骨（普通）
+        ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(PaperPhrog));        // 纸蛙（罕见）
+        ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(SelfFormingClay));   // 自成型黏土（罕见）
+        ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(CharonsAshes));      // 卡戎之灰（稀有）
+        ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(DemonTongue));       // 恶魔之舌（稀有）
+        ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(RuinedHelmet));      // 损毁头盔（稀有）
+        ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(Brimstone));         // 硫磺（商店）
 
         // 注：曾经给「怜悯」的灼烧做过"可指定友方目标并给目标回血"（6 个 vanilla 补丁），已按需求回退，
         // 现在灼烧回到官方行为（不可指定目标，打出后固定回自己血）；相关经验记在 AGENTS.md 的"补丁备忘"里。

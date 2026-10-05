@@ -64,5 +64,8 @@
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_POWER.smartDescription": "At the start of each turn, deal damage to ALL enemies; [red]Tentacle[/red] cards deal more damage and grant more [gold]Block[/gold].",
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.title": "Li Sui - Princess",
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.description": "[red]Tentacle[/red] cards deal and grant [blue]{Amount}[/blue] more damage and [gold]Block[/gold].",
-  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.smartDescription": "[red]Tentacle[/red] cards deal and grant [blue]{Amount}[/blue] more damage and [gold]Block[/gold]."
+  "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.smartDescription": "[red]Tentacle[/red] cards deal and grant [blue]{Amount}[/blue] more damage and [gold]Block[/gold].",
+  "LIHUOWANG2_POWER_BIAN_LIAN_POWER.title": "Face Change",
+  "LIHUOWANG2_POWER_BIAN_LIAN_POWER.description": "You cannot be targeted.\nLose 1 stack at the start of each of your turns; ends at 0 stacks or when you play an Attack card.",
+  "LIHUOWANG2_POWER_BIAN_LIAN_POWER.smartDescription": "You cannot be targeted.\nLose 1 stack at the start of each of your turns; ends at 0 stacks or when you play an Attack card."
 }

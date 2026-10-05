@@ -17,7 +17,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Cards;
 
-// 读心：预读敌人意图。准备攻击 → 格挡；否则 → 活力（下一次攻击的伤害加成，打完自动清零）。
+// 读十情（ReadMind）：预读敌人意图。准备攻击 → 格挡；否则 → 力量（永久加成的攻击伤害）。
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2ReadMind : ModCardTemplate
 {
@@ -32,16 +32,16 @@ public class lihuowang2ReadMind : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // 悬停提示：描述里的「活力」。
-    // 活力是官方能力（VigorPower），文案/图标取官方 powers 表，不需要自己写；
+    // 悬停提示：描述里的「力量」。
+    // 力量是官方能力（StrengthPower），文案/图标取官方 powers 表，不需要自己写；
     // 与「大力丹」给官方 StrengthPower 挂 hover 的写法一致。
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromPower<VigorPower>()];
+        [HoverTipFactory.FromPower<StrengthPower>()];
 
-    // Block = 敌准备攻击时获得的格挡（6，升级 +3）；Magic = 否则获得的活力（2，升级 +1 → 3）
+    // Block = 敌准备攻击时获得的格挡（6，升级 +3）；Magic = 否则获得的力量（1，升级 +1 → 2）
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(6m, ValueProp.Move),
-        new DynamicVar("Magic", 2m)
+        new BlockVar(9m, ValueProp.Move),
+        new DynamicVar("Magic", 1m)
     ];
 
     public lihuowang2ReadMind() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -60,14 +60,14 @@ public class lihuowang2ReadMind : ModCardTemplate
         }
         else
         {
-            // 活力是官方能力（VigorPower）：加成下一次攻击的伤害，攻击结算后自动清零，
-            // 与「力量」的永久加成不同（所以这里不再用 StrengthPower）。
-            await PowerCmd.Apply<VigorPower>(choiceContext, Owner.Creature,
+            // 力量是官方能力（StrengthPower）：永久提升攻击伤害（每层 +1 伤害，不随攻击清零）。
+            // （原来是 VigorPower「活力」——只加成下一次攻击、打完清零，按需求改成了力量。）
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature,
                 DynamicVars["Magic"].BaseValue, Owner.Creature, this);
         }
     }
 
-    // 升级：格挡 6 → 9；活力 2 → 3
+    // 升级：格挡 6 → 9；力量 1 → 2
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(3);

@@ -54,11 +54,11 @@ public class lihuowang2Relic_Dengjie : ModRelicTemplate
     // 三个路径可以先指向同一张图。后续有高清图或轮廓图时再拆开。
     public override RelicAssetProfile AssetProfile => new(
         // 小图标（原版 85x85）。
-        IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
+        IconPath: $"{Entry.ResPath}/images/relics/bahui.png",
         // 轮廓图标（原版 85x85）。
-        IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
+        IconOutlinePath: $"{Entry.ResPath}/images/relics/bahui.png",
         // 大图标（原版 256x256）。
-        BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
+        BigIconPath: $"{Entry.ResPath}/images/relics/bahui.png");
 
     // 每回合开始时，抽一张牌。
     // 这里使用 DynamicVars.Cards.IntValue，保证效果和本地化显示保持一致。

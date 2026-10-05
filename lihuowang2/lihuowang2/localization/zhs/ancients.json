@@ -1,8 +1,42 @@
 {
-  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0.char": "我准备好了。",
-  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0.next": "继续",
-  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1.ancient": "[sine]去吧……用这份模板……搭出你的角色……[/sine]",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0.char": "这里还很空。",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0.next": "继续",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1.ancient": "空白正好！随便拿点东西填进去吧！"
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "又是你。你们这些老东西，给点好处，总要先看人疼不疼。",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[sine]我不看人疼。东西我放下，谁捡起来，谁就得背它的分量——挑吧，别嫌沉。[/sine]",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/neow/neow_welcome",
+
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "你这一地破烂，比外头那些仙宫还热闹。……挑一样给我？",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[jitter]破烂？这叫原材料！书、蘑菇、还有这个——哎，别碰那个，那个会炸。你自己挑，我先躲远点！[/jitter]",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/darv/darv_excited",
+
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "别拿眼睛盯着我。我身上有什么，我自己清楚。",
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "你清楚的那一半，正在骗另一半。要不要我这一眼——你自己挑。",
+
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "换来换去，还是这副烂身子。你要炼就炼，别问我疼不疼。",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "疼是好事。烧过一遍的东西才配留下来——我替你换一副骨头，你敢不敢接？",
+
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "……你退什么？我又不咬人。",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "呜！别靠那么近！……不过，这个亮晶晶的给你——拿着快走，别弄脏我的东西！",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/nonupeipe/nonupeipe_giggle",
+
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "又是唱戏的。你们这些人，就爱把人当戏看。",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "看戏？不、不——我是请你上台。敢不敢在我这儿，演一出没人写过的？",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/tanx/tanx_laugh",
+
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "火我不怕。我在火里烧过一回，出来的时候骨头都是黑的。",
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "那不是烧，是祭。把剩下的半截也添进来——我不给你答案，只给你一撮灰。",
+
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "面具、音乐盒、玫瑰……你这儿像办完的酒席，人走光了还没收。",
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "席散不散，要看还有谁肯坐下。挑一件带走吧——反正你迟早要把它留在身后。",
+
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "你是谁？坐忘道？！！",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "很久没人称呼我那个名字了...",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/tanx/tanx_laugh"
 }

@@ -1,8 +1,42 @@
 {
-  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0.char": "I am ready.",
-  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0.next": "Continue",
-  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1.ancient": "[sine]Go... build your character from this template...[/sine]",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0.char": "This place is still empty.",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0.next": "Continue",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1.ancient": "Emptiness is perfect! Go grab something and fill it in!"
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "You again. You old things never hand out anything without watching someone hurt first.",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[sine]I do not watch. I set things down; whoever picks them up carries their weight. Choose - and do not complain that it is heavy.[/sine]",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/neow/neow_welcome",
+
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "All this junk of yours is livelier than any immortal's palace. ...Picking one out for me?",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[jitter]Junk? This is raw material! Books, mushrooms, and this - hey, don't touch that one, that one explodes. You pick; I'll stand way back![/jitter]",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/darv/darv_excited",
+
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "Stop staring. Whatever is on me, I know it better than you do.",
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "The half you know is lying to the other half. Take my eye or leave it - your choice.",
+
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "Refine it, swap it - it is still this rotten body. Do as you like, just do not ask if it hurts.",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "Pain is good. Only what has burned once deserves to remain. I will give you new bones - dare you take them?",
+
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "...Why are you backing away? I do not bite.",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "Eek! Do not come so close! ...But here, take this shiny one - take it and go, and do not dirty my things!",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/nonupeipe/nonupeipe_giggle",
+
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "Another performer. You people just love watching others dance.",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "Watch? No, no - I am inviting you on stage. Dare you perform something no one has written?",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/tanx/tanx_laugh",
+
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "Fire does not scare me. I burned once already - came out with black bones.",
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "That was not burning. That was an offering. Throw in what is left - I give no answers, only a pinch of ash.",
+
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "Masks, a music box, roses... this looks like a banquet after everyone already left.",
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "Whether the feast is over depends on who still sits down. Take one - you will leave it behind soon enough anyway.",
+
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "However high you build your stage, it was made for someone to stand on. Today, I burn it down.",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "Burn it, then. I remember where every plank belonged - just as I remember you.",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/tanx/tanx_laugh"
 }

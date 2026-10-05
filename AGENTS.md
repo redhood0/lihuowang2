@@ -114,6 +114,33 @@ This file is for project-specific instructions that DodWork and AI agents should
    每次打出耐久 -1、归零即被消耗、进入战斗补满（按场计）；关键字「耐久」与 hover 文本在
    `Keywords/Lihuowang2Keywords.cs` + `card_keywords.json`。卡面描述里写 `耐久（{Durability}）` 会自动显示 X/Y。
 
+## 备忘：随机附魔（enchantment）必须自己兜住"官方附魔会崩的组合"
+
+随机给卡牌附魔（如 `Cards/lihuowang2XiuJia.cs` 修假）时，**官方 `CanEnchant` 只判"能不能附"，
+不判"附了之后打出去会不会崩"**，必须自己加安全过滤。逐个扫过官方 21 个正常附魔后，确认只有两个雷：
+
+| 附魔 | 崩因 | 屏蔽条件 |
+|---|---|---|
+| `Inky`（打出给目标上虚弱） | `OnPlay` 把 `cardPlay.Target` 直接塞进 `PowerCmd.Apply`；`CardPlay.Target` 官方注释就是 "Null for un-targeted cards"，防御牌是 `TargetType.Self` → 塞进 null → `target.CanReceivePowers` 空引用（实测崩过：打出带 Inky 的防御牌 → NRE at `PowerCmd.Apply` ← `Inky.OnPlay`），整局卡死 | 只允许附到 `TargetType.AnyEnemy` / `AllEnemies` 的牌上 |
+| `Goopy`（防御牌加【消耗】、格挡随打出增长） | `AfterCardPlayed` 里 `if (Card.DeckVersion != null) Card.DeckVersion.Enchantment.Amount++` —— 战斗内手牌都有"牌组本体"而本体没这个附魔 → `Enchantment` 为 null → 一打出就 NRE（该附魔**已按需求移出随机池**，`IsRandomSafe` 里的守卫保留作双保险） | 只允许附到 `DeckVersion == null` 的牌上（战斗中生成的牌：飞刀/灼烧/破碎虚空斩等） |
+
+当前随机池**主动排除**的附魔：`Clone`（本身不做事）、`DeprecatedEnchantment`、`Mocks` 测试附魔、
+`Imbued`（注能：第 1 回合自动打出这张牌，随机附到手牌上体验怪）、`Goopy`（黏糊：体验怪 + 上表崩点）、
+`RoyallyApproved`（王室认证）、`TezcatarasEmber`（特兹卡塔拉的余烬）——后两个为策划指定的排除项。
+
+- 附带结论：**只有 `Goopy` 会写 `Card.DeckVersion`**，所以别的附魔都不会"漏"到牌组本体上（战斗结束就没了）。
+- 其余 19 个（Adroit/Corrupted/Glam/Imbued/Instinct/Momentum/Nimble/PerfectFit/RoyallyApproved/Sharp/
+  Slither/SlumberingEssence/SoulsPower/Sown/Spiral/Steady/Swift/TezcatarasEmber/Vigorous）已逐个核对：
+  只用 `Card.Owner`（打出时必非空）、`Card.Pile`（Slither，抽到时必有）、`PlayerCombatState`（Imbued，战斗中必非空），
+  或纯数值钩子，不会空引用。
+- 以后再往随机池里加附魔：先看它的 `OnPlay` / `AfterCardPlayed` 有没有直接解引用
+  `cardPlay.Target`、`Card.DeckVersion.Enchantment`、`Card.CombatState`、`Card.Pile` 这类可能为 null 的东西。
+- **区分「战斗内临时附魔」与「永久附魔」**（修假会先清临时附魔、再重摇）：本体 `Card.DeckVersion` 上没有同类型附魔 ⇒ 临时；
+  本体上有 ⇒ 永久（尘封古籍/事件给的），不要动。战斗中生成的牌（`DeckVersion == null`）身上的附魔一律算临时。
+- ⚠ **`CardCmd.ClearEnchantment` 只置空附魔，不还原 `OnEnchant` 改过的关键字**（官方实现 = `Enchantment.ClearInternal()` + `Enchantment = null`）。
+  池子里会动关键字的是 `Steady`（加【保留】）与 `SoulsPower`（删【消耗】），清理后要按"本体/模型原本有没有这个关键字"手工对齐
+  （见 `Cards/lihuowang2XiuJia.cs` 的 `RestoreKeywordsClearedBy` / `BaseHasKeyword`）；以后新增会改关键字的附魔同样要处理。
+
 ## 模组约定：新增遗物（`lihuowang2/lihuowang2Code/Relics/`）
 
 1. **注册**：`[RegisterRelic(typeof(lihuowang2RelicPool))]` + `ModRelicTemplate`（`lihuowang2RelicPool` 自动收录，不需要手动登记）；

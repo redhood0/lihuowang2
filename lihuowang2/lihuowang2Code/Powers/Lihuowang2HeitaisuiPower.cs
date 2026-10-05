@@ -47,27 +47,33 @@ public class Lihuowang2HeitaisuiPower : ModPowerTemplate
         }
     }
 
-    // 单层触发流程：先抽1张，再选1张手牌消耗；若消耗的是诅咒则获得3点格挡
+    // 单层触发流程：先从当前手牌选 1 张消耗，然后抽 1 张；若消耗的是诅咒则获得3点格挡。
+    // ⚠ 顺序保持原样（选牌池 = 当前手牌，不含本层抽到的那张），只把"抽牌"改成无条件执行。
     private async Task TriggerOnce(PlayerChoiceContext choiceContext, Player player)
     {
-       
-
-        // 2. 让玩家从手牌选 1 张来消耗（此时手牌已包含刚抽到的那张）
+        // 1. 让玩家从手牌选 1 张来消耗（此刻手牌里还没有本层抽到的那张）
         IEnumerable<CardModel> selected = await CardSelectCmd.FromHand(
             choiceContext,
             player,
             new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1),
             filter: null,
             source: this);
-        
+
         CardModel? card = selected.FirstOrDefault();
-        if (card == null) return;
 
-        // 3. 先记录是否为诅咒，再消耗
-        bool isCurse = card.Type == CardType.Curse;
-        await CardCmd.Exhaust(choiceContext, card);
+        // 2. 选到了才消耗；没选到就只跳过「消耗」这一步
+        //    （以前这里是 `if (card == null) return;`，会把下面的抽牌也一起跳过）
+        bool isCurse = card != null && card.Type == CardType.Curse;
+        if (card != null)
+            await CardCmd.Exhaust(choiceContext, card);
 
-        // 1. 先抽 1 张
+        // 3. 抽 1 张 —— **无条件**执行（联机一致性的关键）
+        //    以前这一句在 `if (card == null) return;` 之后，"能不能抽到这张牌"取决于选牌结果：
+        //    只要两端在选牌上出现一丁点差异（选择结果没送达、时序不同…），抽牌次数就会不同
+        //    → 抽牌引发的重洗会消耗「洗牌随机数」→ 随机流错位 → 校验和分歧 → 本局作废。
+        //    现在两者解耦：无论有没有选到牌，这一层都恰好抽 1 张，两端次数恒等。
+        //    效果不变（仍是 选 → 消耗 → 抽），只是"没选到牌"时也会照常抽 1 张，
+        //    与卡面写的"每层抽 1 张、消耗 1 张"也更一致。
         await CardPileCmd.Draw(choiceContext, DrawPerLayer, player);
 
         // 3.5 「我没病」「炼气」「触手」系列被消耗时的额外效果都在卡牌自己的 AfterCardExhausted 里，

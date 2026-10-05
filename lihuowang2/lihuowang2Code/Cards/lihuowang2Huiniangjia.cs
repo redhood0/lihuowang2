@@ -18,11 +18,13 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Cards;
 
 // 回娘家：点燃 3 层；若敌人点燃 ≥6 层则打出重击；杀死目标时把悔恨加入牌组。
+// 类型是**攻击牌**（虽然只在点燃≥6 层时才真的造成伤害）：这样"攻击牌"相关的联动才认它
+// （例如修假能摇到只进攻击牌的附魔、按类型筛选的效果等），目标类型是单体敌人。
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2Huiniangjia : ModCardTemplate
 {
     private const int energyCost = 2;
-    private const CardType type = CardType.Skill;
+    private const CardType type = CardType.Attack;
     private const CardRarity rarity = CardRarity.Rare;
     private const TargetType targetType = TargetType.AnyEnemy;
     private const bool shouldShowInCardLibrary = true;

@@ -54,5 +54,8 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PIAN_JING.flavor": "As the Deception Scripture says - mixing false and true, nine lies and one truth.",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIU_MU_RU_YI.title": "Rotwood Ruyi",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIU_MU_RU_YI.description": "At the start of turn [blue]3[/blue], randomly [gold]Stun[/gold] an enemy.",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIU_MU_RU_YI.flavor": "Rotten wood cannot be carved - yet it grants you whatever you wish."
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XIU_MU_RU_YI.flavor": "Rotten wood cannot be carved - yet it grants you whatever you wish.",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_CIMUXINZHAI.title": "Cimu Xinzha",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_CIMUXINZHAI.description": "Whenever you lose HP from your own effects during your turn, gain an equal amount of [gold]Block[/gold].",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_CIMUXINZHAI.flavor": "She never asks where you went - only whether it still hurts."
 }
