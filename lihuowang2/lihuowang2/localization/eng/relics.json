@@ -6,7 +6,7 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.description": "At the start of each turn, add [blue]1[/blue] [red]Doubt[/red] to your hand. Whenever you draw [blue]3[/blue] [red]Doubts[/red], gain [gold]Mania[/gold] for [blue]1[/blue] turn.",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.flavor": "Who am I? Where am I? I'm not sick!!!",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.title": "Yi Ji: Xin Su",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.description": "At the start of each combat, gain [gold]Energy[/gold] equal to this relic's stacks.\nAt [blue]{Tier1}[/blue], [blue]{Tier2}[/blue] and [blue]{Tier3}[/blue] stacks, also gain [blue]{TierEnergy}[/blue] [gold]Max Energy[/gold] each. (Max [blue]{MaxStacks}[/blue] stacks.)\nLevel up by playing [blue]{Rates}[/blue] [red]Xiu Zhen[/red] cards in total (doubles each level).\nXiu Zhen progress: {Progress}",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.description": "At the start of each turn, add [blue]1[/blue] [red]Doubt[/red] to your hand. Whenever you draw [blue]3[/blue] [red]Doubts[/red], gain [gold]Mania[/gold] for [blue]1[/blue] turn.\nEach turn, you may play [blue]1[/blue] [red]Curse[/red], then gain [blue]1[/blue] [gold]Energy[/gold].",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.flavor": "(Text TBD)",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.title": "Ascension Counter (Max 10)",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.description": "At the start of each combat, gain [gold]Regeneration[/gold] based on your Ascension count, starting at [blue]8[/blue] stacks. Each additional Ascension increases [gold]Regeneration[/gold] by half of the previous increase.",

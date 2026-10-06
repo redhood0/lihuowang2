@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
@@ -7,11 +6,11 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using lihuowang2.Characters;
-using lihuowang2.Tags;
+using lihuowang2.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -20,211 +19,191 @@ namespace lihuowang2.Relics;
 // 一炁·心素：初始遗物「心素」的**先祖**版本（RelicRarity.Ancient）。
 //
 // 身份规则：它**也视为心素** —— 携带它时，所有"需要心素"的牌（目前是 替身人皮 / lihuowang2XinSuSkin）
-// 照样可以打出。判定统一走 lihuowang2Relic_Xinsu.HasXinsu(player)（那边把两张遗物都算心素），
-// 牌那边不要再自己判遗物类型，否则每加一张心素系遗物都要改一遍牌。
+// 照样可以打出。判定统一走 lihuowang2Relic_Xinsu.HasXinsu(player)（那边把两张遗物都算心素）。
 //
-// 获取途径：官方遗物「欧洛巴斯之触」（TouchOfOrobas）会把初始遗物「心素」精炼成它 ——
-// 映射注册在 lihuowang2Relic_Xinsu 上的 [RegisterTouchOfOrobasRefinement]，
-// 与卡牌侧「黑太岁 → 岁岁公主」用 [RegisterArchaicToothTranscendence]（古老牙齿）完全对应。
-// 它本身是先祖稀有度（RelicRarity.Ancient），不进普通掉落池与商店。
+// 获取途径（未改动）：官方遗物「欧洛巴斯之触」（TouchOfOrobas）把初始遗物「心素」精炼成它 ——
+// 映射注册在 lihuowang2Relic_Xinsu 上的 [RegisterTouchOfOrobasRefinement]。
 //
-// 效果：
-//   1. 带层数（初始 1 层，上限 7 层，图标上直接显示）；
-//   2. 每场战斗开始时（= 本场第一次能量重置之后）：获得等同层数的能量；
-//   3. 层数达到 3 / 5 / 7 层时，各额外 +1 点最大能量（累进：3 层 +1、5 层 +2、7 层 +3）；
-//   4. 层数成长靠"打【修真】tag 的牌"：升到下一级分别需要累计打出 2 / 4 / 8 / 16 / 32 / 64 张
-//      （逐级翻倍，见 RequirementsPerLevel），攒够就 +1 层并把进度清零；
-//      进度在遗物说明里以「修真进度：x/y」显示（x = 已打出次数，y = 升级所需次数）。
+// 效果（本次重做）：
+//   1. 每回合开始时，将 1 张「疑虑」加入手牌（与「心素」同款）；
+//   2. 每当你抽到 3 张「疑虑」时，获得「疯癫」1 回合（与「心素」同款，跨回合累计、不跨战斗）；
+//   3. 每回合可以主动打出 1 张诅咒牌，然后获得 1 点能量。
+//      —— 潜规则：这么打出的诅咒牌会**被消耗**（由本遗物给它临时加上 [消耗] 关键字实现，不写进卡面）。
+//
+// ⚠ 多人安全：两个计数都走 [SavedProperty]（本局存档 + 战斗快照双通道），
+//   断线重连的客户端能把计数恢复成和主机一致；否则"第几张疑虑触发疯癫""本回合诅咒额度用没用"
+//   两端会不同 → 行为不一致甚至校验和分歧。判定条件全部是内容信息，不按机器判断。
+//
 // 图标：images/relics/lihuowang2Relic_YijiXinsu.png。
 [RegisterRelic(typeof(lihuowang2RelicPool))]
 public class lihuowang2Relic_YijiXinsu : ModRelicTemplate
 {
-    // ===== 数值（改这里就够，文案里的数字都走占位符跟着变）=====
-    // 层数初始值 / 上限
-    private const int InitialStacks = 1;
-    private const int MaxStacks = 7;
-    // 加最大能量的门槛（达到即生效，累进）：3 层 +1、5 层再 +1、7 层共 +3。
-    // 想加减档位/改门槛只动这个数组；说明里的数字走 {Tier1}/{Tier2}/{Tier3}/{Tiers} 占位符跟着变。
-    private static readonly int[] MaxEnergyTiers = [3, 5, 7];
-    private const decimal MaxEnergyPerTier = 1m;
+    // ===== 数值 =====
+    // 攒够多少张疑虑触发一次疯癫
+    private const int DoubtsPerCrazy = 3;
+    // 每回合允许主动打出的诅咒牌张数
+    private const int CursesAllowedPerTurn = 1;
+    // 每打出一张诅咒回复的能量
+    private const int EnergyPerCurse = 1;
 
-    // 1→2 级、2→3 级……6→7 级，各需要累计打出多少张【修真】牌（逐级翻倍）。
-    // 与 MaxStacks 的对应关系：表里第 i 个数 = 从 i+1 级升到 i+2 级的需求，所以长度 = MaxStacks - 1。
-    private static readonly int[] RequirementsPerLevel = [2, 4, 8, 16, 32, 64];
+    // 本场战斗内累计抽到的疑虑数量，满 DoubtsPerCrazy 张后清零。跨回合累计，不跨战斗。
+    private int _doubtDrawnCount;
+    // 本回合已经打出的诅咒牌数量。
+    private int _cursesPlayedThisTurn;
 
-    private int _stacks = InitialStacks;
-    private int _xiuZhenCount;
+    // ===== 存档 / 战斗快照出口（多人重连、两端一致性）=====
 
-    // 层数：存档 + 多人战斗快照的出口（遗物是引擎里唯一支持 [SavedProperty] 的模型）。
     [SavedProperty]
-    public int Stacks
+    public int DoubtDrawnCount
     {
-        get => _stacks;
+        get => _doubtDrawnCount;
         private set
         {
-            _stacks = Math.Clamp(value, 0, MaxStacks);
+            _doubtDrawnCount = value;
             UpdateCounterDisplay();
         }
     }
 
-    // 当前进度：距离下一级已经累计了多少张【修真】牌（满级时停在满格数字上，供说明显示 x/x）。
     [SavedProperty]
-    public int XiuZhenCount
+    public int CursesPlayedThisTurn
     {
-        get => _xiuZhenCount;
-        private set
-        {
-            _xiuZhenCount = Math.Clamp(value, 0, LastRequirement);
-            UpdateCounterDisplay();
-        }
+        get => _cursesPlayedThisTurn;
+        private set => _cursesPlayedThisTurn = value;
     }
 
-    // 表里最后一个需求（满级门槛），也是进度的上限值。
-    private static int LastRequirement => RequirementsPerLevel[^1];
+    // 本回合"打诅咒"的额度是否还没用掉
+    private bool CurseChargeAvailable => CursesPlayedThisTurn < CursesAllowedPerTurn;
 
-    // 距离下一级还需要的【修真】牌张数；已满级返回 0。
-    public int RequiredForNextLevel => Stacks >= MaxStacks ? 0 : RequirementsPerLevel[Stacks - 1];
-
-    // 先祖遗物（与卡牌的 CardRarity.Ancient 对应）：
-    // 引擎的商店/掉落按稀有度取，Ancient 的 MerchantCost 是 999999999，天然不会出现在商店；
-    // 普通宝箱/奖励也只会按 Common/Uncommon/Rare 等取（与「替身人皮」用 Event 不进普通池同理）。
+    // 先祖遗物：不进普通掉落池与商店（引擎按稀有度取，Ancient 天然不会出现）。
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
-    // 计数器：始终显示层数（初始就有 1 层，不是"攒够了才显示"）
-    public override bool ShowCounter => true;
+    // 计数器：只在积累了疑虑后才显示，默认（0）不显示
+    public override bool ShowCounter => DoubtDrawnCount > 0;
 
-    // 图标上显示的数字 = 层数（修真进度在遗物说明里显示，不放图标上）
-    public override int DisplayAmount => Stacks;
+    // 计数器显示的数字 = 当前积累的疑虑数（0..DoubtsPerCrazy-1）
+    public override int DisplayAmount => DoubtDrawnCount;
 
-    // 图片资源统一放在 AssetProfile 里配置（小图/轮廓图/大图先用同一张）。
+    // 描述里出现的「疑虑」「能量」给官方 hover。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromCard<Doubt>(),
+        HoverTipFactory.ForEnergy(this)
+    ];
+
     public override RelicAssetProfile AssetProfile => new(
         IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
 
-    // 描述里出现的「能量」给官方 hover。
-    // ⚠ 用 AdditionalHoverTips 而不是 ExtraHoverTips：RitsuLib 的 ModRelicTemplate 把后者封了
-    //   （模组遗物统一走 AdditionalHoverTips，参考 lihuowang2Relic_XiuMuRuYi）。
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.ForEnergy(this)];
+    // ===== 效果 1：每回合开始给 1 张疑虑 + 重置诅咒额度 =====
 
-    // 描述里的数字都用这些变量（引擎渲染遗物文本时会注入 DynamicVars）：
-    // 改上面的常量/需求表，卡面/提示里的数字会跟着变，不需要动本地化文案。
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new IntVar("MaxStacks", MaxStacks),
-        new IntVar("Tier1", MaxEnergyTiers[0]),
-        new IntVar("Tier2", MaxEnergyTiers[1]),
-        new IntVar("Tier3", MaxEnergyTiers[2]),
-        new IntVar("TierEnergy", MaxEnergyPerTier),
-        new TiersVar(),      // {Tiers}    -> "3/5/7"
-        new RatesVar(),      // {Rates}    -> "2/4/8/16/32/64"
-        new ProgressVar()    // {Progress} -> "3/8"（满级 "64/64"）
-    ];
-
-    // 最大能量：每达到一个门槛就 +1（累进：3 层 +1、5 层 +2、7 层 +3）。
-    // ⚠ 必须判 player != Owner：引擎会为每个玩家问一遍场上所有遗物（官方给能量的遗物全都这么写），
-    //   不筛就会给队友也加能量上限。
-    public override decimal ModifyMaxEnergy(Player player, decimal amount)
+    public override async Task AfterPlayerTurnStartEarly(PlayerChoiceContext choiceContext, Player player)
     {
+        // 多人：Hook 会把「每个玩家的回合开始」通知给场上所有遗物，先筛掉队友的回合。
         if (player != Owner)
-            return amount;
-
-        decimal bonus = 0m;
-        foreach (int tier in MaxEnergyTiers)
         {
-            if (Stacks >= tier)
-                bonus += MaxEnergyPerTier;
+            await base.AfterPlayerTurnStartEarly(choiceContext, player);
+            return;
         }
 
-        return amount + bonus;
+        // 新回合 → 重置"打诅咒"的额度
+        CursesPlayedThisTurn = 0;
+
+        // 给 1 张疑虑：直接放进手牌，不走抽牌钩子，所以下面手动计入一次
+        await CardPileCmd.AddToCombatAndPreview<Doubt>(Owner.Creature, PileType.Hand, 1, Owner);
+        await CountDoubtAndTryTriggerCrazy(choiceContext);
+
+        await base.AfterPlayerTurnStartEarly(choiceContext, player);
     }
 
-    // 每场战斗开始时（本场第一次能量重置之后）获得等同层数的能量。
-    // 用 AfterEnergyReset 而不是 BeforeCombatStart：战斗内的能量会在回合开始被重置成最大能量，
-    // 写在 BeforeCombatStart 给的能量会被那次重置冲掉（官方"开局给能量"的遗物也都是挂在这里）。
-    public override async Task AfterEnergyReset(Player player)
+    // ===== 效果 2：抽到 3 张疑虑 → 疯癫 1 回合 =====
+
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        if (player != Owner)
+        // 只统计真正抽到手的疑虑，而且必须是自己的（队友抽牌也会通知到本遗物）
+        if (card is not Doubt || card.Owner != Owner)
             return;
 
-        // 只在本场第一次重置时给（TurnNumber 由引擎在本钩子之前指到当前回合）
-        if (Owner.PlayerCombatState?.TurnNumber != 1)
-            return;
-
-        Flash();
-        await PlayerCmd.GainEnergy(Stacks, Owner);
+        await CountDoubtAndTryTriggerCrazy(choiceContext);
     }
 
-    // 层数成长：打出带【修真】tag 的牌就累计进度，攒够需求升 1 层。
-    // 用 AfterCardPlayed 而不是"按具体卡类判"：以后新增任何修真牌都会自动计入（只要挂上 tag）。
+    // 累计 1 张疑虑，满 DoubtsPerCrazy 张时施加疯癫并清零
+    private async Task CountDoubtAndTryTriggerCrazy(PlayerChoiceContext choiceContext)
+    {
+        DoubtDrawnCount++;
+
+        if (DoubtDrawnCount < DoubtsPerCrazy)
+            return;
+
+        DoubtDrawnCount = 0;
+        await PowerCmd.Apply<CrazyPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, null);
+    }
+
+    // ===== 效果 3：每回合可以主动打出 1 张诅咒 → 获得 1 点能量（该诅咒被消耗）=====
+
+    // 本回合还"可打出"的诅咒：去掉 [不可打出]，并加上 [消耗]（打出后进消耗堆 —— 潜规则）。
+    // 额度用完后不再改关键字 → 该诅咒恢复成不可打出（UI 会照常提示原因）。
+    // 这是全局关键字贡献：只要遗物还在就生效，不需要额外清理（与「火袄/怜悯」同款写法）。
+    public override bool TryModifyKeywordsInCombat(CardModel card, ISet<CardKeyword> keywords)
+    {
+        if (card.Owner != Owner)
+            return false;
+        if (card.Type != CardType.Curse)
+            return false;
+        if (!CurseChargeAvailable)
+            return false;
+
+        bool changed = keywords.Remove(CardKeyword.Unplayable);
+        changed |= keywords.Add(CardKeyword.Exhaust);
+        return changed;
+    }
+
+    // 额度用完的诅咒不能再打出（同「怜悯」的 ShouldPlay）。不影响其它牌，也不额外拦截自动打出，
+    // 免得把别的卡的效果卡住。
+    public override bool ShouldPlay(CardModel card, AutoPlayType autoPlayType)
+        => card.Owner != Owner || card.Type != CardType.Curse || CurseChargeAvailable;
+
+    // 打出诅咒：消耗额度 + 获得能量（这张诅咒会被 [消耗] 关键字送进消耗堆）
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel? card = cardPlay.Card;
 
-        // ⚠ 引擎会把"所有玩家打出的牌"都通知给场上遗物，所以必须筛掉队友打的牌
-        //   （与「心素」AfterCardDrawn 里 card.Owner != Owner 的写法一致）。
-        if (card?.Owner != Owner || !card.Tags.Contains(XiuZhenTags.XiuZhen))
+        // 引擎会把"所有玩家打出的牌"都通知给场上遗物，先筛掉队友打的牌
+        if (card?.Owner != Owner || card.Type != CardType.Curse)
             return;
 
-        int required = RequiredForNextLevel;
-        if (required <= 0)
-        {
-            // 已满级：进度停在满格（说明里显示 64/64），不再累计
-            XiuZhenCount = LastRequirement;
-            return;
-        }
-
-        XiuZhenCount++;
-        if (XiuZhenCount < required)
-            return;
-
-        // 攒够 → 升 1 层；进度清零（满级时改成停在满格数字，方便显示 x/x）
-        Stacks++;
-        XiuZhenCount = Stacks >= MaxStacks ? LastRequirement : 0;
+        CursesPlayedThisTurn++;
         Flash();
+        await PlayerCmd.GainEnergy(EnergyPerCurse, Owner);
     }
 
-    // 计数器显示刷新（RelicModel.InvokeDisplayAmountChanged）
+    // ===== 战斗内计数清理 =====
+
+    public override async Task BeforeCombatStart()
+    {
+        DoubtDrawnCount = 0;
+        CursesPlayedThisTurn = 0;
+        await base.BeforeCombatStart();
+    }
+
+    public override async Task AfterCombatEnd(MegaCrit.Sts2.Core.Rooms.CombatRoom room)
+    {
+        DoubtDrawnCount = 0;
+        CursesPlayedThisTurn = 0;
+        await base.AfterCombatEnd(room);
+    }
+
+    // 通知 UI 刷新计数器显示
     private void UpdateCounterDisplay()
         => InvokeDisplayAmountChanged();
 
-    // 「3/5/7」这一串门槛数字：从 MaxEnergyTiers 生成，改门槛就跟着变
-    // （想用整串数字写说明就引用 {Tiers}；想分开写就用 {Tier1}/{Tier2}/{Tier3}）。
-    private sealed class TiersVar : DynamicVar
+    // 塔1彩蛋：进入最终胜利房间时播放「成仙」BGM
+    // （与「心素」相同 —— 心素被精炼成本遗物后，这个彩蛋不会丢）
+    public override async Task AfterRoomEntered(MegaCrit.Sts2.Core.Rooms.AbstractRoom room)
     {
-        public TiersVar() : base("Tiers", 0m) { }
+        if (room.GetType().Name.IndexOf("Victory", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            Lihuowang2MusicUtil.PlayVictoryMusic("chengxian.mp3");
 
-        public override string ToString()
-            => string.Join("/", MaxEnergyTiers);
-    }
-
-    // 「每 2/4/8/16/32/64 张」那一串数字：直接从需求表生成，改表就跟着变。
-    private sealed class RatesVar : DynamicVar
-    {
-        public RatesVar() : base("Rates", 0m) { }
-
-        public override string ToString()
-            => string.Join("/", RequirementsPerLevel);
-    }
-
-    // 「修真进度：x/y」的 x/y。引擎渲染遗物文本读的就是 DynamicVar.ToString()
-    // （官方 StringVar / 模组 Dice18 的 RelicTextVar 都是这么供值的），所以这里直接拼字符串，
-    // 本地化里写 {Progress} 占位即可 —— 换语言不用改文案，数字永远和代码同步。
-    private sealed class ProgressVar : DynamicVar
-    {
-        public ProgressVar() : base("Progress", 0m) { }
-
-        public override string ToString()
-        {
-            if (_owner is not lihuowang2Relic_YijiXinsu relic)
-                return string.Empty;
-
-            int required = relic.RequiredForNextLevel;
-            // 满级：显示"已完成"的满格进度（64/64），而不是 0/0
-            return required <= 0
-                ? $"{LastRequirement}/{LastRequirement}"
-                : $"{relic.XiuZhenCount}/{required}";
-        }
+        await base.AfterRoomEntered(room);
     }
 }

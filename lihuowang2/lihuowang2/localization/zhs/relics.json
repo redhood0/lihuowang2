@@ -6,7 +6,7 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.description": "在每回合开始时，将[blue]1[/blue]张[red]疑虑[/red]加入你的手牌。每当你抽到[blue]3[/blue]张[red]疑虑[/red]时，获得[gold]疯癫[/gold][blue]1[/blue]回合。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_XINSU.flavor": "我是谁？我在哪？我没病！！！",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.title": "一炁·心素",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.description": "战斗开始时，获得等同于层数的[gold]能量[/gold]。\n层数达到[blue]{Tier1}[/blue]、[blue]{Tier2}[/blue]、[blue]{Tier3}[/blue]层时，额外 +[blue]{TierEnergy}[/blue]点[gold]最大能量[/gold]（上限[blue]{MaxStacks}[/blue]）\n打出[gold]【修真】[/gold]牌可以积累进度。当前进度：{Progress}",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.description": "在每回合开始时，将[blue]1[/blue]张[red]疑虑[/red]加入你的手牌。每当你抽到[blue]3[/blue]张[red]疑虑[/red]时，获得[gold]疯癫[/gold][blue]1[/blue]回合。\n每回合可以主动打出[blue]1[/blue]张[red]诅咒[/red]牌，然后获得[blue]1[/blue]点[gold]能量[/gold]。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.flavor": "用神光包裹先天一炁依次过七脉轮，修到顶轮即成司命",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.title": "巴虺凝视·登阶（上限10）",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.description": "在每场战斗开始时，根据登阶次数获得[gold]再生[/gold]，基础获得 [blue]8[/blue] 层[gold]再生[/gold]。登阶次数每增加 [blue]1[/blue]，[gold]再生[/gold]会额外增加前一次增加量的一半。",
