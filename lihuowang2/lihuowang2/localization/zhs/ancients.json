@@ -4,10 +4,12 @@
   "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[sine]我不看人疼。东西我放下，谁捡起来，谁就得背它的分量——挑吧，别嫌沉。[/sine]",
   "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/neow/neow_welcome",
 
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "你这一地破烂，比外头那些仙宫还热闹。……挑一样给我？",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[jitter]破烂？这叫原材料！书、蘑菇、还有这个——哎，别碰那个，那个会炸。你自己挑，我先躲远点！[/jitter]",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/darv/darv_excited",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "哦？你也回高塔来啦，脑袋好些了吗？",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "回答",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.char": "我没病！",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.next": "继续",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-2r.ancient": "还是老样子啊，有什么想要的就自己拿吧。",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-2r.ancient.sfx": "event:/sfx/npcs/darv/darv_excited",
 
   "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "别拿眼睛盯着我。我身上有什么，我自己清楚。",
   "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",

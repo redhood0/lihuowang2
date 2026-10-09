@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
@@ -71,9 +72,15 @@ public class lihuowang2XiuZhenQiuChiBao : ModCardTemplate
         // 血量由 QiuChiBao 自己的 MinInitialHp / MaxInitialHp 决定（1）。
         // 「失去 1 点最大能量」不需要在这里写：随从召唤时会上「修真」，
         // 那个能力负责 -1，并在随从死亡时随能力一起失效（= 归还）。
-        await MinionCmd.AddMinion<QiuChiBao>(choiceContext, Owner, new MinionSummonOptions(
+        Creature minion = await MinionCmd.AddMinion<QiuChiBao>(choiceContext, Owner, new MinionSummonOptions(
             Source: this,
             Position: MinionPosition.Back));
+
+        // 等摆位动画（MinionAnimCmd.Rearrange 默认 0.25 秒补间）落地，再让秋吃饱说话。
+        // 气泡位置本身是按"最终站位"算的、不依赖这一步，所以极速(Instant)模式下这里被跳过也不会跑偏；
+        // 这一步只是让气泡在随从滑到位之后再冒出来，观感更自然。
+        await Cmd.Wait(0.3f);
+        QiuChiBao.PlaySummonLine(minion);
     }
 
     // 升级：费用 1 → 0

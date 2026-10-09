@@ -1,11 +1,16 @@
 using System.Threading.Tasks;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 using MinionLib.Layout;
 using MinionLib.Minion;
 using lihuowang2.Powers;
@@ -89,6 +94,29 @@ public sealed class QiuChiBao : ModMinionTemplate
     public override LocString Title =>
         MonsterModel.L10NMonsterLookup("LIHUOWANG2_MONSTER_QIU_CHI_BAO.name");
 
+    // 召唤时说的那句（同一张本地化表 monsters）。
+    // 想改台词只动 localization/<lang>/monsters.json，不用碰代码。
+    private const string SummonLineKey = "LIHUOWANG2_MONSTER_QIU_CHI_BAO.talk.summon";
+
+    // 气泡配色 / 停留时长（秒）。
+    private const VfxColor BubbleColor = VfxColor.Cyan;
+    private const double BubbleSeconds = 2.25;
+
+    // 气泡挂点微调（像素；X 右为正 / Y 下为正）。
+    // 想让它更靠上就把 Y 调得更负，想更靠右就把 X 调大。
+    private static readonly Vector2 BubbleOffset = new(0f, -6f);
+
+    /// <summary>
+    /// 在秋吃饱头顶说一句召唤台词（对话气泡）。由卡牌「修真·秋吃饱」在召唤后调用。
+    ///
+    /// 实现（挂点、"往哪边摊开"、防出屏）都在共用的 MinionSpeechBubble 里。
+    /// 秋吃饱站在玩家**后方**（左手边），所以气泡要**向左**摊开（extendRight: false）——
+    /// 往右摊开会正好盖在主角头上、看着像主角在说话。
+    /// </summary>
+    public static void PlaySummonLine(Creature minion)
+        => MinionSpeechBubble.Play(minion, "monsters", SummonLineKey,
+            BubbleColor, BubbleSeconds, BubbleOffset, extendRight: false);
+
     // 召唤时挂上「修真」与「石渎」。
     // 故意不挂 MinionGuardianPower：那是 TestMinion 用来替玩家承伤的「守护」，
     // 本随从要求「无法承担伤害」，所以不挂 —— 它就不会把打向玩家的未格挡伤害转移到自己身上。
@@ -108,5 +136,9 @@ public sealed class QiuChiBao : ModMinionTemplate
         // 石渎：召唤者回合结束时获得 1 个「药水形状的石头」
         await PowerCmd.Apply<ShiDuPower>(choiceContext, Creature, 1m, owner.Creature,
             options.Source);
+
+        // 召唤台词**不在这里**播：此刻摆位补间还没开始（AddMinion 是「AddPet → OnSummon → Rearrange」），
+        // 随从节点还贴在主角身上，而气泡坐标只算一次、之后不跟随 → 会看起来像主角在说话。
+        // 交给卡牌「修真·秋吃饱」在 AddMinion 之后再等 0.3 秒调 PlaySummonLine(...)。
     }
 }

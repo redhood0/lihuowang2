@@ -4,10 +4,12 @@
   "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[sine]I do not watch. I set things down; whoever picks them up carries their weight. Choose - and do not complain that it is heavy.[/sine]",
   "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/neow/neow_welcome",
 
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "All this junk of yours is livelier than any immortal's palace. ...Picking one out for me?",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[jitter]Junk? This is raw material! Books, mushrooms, and this - hey, don't touch that one, that one explodes. You pick; I'll stand way back![/jitter]",
-  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/darv/darv_excited",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "Oh? You've come back to the tower too. Is your head feeling any better?",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Reply",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.char": "I'm not sick!",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.next": "Continue",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-2r.ancient": "Still the same as ever. If there's anything you want, help yourself.",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-2r.ancient.sfx": "event:/sfx/npcs/darv/darv_excited",
 
   "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "Stop staring. Whatever is on me, I know it better than you do.",
   "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",

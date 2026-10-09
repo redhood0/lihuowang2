@@ -21,8 +21,8 @@
   "LIHUOWANG2_POWER_DAN_LU_POWER.description": "At the start of each turn, add a random Pill to your hand.",
   "LIHUOWANG2_POWER_DAN_LU_POWER.smartDescription": "At the start of each turn, add a random Pill to your hand.",
   "LIHUOWANG2_POWER_SHA_QI_POWER.title": "Sha Qi",
-  "LIHUOWANG2_POWER_SHA_QI_POWER.description": "Your attacks deal extra damage equal to your [gold]Sha Qi[/gold] stacks. At [blue]5[/blue] or more stacks, apply [blue]1[/blue] [red]Vulnerable[/red] to ALL enemies at the start of each turn, and you can no longer gain [gold]Block[/gold] from cards.",
-  "LIHUOWANG2_POWER_SHA_QI_POWER.smartDescription": "Your attacks deal extra damage equal to your [gold]Sha Qi[/gold] stacks. At [blue]5[/blue] or more stacks, apply [blue]1[/blue] [red]Vulnerable[/red] to ALL enemies at the start of each turn, and you can no longer gain [gold]Block[/gold] from cards.",
+  "LIHUOWANG2_POWER_SHA_QI_POWER.description": "Your attacks deal extra damage equal to your [gold]Sha Qi[/gold] stacks. At [blue]3[/blue] or more stacks, you can no longer gain [gold]Block[/gold] from cards. At [blue]5[/blue] or more stacks, apply [blue]1[/blue] [red]Vulnerable[/red] to ALL enemies at the start of each turn.",
+  "LIHUOWANG2_POWER_SHA_QI_POWER.smartDescription": "Your attacks deal extra damage equal to your [gold]Sha Qi[/gold] stacks. At [blue]3[/blue] or more stacks, you can no longer gain [gold]Block[/gold] from cards. At [blue]5[/blue] or more stacks, apply [blue]1[/blue] [red]Vulnerable[/red] to ALL enemies at the start of each turn.",
   "LIHUOWANG2_POWER_XIU_ZHEN_POWER.title": "Cultivation",
   "LIHUOWANG2_POWER_XIU_ZHEN_POWER.description": "Each stack reduces the summoner's [gold]Max Energy[/gold] by [blue]1[/blue].\nWhen this minion dies, the summoner regains [gold]Max Energy[/gold] equal to the stacks.",
   "LIHUOWANG2_POWER_XIU_ZHEN_POWER.smartDescription": "Each stack reduces the summoner's [gold]Max Energy[/gold] by [blue]1[/blue].\nWhen this minion dies, the summoner regains [gold]Max Energy[/gold] equal to the stacks.",
@@ -67,5 +67,11 @@
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.smartDescription": "[red]Tentacle[/red] cards deal and grant [blue]{Amount}[/blue] more damage and [gold]Block[/gold].",
   "LIHUOWANG2_POWER_BIAN_LIAN_POWER.title": "Face Change",
   "LIHUOWANG2_POWER_BIAN_LIAN_POWER.description": "You cannot be targeted.\nLose 1 stack at the start of each of your turns; ends at 0 stacks or when you play an Attack card.",
-  "LIHUOWANG2_POWER_BIAN_LIAN_POWER.smartDescription": "You cannot be targeted.\nLose 1 stack at the start of each of your turns; ends at 0 stacks or when you play an Attack card."
+  "LIHUOWANG2_POWER_BIAN_LIAN_POWER.smartDescription": "You cannot be targeted.\nLose 1 stack at the start of each of your turns; ends at 0 stacks or when you play an Attack card.",
+  "LIHUOWANG2_POWER_SONG_JING_POWER.title": "Chanting Sutra",
+  "LIHUOWANG2_POWER_SONG_JING_POWER.description": "Gain [blue]1[/blue] stack at the end of each of your turns. At [blue]10[/blue] stacks, deal [blue]999[/blue] damage to a random enemy.",
+  "LIHUOWANG2_POWER_SONG_JING_POWER.smartDescription": "Gain [blue]1[/blue] stack at the end of each of your turns. At [blue]10[/blue] stacks, deal [blue]999[/blue] damage to a random enemy.",
+  "LIHUOWANG2_POWER_XING_SHAN_POWER.title": "Good Deeds",
+  "LIHUOWANG2_POWER_XING_SHAN_POWER.description": "At the start of each of your turns, remove [blue]1[/blue] stack of a random debuff from a random allied character (teammates included; minions are unaffected), then lose [blue]1[/blue] HP.",
+  "LIHUOWANG2_POWER_XING_SHAN_POWER.smartDescription": "At the start of each of your turns, remove [blue]1[/blue] stack of a random debuff from a random allied character (teammates included; minions are unaffected), then lose [blue]1[/blue] HP."
 }

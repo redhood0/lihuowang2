@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MinionLib.Layout;
 using MinionLib.Minion;
 using MinionLib.Powers;
@@ -199,6 +200,28 @@ public sealed class PengLongTeng : ModMinionTemplate
     // 名字（本地化表 monsters）
     public override LocString Title =>
         MonsterModel.L10NMonsterLookup("LIHUOWANG2_MONSTER_PENG_LONG_TENG.name");
+
+    // ===== 召唤台词 =====
+    // 台词写在同一张本地化表 monsters 里，想改词只动 localization/<lang>/monsters.json，不用碰代码。
+    private const string SummonLineKey = "LIHUOWANG2_MONSTER_PENG_LONG_TENG.talk.summon";
+
+    // 气泡配色 / 停留时长（秒）。想换成战吼感更强的颜色（例如 VfxColor.Gold / Red）只要动这一行。
+    private const VfxColor BubbleColor = VfxColor.Cyan;
+    private const double BubbleSeconds = 2.25;
+
+    // 气泡挂点微调（像素；X 右为正 / Y 下为正）。想更靠上就把 Y 调得更负。
+    private static readonly Vector2 BubbleOffset = new(0f, -6f);
+
+    /// <summary>
+    /// 在彭龙腾头顶说一句召唤台词（对话气泡）。由卡牌「修真·彭龙腾」在召唤后调用。
+    ///
+    /// 具体实现（挂点、"往哪边摊开"、防出屏）都在共用的 MinionSpeechBubble 里。
+    /// 彭龙腾站在玩家**前方**（朝敌人那一侧、在主角右手边），所以气泡要**向右**摊开
+    /// （extendRight: true）—— 往左摊开会正好盖在主角头上、看着像主角在说话。
+    /// </summary>
+    public static void PlaySummonLine(Creature minion)
+        => MinionSpeechBubble.Play(minion, "monsters", SummonLineKey,
+            BubbleColor, BubbleSeconds, BubbleOffset, extendRight: true);
 
     // 召唤时挂「守护」「先天一炁」「唯一」「将相首」。
     public override async Task OnSummon(PlayerChoiceContext choiceContext, Player owner,

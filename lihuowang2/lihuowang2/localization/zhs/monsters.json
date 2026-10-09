@@ -1,5 +1,11 @@
 {
   "LIHUOWANG2_MONSTER_TEST_MINION.name": "曹操",
   "LIHUOWANG2_MONSTER_QIU_CHI_BAO.name": "秋吃饱",
-  "LIHUOWANG2_MONSTER_PENG_LONG_TENG.name": "彭龙腾"
+  "LIHUOWANG2_MONSTER_QIU_CHI_BAO.talk.summon": "这个石头药水，吃着不烧心",
+  "LIHUOWANG2_MONSTER_PENG_LONG_TENG.name": "彭龙腾",
+  "LIHUOWANG2_MONSTER_PENG_LONG_TENG.talk.summon": "来来来，战个痛快！",
+  "LIHUOWANG2_MONSTER_HE_SHANG.name": "和尚",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.0": "善哉善哉",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.1": "阿弥陀佛",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.final": "噫，不曾想我竟是世尊~"
 }

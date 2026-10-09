@@ -15,10 +15,19 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Powers;
 
 // 煞气：你的普通攻击伤害 +层数；
-// 当煞气 ≥ 5 时，每个自己回合开始时给所有敌人 1 层易伤，并且你无法从卡牌中获得格挡。
+// 达到阈值后还有两个惩罚：无法从卡牌中获得格挡 / 每回合开始给所有敌人易伤。
+// 两个阈值是**分开**的常量（见下），各改各的。
 [RegisterPower]
 public class ShaQiPower : ModPowerTemplate
 {
+    // ===== 可调阈值 =====
+    // 煞气达到这个层数后：无法从卡牌获得格挡。
+    public const int BlockPreventStacks = 3;
+    // 煞气达到这个层数后：每回合开始时对所有敌人施加 1 层易伤。
+    public const int VulnerableStacks = 5;
+    // ⚠ 改这两个数字时，记得同步 powers 本地化文案里的数字
+    //   （LIHUOWANG2_POWER_SHA_QI_POWER.description / .smartDescription）。
+
     // 类型：Buff
     public override PowerType Type => PowerType.Buff;
     // 叠加：Counter，层数 = 攻击伤害加成
@@ -40,7 +49,7 @@ public class ShaQiPower : ModPowerTemplate
         return base.Amount;
     }
 
-    // 煞气 ≥ 5 时无法从「卡牌」获得格挡（能力/遗物给的格挡照常生效）。
+    // 煞气 ≥ BlockPreventStacks 时无法从「卡牌」获得格挡（能力/遗物给的格挡照常生效）。
     // 判定依据是 cardSource：引擎文档写明「Card that will be adding the block.
     // Null if the block is coming from something other than a card (like a Relic)」，
     // 所以 cardSource != null 就代表这一笔格挡来自卡牌。
@@ -49,17 +58,17 @@ public class ShaQiPower : ModPowerTemplate
     public override decimal ModifyBlockMultiplicative(Creature target, decimal block, ValueProp props,
         CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (target == Owner && base.Amount >= 5 && cardSource != null)
+        if (target == Owner && base.Amount >= BlockPreventStacks && cardSource != null)
             return 0m;
         return 1m;
     }
 
-    // 自己回合开始：煞气 ≥ 5 时给所有敌人 1 层易伤
+    // 自己回合开始：煞气 ≥ VulnerableStacks 时给所有敌人 1 层易伤
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player.Creature != Owner)
             return;
-        if (base.Amount < 5m)
+        if (base.Amount < VulnerableStacks)
             return;
 
         Flash();

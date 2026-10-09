@@ -1,5 +1,11 @@
 {
   "LIHUOWANG2_MONSTER_TEST_MINION.name": "Cao Cao",
   "LIHUOWANG2_MONSTER_QIU_CHI_BAO.name": "Qiu Chi Bao",
-  "LIHUOWANG2_MONSTER_PENG_LONG_TENG.name": "Peng Long Teng"
+  "LIHUOWANG2_MONSTER_QIU_CHI_BAO.talk.summon": "This stone potion goes down easy - no heartburn at all.",
+  "LIHUOWANG2_MONSTER_PENG_LONG_TENG.name": "Peng Long Teng",
+  "LIHUOWANG2_MONSTER_PENG_LONG_TENG.talk.summon": "Come on, come on - let's have a proper fight!",
+  "LIHUOWANG2_MONSTER_HE_SHANG.name": "He Shang",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.0": "Sadhu, sadhu.",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.1": "Amitabha.",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.final": "Heh - who knew I was the World-Honored One~"
 }

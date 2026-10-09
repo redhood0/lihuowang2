@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Enchantments;
@@ -24,7 +25,11 @@ namespace lihuowang2.Cards;
 //   3. 手里没有可附魔的牌时什么都不发生（不会空转、也不消耗别的资源）；
 //   4. 目标牌身上若已经有"战斗内临时附魔"，会**先把它清掉，再随机一个新附魔**（永久附魔不动，见 HasTemporaryEnchantment）。
 //
-// 升级：从"随机 1 张"变成"给手里所有其它牌各附魔一次"（每张各随机一个附魔）。
+// 升级：从"随机 1 张"变成"随机 2 张"（每张各随机一个附魔）。
+//
+// 选牌潜规则（不写进卡面，见 PickTargets）：
+//   · 永久附魔的牌**一律不碰** —— 不清、不覆盖、也不占名额（那是牌组里攒下的东西，不该被这张战斗内的一次性牌动到）；
+//   · **优先挑身上一点附魔都没有的牌**；名额没凑够时，才退用"只有战斗内临时附魔"的牌（先清掉旧的再随机新的）。
 //
 // ⚠ 安全过滤（见 IsRandomSafe）：官方附魔里有两个"只在特定场景成立"的，随机附到战斗手牌上会空引用崩游戏。
 //   Inky 按组合屏蔽（只允许附到有敌方目标的牌上）；Goopy 已直接移出池子，守卫保留作双保险。
@@ -47,6 +52,10 @@ public class lihuowang2XiuJia : ModCardTemplate
     // Glam/Spiral 的额外结算次数、Steady/Slither 等）不受影响。
     // 想让随机附魔更强/更弱就改这一个数。
     private const decimal EnchantAmount = 2m;
+
+    // 本牌一次附魔几张：基础 1 张，升级 2 张。
+    private const int BaseEnchantCount = 2;
+    private const int UpgradedEnchantCount = 3;
 
     // 可随机的官方附魔池（都在 MegaCrit.Sts2.Core.Models.Enchantments）。
     // 只收"有实际效果"的，故意排除：
@@ -86,30 +95,13 @@ public class lihuowang2XiuJia : ModCardTemplate
         if (hand.Count == 0)
             return Task.CompletedTask;   // 没有手牌：什么都不发生
 
+        // 基础 1 张 / 升级 2 张；选谁见 PickTargets
+        List<CardModel> targets = PickTargets(
+            player, hand, IsUpgraded ? UpgradedEnchantCount : BaseEnchantCount);
+
         List<CardModel> enchanted = [];
-
-        if (IsUpgraded)
+        foreach (CardModel card in targets)
         {
-            // 升级：给所有其它手牌各附一个随机附魔（附不上的那张跳过）
-            foreach (CardModel card in hand)
-            {
-                if (EnchantRandomly(player, card))
-                    enchanted.Add(card);
-            }
-        }
-        else
-        {
-            // 基础：随机 1 张"能被附魔"的手牌。候选有两类：
-            //   · 现在就能接受某个附魔的；
-            //   · 身上只有战斗内临时附魔的（会先被清掉、再随机附一个新的，所以也算可附）。
-            // 先算候选再随机，避免随机到一张附什么都附不上的牌导致这张卡空转。
-            List<CardModel> candidates = hand
-                .Where(c => HasTemporaryEnchantment(c) || ValidEnchantments(c).Count > 0)
-                .ToList();
-            if (candidates.Count == 0)
-                return Task.CompletedTask;
-
-            CardModel card = candidates[player.RunState.Rng.Niche.NextInt(candidates.Count)];
             if (EnchantRandomly(player, card))
                 enchanted.Add(card);
         }
@@ -120,6 +112,49 @@ public class lihuowang2XiuJia : ModCardTemplate
 
         return Task.CompletedTask;
     }
+
+    // 选这次的附魔目标（不写进卡面）：
+    //   ① 永久附魔的牌**直接排除** —— 不清、不覆盖、也不占名额；
+    //   ② 首选"身上一点附魔都没有"的牌；
+    //   ③ 名额没凑够时，才退用"只有战斗内临时附魔"的牌（EnchantRandomly 会先清掉旧的再随机新的）；
+    //   ④ 随机走引擎的确定性随机流 Niche（两端一致，与官方"迅捷"遗物挑附魔牌同一套）。
+    // 先筛后随机的意义：保证不会随机到一张"附什么都附不上"的牌导致这张卡空转。
+    private static List<CardModel> PickTargets(Player player, List<CardModel> hand, int count)
+    {
+        if (count <= 0)
+            return [];
+
+        List<CardModel> untouched = [];   // 一点附魔都没有
+        List<CardModel> reusable = [];    // 只有战斗内临时附魔（会被清掉重随机）
+
+        foreach (CardModel card in hand)
+        {
+            if (HasPermanentEnchantment(card))
+                continue;                       // ① 永久附魔：不碰
+
+            if (card.Enchantment == null)
+            {
+                if (ValidEnchantments(card).Count > 0)
+                    untouched.Add(card);        // ② 首选
+                continue;
+            }
+
+            reusable.Add(card);                 // ③ 次选（上面已排除永久附魔，所以这里只可能是临时的）
+        }
+
+        List<CardModel> picked = [.. untouched.TakeRandom(count, player.RunState.Rng.Niche)];
+        if (picked.Count < count)
+        {
+            picked.AddRange(reusable.TakeRandom(count - picked.Count, player.RunState.Rng.Niche));
+        }
+
+        return picked;
+    }
+
+    // 这张牌身上那层附魔算不算"永久附魔"（牌组本体上就有）。
+    // 与 HasTemporaryEnchantment 互为补集：有附魔、又不是临时的 → 永久，本牌一律不碰。
+    private static bool HasPermanentEnchantment(CardModel card)
+        => card.Enchantment != null && !HasTemporaryEnchantment(card);
 
     // 给一张牌随机附一个附魔；附上了返回 true（没有可用附魔时返回 false）
     private static bool EnchantRandomly(Player player, CardModel card)

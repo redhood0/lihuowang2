@@ -1,11 +1,17 @@
 ﻿using lihuowang2.Characters;
+using lihuowang2.Tags;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -123,4 +129,34 @@ public class lihuowang2Relic_Dengjie : ModRelicTemplate
         StepCount = _stepCount + 1;   // 走属性，顺带刷新计数器显示
     }
 
+    // ===== 潜规则：每层登阶 → 大千录卡牌伤害 +10% =====
+
+    // 每层加成（10%）。层数就是计数器数值（1~10）→ 满层共 +100%。
+    private const decimal DamageBonusPerStep = 0.1m;
+
+    // 只放大"我打出的、带「大千录」tag 的牌"对**敌人**造成的伤害；其余一律不变：
+    //   · 别的牌（无该 tag）、队友打的牌 → 不加成；
+    //   · 大千录牌对自己的伤害（很多大千录是自伤换效果）→ 不加成；
+    //   · 非卡牌来源的伤害（异常/能力/遗物）→ 根本没有 cardSource，不加成。
+    // 写法与官方遗物 VitruvianMinion（"带 Minion tag 的牌 ×2 伤害"）一致：按卡牌 tag 判定，不自己维护卡表。
+    //
+    // 卡面数字是**自动**跟着变的：引擎算卡面伤害（DynamicVar.UpdateCardPreview / CalculatedDamageVar）
+    // 走的是同一个 Hook.ModifyDamage → ModifyDamageMultiplicative，所以不需要去改任何卡牌的 DynamicVars。
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
+    {
+        // ① 必须是我打出的、且属于大千录系列的牌
+        if (cardSource == null || cardSource.Owner != Owner)
+            return 1m;
+        if (!cardSource.Tags.Contains(DaqianTags.DaqianLu))
+            return 1m;
+
+        // ② 只加"打向敌人"的那一份：明确是己方目标（自己/随从）就跳过。
+        //    ⚠ target 可能是 null —— 那是卡面预览的路径（牌库里看牌、战斗里未选目标），
+        //    这种情况不能当成己方，否则卡面数字就不会动态显示了。
+        if (target != null && target.Side != CombatSide.Enemy)
+            return 1m;
+
+        return 1m + DamageBonusPerStep * StepCount;
+    }
 }

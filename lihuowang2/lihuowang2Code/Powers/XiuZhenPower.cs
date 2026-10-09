@@ -17,8 +17,12 @@ namespace lihuowang2.Powers;
 [RegisterPower]
 public class XiuZhenPower : ModPowerTemplate
 {
-    // 对召唤者来说是代价（最大能量 -层数），所以标成 Debuff
-    public override PowerType Type => PowerType.Debuff;
+    // 类型：Buff。
+    // 它确实会让召唤者的最大能量 -层数，但那是"召唤的代价 / 供奉"，不是需要被驱散的负面效果：
+    //   · 引擎自己的解负面效果会按 GetTypeForAmount(...) != Debuff 过滤（标 Debuff 就会被解掉）；
+    //   · 模组的「行善」之类我方解控也是按 Type == Debuff 挑候选。
+    // 标成 Buff 之后，这些效果都不会再动它。
+    public override PowerType Type => PowerType.Buff;
 
     // 计数器：层数 = 被扣住的「最大能量」点数。
     // 1 层 → 召唤者最大能量 -1，死亡时归还 1；

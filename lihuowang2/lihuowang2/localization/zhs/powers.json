@@ -21,8 +21,8 @@
   "LIHUOWANG2_POWER_DAN_LU_POWER.description": "每个回合开始时，随机将 1 张丹药加入手牌。",
   "LIHUOWANG2_POWER_DAN_LU_POWER.smartDescription": "每个回合开始时，随机将 1 张丹药加入手牌。",
   "LIHUOWANG2_POWER_SHA_QI_POWER.title": "煞气",
-  "LIHUOWANG2_POWER_SHA_QI_POWER.description": "你的攻击会额外增加[gold]煞气[/gold]层数的伤害。[blue]5[/blue]层及以上时，每回合开始时对所有敌人施加[blue]1[/blue]层[red]易伤[/red]，你无法从卡牌中获得[gold]格挡[/gold]。",
-  "LIHUOWANG2_POWER_SHA_QI_POWER.smartDescription": "你的攻击会额外增加[gold]煞气[/gold]层数的伤害。[blue]5[/blue]层及以上时，每回合开始时对所有敌人施加[blue]1[/blue]层[red]易伤[/red]，你无法从卡牌中获得[gold]格挡[/gold]。",
+  "LIHUOWANG2_POWER_SHA_QI_POWER.description": "你的攻击会额外增加[gold]煞气[/gold]层数的伤害。[blue]3[/blue]层及以上时，你无法从卡牌中获得[gold]格挡[/gold]；[blue]5[/blue]层及以上时，每回合开始时对所有敌人施加[blue]1[/blue]层[red]易伤[/red]。",
+  "LIHUOWANG2_POWER_SHA_QI_POWER.smartDescription": "你的攻击会额外增加[gold]煞气[/gold]层数的伤害。[blue]3[/blue]层及以上时，你无法从卡牌中获得[gold]格挡[/gold]；[blue]5[/blue]层及以上时，每回合开始时对所有敌人施加[blue]1[/blue]层[red]易伤[/red]。",
   "LIHUOWANG2_POWER_XIU_ZHEN_POWER.title": "先天一炁",
   "LIHUOWANG2_POWER_XIU_ZHEN_POWER.description": "死亡时，召唤者恢复等量层数的[gold]最大能量[/gold]。",
   "LIHUOWANG2_POWER_XIU_ZHEN_POWER.smartDescription": "死亡时，召唤者恢复等量层数的[gold]最大能量[/gold]。",
@@ -67,5 +67,11 @@
   "LIHUOWANG2_POWER_LIHUOWANG2_LISUI_GONGZHU_POWER.smartDescription": "[red]触手[/red]牌造成的[gold]伤害[/gold]与[gold]格挡[/gold]+[blue]{Amount}[/blue]。",
   "LIHUOWANG2_POWER_BIAN_LIAN_POWER.title": "变脸",
   "LIHUOWANG2_POWER_BIAN_LIAN_POWER.description": "不会成为攻击目标。\n回合开始时层数-1，归零或你主动打出攻击牌时结束。",
-  "LIHUOWANG2_POWER_BIAN_LIAN_POWER.smartDescription": "不会成为攻击目标。\n回合开始时层数-1，归零或你主动打出攻击牌时结束。"
+  "LIHUOWANG2_POWER_BIAN_LIAN_POWER.smartDescription": "不会成为攻击目标。\n回合开始时层数-1，归零或你主动打出攻击牌时结束。",
+  "LIHUOWANG2_POWER_SONG_JING_POWER.title": "诵经",
+  "LIHUOWANG2_POWER_SONG_JING_POWER.description": "诵念佛经，每回合结束时+1。[blue]10[/blue]层功德圆满。",
+  "LIHUOWANG2_POWER_SONG_JING_POWER.smartDescription": "诵念佛经，每回合结束时+1。[blue]10[/blue]层功德圆满。",
+  "LIHUOWANG2_POWER_XING_SHAN_POWER.title": "行善",
+  "LIHUOWANG2_POWER_XING_SHAN_POWER.description": "每回合开始时，随机移除一个友方角色身上的一层负面状态，自身失去1点生命。",
+  "LIHUOWANG2_POWER_XING_SHAN_POWER.smartDescription": "每回合开始时，随机移除一个友方角色身上的一层负面状态，自身失去1点生命。"
 }

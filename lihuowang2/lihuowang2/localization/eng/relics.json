@@ -9,7 +9,7 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.description": "At the start of each turn, add [blue]1[/blue] [red]Doubt[/red] to your hand. Whenever you draw [blue]3[/blue] [red]Doubts[/red], gain [gold]Mania[/gold] for [blue]1[/blue] turn.\nEach turn, you may play [blue]1[/blue] [red]Curse[/red], then gain [blue]1[/blue] [gold]Energy[/gold].",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_YIJI_XINSU.flavor": "(Text TBD)",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.title": "Ascension Counter (Max 10)",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.description": "At the start of each combat, gain [gold]Regeneration[/gold] based on your Ascension count, starting at [blue]8[/blue] stacks. Each additional Ascension increases [gold]Regeneration[/gold] by half of the previous increase.",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.description": "At the start of each combat, gain [gold]Regeneration[/gold] based on your Ascension count, starting at [blue]8[/blue] stacks. Each additional Ascension increases [gold]Regeneration[/gold] by half of the previous increase.\nEach Ascension also increases [gold]Da Qian Lu[/gold] card damage by [blue]10%[/blue].",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DENGJIE.flavor": "Thanks to the top donator Bahuo for the rocket gift",
   "LIHUOWANG2_RELIC_LIHUOWANG2_BLACKHAND.title": "Black Hand",
   "LIHUOWANG2_RELIC_LIHUOWANG2_BLACKHAND.description": "Whenever you apply [red]Ignite[/red], apply [blue]1[/blue] additional layer.",
