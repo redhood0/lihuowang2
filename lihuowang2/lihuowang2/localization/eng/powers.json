@@ -73,5 +73,8 @@
   "LIHUOWANG2_POWER_SONG_JING_POWER.smartDescription": "Gain [blue]1[/blue] stack at the end of each of your turns. At [blue]10[/blue] stacks, deal [blue]999[/blue] damage to a random enemy.",
   "LIHUOWANG2_POWER_XING_SHAN_POWER.title": "Good Deeds",
   "LIHUOWANG2_POWER_XING_SHAN_POWER.description": "At the start of each of your turns, remove [blue]1[/blue] stack of a random debuff from a random allied character (teammates included; minions are unaffected), then lose [blue]1[/blue] HP.",
-  "LIHUOWANG2_POWER_XING_SHAN_POWER.smartDescription": "At the start of each of your turns, remove [blue]1[/blue] stack of a random debuff from a random allied character (teammates included; minions are unaffected), then lose [blue]1[/blue] HP."
+  "LIHUOWANG2_POWER_XING_SHAN_POWER.smartDescription": "At the start of each of your turns, remove [blue]1[/blue] stack of a random debuff from a random allied character (teammates included; minions are unaffected), then lose [blue]1[/blue] HP.",
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.title": "Power of Bewilderment",
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.description": "The [red]Bewilderment[/red] curse can be played: stun a random enemy and gain [blue]1[/blue] Energy.",
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.smartDescription": "The [red]Bewilderment[/red] curse can be played: stun a random enemy and gain [blue]1[/blue] Energy."
 }

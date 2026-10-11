@@ -20,7 +20,9 @@ namespace lihuowang2.Cards;
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2CurseZhalu : ModCardTemplate
 {
-    private const int energyCost = -2;
+    // 费用 -1：与官方诅咒（疑虑 / Doubt 等，见 _sts2_all.cs:139967 的 base(-1, ...)）保持一致，
+    // 卡面显示的是诅咒那种"无费用"的观感。
+    private const int energyCost = -1;
     private const CardType type = CardType.Curse;
     private const CardRarity rarity = CardRarity.Curse;
     private const TargetType targetType = TargetType.None;
@@ -44,7 +46,10 @@ public class lihuowang2CurseZhalu : ModCardTemplate
     // 免得营火之类把它升成没有任何实际效果的「炸炉+」。
     public override int MaxUpgradeLevel => 0;
 
-    // 诅咒无法打出
+    // 诅咒无法打出。
+    // 与下面的 Unplayable 关键字是**双保险**：
+    //   · 关键字负责让卡面直接显示「不能被打出」，并且引擎的 CanPlay 会按它拦截；
+    //   · 这一条负责任何直接问 IsPlayable 的路径（例如以后新增的自动打出逻辑）。
     protected override bool IsPlayable => false;
 
     // 视觉卡池（引擎：CardModel.FrameMaterial => VisualCardPool.FrameMaterial）。
@@ -56,9 +61,14 @@ public class lihuowang2CurseZhalu : ModCardTemplate
     // 告诉引擎：回合结束时若此牌仍在手牌中，调用 OnTurnEndInHand。
     public override bool HasTurnEndInHandEffect => true;
 
-    // 虚无：让引擎在 OnTurnEndInHand 跑完后的结算阶段把这张牌消耗掉。
-    // 注意：引擎在"回合结束手牌"这条路径只认 Ethereal，写 Exhaust 关键字不会消耗。
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
+    // 关键字：
+    //   · Unplayable（不能被打出）—— 官方诅咒「疑虑」用的就是这一套：卡面会打出「不能被打出」标签，
+    //     且引擎的 CanPlay 里有一条 `Keywords.Contains(CardKeyword.Unplayable)` 拦截
+    //     （见 _sts2_all.cs:75692，另一条才是 IsPlayable / _sts2_all.cs:75708）。
+    //   · Ethereal（虚无）—— 让引擎在 OnTurnEndInHand 跑完后的结算阶段把这张牌消耗掉。
+    //     注意：引擎在"回合结束手牌"这条路径只认 Ethereal，写 Exhaust 关键字不会消耗。
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Unplayable, CardKeyword.Ethereal];
 
     // 回合结束若此牌在手牌中：炸毁丹炉，并失去 1 点生命。
     protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)

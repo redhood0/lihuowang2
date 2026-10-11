@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Enchantments;
 using lihuowang2.Characters;
@@ -15,7 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Cards;
 
-// 修假：1 费稀有技能 —— 给随机 1 张手牌附魔（附魔效果本身也是随机的）。
+// 修假：1 费稀有技能 —— 给随机 2 张手牌附魔（附魔效果本身也是随机的）。
 //
 // 三条**不写进卡面**的设定：
 //   1. 附魔效果随机：从 EnchantmentPool 里挑一个"官方 CanEnchant 说能附到那张牌上"的
@@ -25,7 +26,7 @@ namespace lihuowang2.Cards;
 //   3. 手里没有可附魔的牌时什么都不发生（不会空转、也不消耗别的资源）；
 //   4. 目标牌身上若已经有"战斗内临时附魔"，会**先把它清掉，再随机一个新附魔**（永久附魔不动，见 HasTemporaryEnchantment）。
 //
-// 升级：从"随机 1 张"变成"随机 2 张"（每张各随机一个附魔）。
+// 升级：附魔张数 2 → 4（每张各随机一个附魔）。张数走卡面变量 Enchant，见 CanonicalVars / OnUpgrade。
 //
 // 选牌潜规则（不写进卡面，见 PickTargets）：
 //   · 永久附魔的牌**一律不碰** —— 不清、不覆盖、也不占名额（那是牌组里攒下的东西，不该被这张战斗内的一次性牌动到）；
@@ -46,6 +47,8 @@ public class lihuowang2XiuJia : ModCardTemplate
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 
+    // ===== 效果参数（都集中在这里，想调就改这几行）=====
+
     // 附魔强度：官方附魔都用 Amount 表示强度
     // （Adroit 给的格挡、Sharp/Vigorous 给的伤害、Nimble 给的格挡、Sown 给的能量、Swift 抽的牌数……）。
     // 当前 2 —— 吃 Amount 的这批翻倍变强；不吃 Amount 的那批（Corrupted/Instinct 的倍率、
@@ -53,9 +56,12 @@ public class lihuowang2XiuJia : ModCardTemplate
     // 想让随机附魔更强/更弱就改这一个数。
     private const decimal EnchantAmount = 2m;
 
-    // 本牌一次附魔几张：基础 1 张，升级 2 张。
-    private const int BaseEnchantCount = 2;
-    private const int UpgradedEnchantCount = 3;
+    // 附魔张数：初始 2 张，升级 +2 → 4 张。
+    // 走卡面变量（DynamicVar），所以描述里用 {Enchant:diff()} 就能自动显示当前值
+    // （未升级显示 2、升级后显示 4），不用在文案里手写数字。
+    private const string EnchantVar = "Enchant";
+    private const decimal EnchantBase = 2m;
+    private const decimal EnchantUpgradeBonus = 2m;
 
     // 可随机的官方附魔池（都在 MegaCrit.Sts2.Core.Models.Enchantments）。
     // 只收"有实际效果"的，故意排除：
@@ -84,6 +90,14 @@ public class lihuowang2XiuJia : ModCardTemplate
     {
     }
 
+    // 卡面变量：附魔张数（描述里用 {Enchant:diff()} 取这里的值）。
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DynamicVar(EnchantVar, EnchantBase)];
+
+    // 升级：附魔张数 +2（2 → 4）。改增量就改 EnchantUpgradeBonus。
+    protected override void OnUpgrade()
+        => DynamicVars[EnchantVar].UpgradeValueBy(EnchantUpgradeBonus);
+
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         Player? player = Owner.Creature.Player;
@@ -95,9 +109,8 @@ public class lihuowang2XiuJia : ModCardTemplate
         if (hand.Count == 0)
             return Task.CompletedTask;   // 没有手牌：什么都不发生
 
-        // 基础 1 张 / 升级 2 张；选谁见 PickTargets
-        List<CardModel> targets = PickTargets(
-            player, hand, IsUpgraded ? UpgradedEnchantCount : BaseEnchantCount);
+        // 附魔张数：卡面变量 Enchant（初始 2 张 / 升级 4 张）；选谁见 PickTargets
+        List<CardModel> targets = PickTargets(player, hand, (int)DynamicVars[EnchantVar].BaseValue);
 
         List<CardModel> enchanted = [];
         foreach (CardModel card in targets)

@@ -44,7 +44,7 @@
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.brokenDescription": "嘿嘿嘿，节日快乐，骰子我先逃走了~",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_DICE18.flavor": "似乎是易医生桌上的一个骰子，底部写着义乌制造",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.title": "瓶女",
-  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.description": "[gold]右键[/gold]：[gold]消耗[/gold][blue]1[/blue]点能量，[gold]预见[/gold][blue]4[/blue]。处于[red]丹阳子化[/red]时免费。",
+  "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.description": "[gold]右键[/gold]：[gold]消耗[/gold][blue]1[/blue]点能量，[gold]预见[/gold][blue]4[/blue]（每回合1次）。处于[red]丹阳子化[/red]时免费。",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_PING_WA.flavor": "一个青花瓷瓶上有一个女娃娃的头在朝你笑，看久了还怪可爱的...",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_JIAN_TIAN_SI.title": "监天司令牌",
   "LIHUOWANG2_RELIC_LIHUOWANG2_RELIC_JIAN_TIAN_SI.description": "在战斗结束时获得[gold]赏金[/gold]。\n普通怪物：[blue]{NormalGold}[/blue]金币。\n精英怪物：[blue]{EliteGold}[/blue]金币。\nBOSS：[blue]{BossGold}[/blue]金币。",

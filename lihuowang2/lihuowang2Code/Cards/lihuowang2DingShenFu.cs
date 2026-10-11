@@ -108,7 +108,7 @@ public class lihuowang2DingShenFu : ModCardTemplate
     // 所以基础版没有保留、升过级的才有；卡面的关键字标记由引擎自动刷新（KeywordsChanged）。
     protected override void OnUpgrade()
     {
-        // EnergyCost.UpgradeBy(-1);
-        AddKeyword(CardKeyword.Retain);
+        EnergyCost.UpgradeBy(-1);
+        // AddKeyword(CardKeyword.Retain);
     }
 }

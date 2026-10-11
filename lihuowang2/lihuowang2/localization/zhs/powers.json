@@ -73,5 +73,8 @@
   "LIHUOWANG2_POWER_SONG_JING_POWER.smartDescription": "诵念佛经，每回合结束时+1。[blue]10[/blue]层功德圆满。",
   "LIHUOWANG2_POWER_XING_SHAN_POWER.title": "行善",
   "LIHUOWANG2_POWER_XING_SHAN_POWER.description": "每回合开始时，随机移除一个友方角色身上的一层负面状态，自身失去1点生命。",
-  "LIHUOWANG2_POWER_XING_SHAN_POWER.smartDescription": "每回合开始时，随机移除一个友方角色身上的一层负面状态，自身失去1点生命。"
+  "LIHUOWANG2_POWER_XING_SHAN_POWER.smartDescription": "每回合开始时，随机移除一个友方角色身上的一层负面状态，自身失去1点生命。",
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.title": "迷惘之力",
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.description": "[red]迷惘[/red]可以被主动打出：随机击晕一个敌人并获得[blue]1[/blue]点能量。",
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.smartDescription": "「迷惘」可以被主动打出：随机击晕一个敌人并获得[blue]1[/blue]点能量。"
 }

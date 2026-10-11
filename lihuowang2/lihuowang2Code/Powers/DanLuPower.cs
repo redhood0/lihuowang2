@@ -10,15 +10,16 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Powers;
 
-// 丹炉：每个自己回合开始时随机发一颗丹药进手牌。
+// 丹炉：每个自己回合开始时，**每一层各**随机发一颗丹药进手牌（打出 2 张「丹炉」= 2 层 = 每回合开炉 2 次）。
 // 开炉次数越多越容易"炸炉"（炸炉的效果由炸炉卡自己的 OnTurnEndInHand 结算：炸毁本 power）。
 [RegisterPower]
 public class DanLuPower : ModPowerTemplate
 {
     // 类型：Buff
     public override PowerType Type => PowerType.Buff;
-    // 单层、不叠加
-    public override PowerStackType StackType => PowerStackType.Single;
+    // 可叠加：层数可见、每次施加累加（引擎 PowerStackType 只有 None / Counter / Single 三种，
+    // 可叠加就是 Counter —— 模组其它叠加型能力如煞气、迷惘之力都是它）。
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: $"{Entry.ResPath}/images/powers/danlu32.png",
@@ -41,8 +42,16 @@ public class DanLuPower : ModPowerTemplate
         }
 
         Flash();
-        _turns++;
-        await GiveReward(choiceContext, player);
+
+        // 每一层各触发一次：层数 = 本回合要开几次炉。
+        // 每次开炉都独立抽一次奖、也各自把「开炉次数」+1，所以层数越多炸炉概率涨得越快
+        // （与"开炉次数越多越容易炸炉"的设定一致）。
+        int stacks = (int)Amount;
+        for (int i = 0; i < stacks; i++)
+        {
+            _turns++;
+            await GiveReward(choiceContext, player);
+        }
 
         await base.AfterPlayerTurnStart(choiceContext, player);
     }
