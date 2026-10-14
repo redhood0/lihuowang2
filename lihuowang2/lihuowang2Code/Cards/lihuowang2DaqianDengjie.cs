@@ -28,8 +28,10 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     // 绝境爆发给的无实体层数。
-    // ⚠ 改这个数字时，记得同步 cards.json 里本牌描述（中英各 .description / .smartDescription）的
-    //   「[blue]N[/blue]层无实体」——本地化文本里的数字是手写的，不会跟着代码走。
+    // ⚠ 这个数字是手写常量，cards.json 里的描述（中英各 .description / .smartDescription）也手写了
+    //   「[blue]N[/blue]层无实体」——改常量时要一起改文案。
+    //   （易伤层数 / 抽牌数 / 血量门槛已经改成卡面变量，描述里写 {VulnerablePower:diff()} 这类会自动跟随，
+    //     不用再手写数字；剩下的「再生 8 层」「开局给 2 点能量」也还是手写的。）
     private const int IntangibleStacks = 2;
 
     // 打出后消耗
@@ -39,12 +41,16 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     // Draw = 抽牌数(4，升级 +2)；Threshold = 血量低于该值触发绝境(8，升级 +2)；
-    // Energy = 绝境爆发获得的能量(2)。描述里出现的每个 {名字} 都必须在 CanonicalVars 里有同名变量，
+    // Energy = 绝境爆发获得的能量(2)；Vulnerable = 给所有敌人的易伤层数(10，升级不变)。
+    // 描述里出现的每个 {名字} 都必须在 CanonicalVars 里有同名变量，
     // 否则 SmartFormat 会抛异常，整条描述会退化成未替换的原文。
+    // PowerVar<T> 的默认变量名就是 power 类型名（VulnerablePower），所以描述里写 {VulnerablePower:diff()}，
+    // 模板按同名访问（DynamicVars.Vulnerable）—— 两处必须一致（与模组「大千录之臂」「肋间」同款写法）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Draw", 4m),
         new DynamicVar("Threshold", 8m),
-        new EnergyVar(2)
+        new EnergyVar(2),
+        new PowerVar<VulnerablePower>(10m)
     ];
 
     // 悬停提示：描述里出现的易伤 / 无实体 / 再生，以及登阶遗物。
@@ -70,9 +76,10 @@ public class lihuowang2DaqianDengjie : ModCardTemplate
         // 1. 抽牌
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].BaseValue, player);
 
-        // 2. 所有敌人 99 层易伤
+        // 2. 所有敌人 N 层易伤（N = 卡面变量 Vulnerable，当前 10；描述里同源，改一处即可）
         IReadOnlyList<Creature> enemies = Owner.Creature.CombatState!.Enemies;
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, enemies, 99m, Owner.Creature, this);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, enemies,
+            DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
 
         // 3. 血量低于门槛：绝境爆发（只有满足条件才播 BGM）
         if (Owner.Creature.CurrentHp > (int)DynamicVars["Threshold"].BaseValue)

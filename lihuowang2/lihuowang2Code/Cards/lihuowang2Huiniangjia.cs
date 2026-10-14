@@ -69,12 +69,16 @@ public class lihuowang2Huiniangjia : ModCardTemplate
             .WithHitFx("vfx/vfx_fire_burst")   // 命中特效：火焰爆燃（点燃叠满后的爆发）
             .Execute(choiceContext);
         
-        // BGM：回娘家（离火）
-        Lihuowang2MusicUtil.PlayCardMusic("lihuo.mp3");
-        
-        // 3. 若因此击杀：把一张「悔恨」加入牌组
+        // 3. 若因此击杀：把一张「悔恨」加入牌组，并播"回娘家（离火）"BGM
         if (target.IsDead && player != null)
+        {
             await CardPileCmd.AddCursesToDeck([ModelDb.Card<Regret>()], player);
+
+            // BGM 放在"击杀得悔恨"这里：之前写在伤害之后、击杀判定之前，等于"只要打出就放"，
+            // 而且击杀即战斗结束，Combat 作用域的清理在那一刻已经跑过 → 音乐挂不上清理、会一直响。
+            // 改用 Room 作用域：离开战斗房（= 战斗结束 / 回事件房）或离开事件房时由引擎自动停掉，不会漏。
+            Lihuowang2MusicUtil.PlayRoomMusic("lihuo.mp3");
+        }
     }
 
     // 升级：倍率 8 → 10
