@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -9,7 +8,6 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -34,9 +32,9 @@ public class lihuowang2BreakSwordAttack : ModCardTemplate
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromPower<WeakPower>()];
 
-    // Damage = 伤害（6，升级 +3）；Weak = 目标正在攻击时给予的虚弱（1，升级 +1 → 2）
+    // Damage = 伤害（9，升级 +1 → 10）；Weak = 目标准备攻击时给予的虚弱（1，升级 +1 → 2）
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6m, ValueProp.Move),
+        new DamageVar(9m, ValueProp.Move),
         new DynamicVar("Weak", 1m)
     ];
 
@@ -44,38 +42,38 @@ public class lihuowang2BreakSwordAttack : ModCardTemplate
     {
     }
 
-    // 破剑式：造成基础伤害；若目标本回合的意图是攻击（含单次/多次攻击），额外造成 6 点伤害并施加 1 层虚弱。
+    // 破剑式：造成 {Damage} 点伤害；若目标本回合准备攻击，再给予 {Weak} 层虚弱。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         Creature target = cardPlay.Target!;
 
-        // 读取敌人意图：Monster.NextMove.Intents 里是否有 AttackIntent（Single/MultiAttack 都是它的子类）。
-        bool intendsToAttack = target.Monster?.NextMove?.Intents.Any(intent => intent is AttackIntent) ?? false;
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this, cardPlay)
+            .Targeting(target)
+            .WithHitFx("vfx/vfx_attack_slash")   // 命中特效：斩击（破剑式）
+            .Execute(choiceContext);
 
-        if (intendsToAttack)
+        // 虚弱降低的是目标**打出**的伤害，不会像易伤那样反过来放大本牌这一下，
+        // 所以放在伤害之后给不影响数值；目标若已被这一下打死就不再施加（没意义）。
+        if (!target.IsDead && IsIntendingToAttack(target))
         {
             await PowerCmd.Apply<WeakPower>(choiceContext, target,
                 DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+        }
+    }
 
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue + 6m)
-                .FromCard(this, cardPlay)
-                .Targeting(target)
-                .WithHitFx("vfx/vfx_attack_slash")   // 命中特效：斩击（破剑式）
-                .Execute(choiceContext);
-        }
-        else
-        {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this, cardPlay)
-                .Targeting(target)
-                .WithHitFx("vfx/vfx_attack_slash")   // 命中特效：斩击（破剑式）
-                .Execute(choiceContext);
-        }
+    // 目标本回合是否"准备攻击" —— 与「偷袭」用同一套判定（官方 MonsterModel.IntendsToAttack，
+    // 即 NextMove 的意图里含 Attack 或 DeathBlow）。
+    // 比原来自己判断 `intent is AttackIntent` 更稳：官方这个还覆盖"致命一击"，
+    // 两张牌的判定口径也就统一了。
+    private static bool IsIntendingToAttack(Creature target)
+    {
+        return target.Monster?.IntendsToAttack ?? false;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3);
-        // DynamicVars["Weak"].UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(1);    // 9 → 10
+        DynamicVars["Weak"].UpgradeValueBy(1);   // 1 → 2
     }
 }

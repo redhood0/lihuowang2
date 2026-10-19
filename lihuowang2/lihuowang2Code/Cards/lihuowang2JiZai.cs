@@ -27,11 +27,14 @@ namespace lihuowang2.Cards;
 //   · 构造函数里的费用传 -1（引擎据此把卡面渲染成 X，并在打出时消耗掉全部能量）；
 //   · 打出时用 ResolveEnergyXValue() 取回"这张牌实际消耗了多少能量"= X。
 //
-// 先祖卡的两处登记（与已有的「岁岁公主」完全一致）：
+// 先祖卡的两处登记：
 //   · [RegisterCard(typeof(lihuowang2CardPool))] —— 注册进本角色卡池。
 //     先祖卡不会进随机奖励池（引擎在 CardFactory 里就按 Ancient / Event 稀有度排除了）；
-//   · [RegisterDustyTomeCard(typeof(lihuowang2Character))] —— 登记为「尘封古籍」（达弗事件里的
-//     先古遗物 DustyTome）的候选。不登记的话它不会出现在那件遗物的候选池里。
+//   · [RegisterDustyTomeCard(typeof(lihuowang2Character))] —— 登记为官方遗物「尘封魔典」
+//     （DustyTome，达弗事件里那件先古遗物）的候选。
+//     ⚠ 本角色**只有这一张**登记进那个候选池：另一张先祖卡「岁岁公主」故意没登记
+//     （它是「黑太岁」的超越卡，官方逻辑本就排除超越卡），否则尘封魔典会给错牌。
+//     至少要有一张登记，候选池为空会让 DustyTome.SetupForPlayer 取 .Id 时空引用崩溃。
 [RegisterCard(typeof(lihuowang2CardPool))]
 [RegisterDustyTomeCard(typeof(lihuowang2Character))]
 public sealed class lihuowang2JiZai : ModCardTemplate

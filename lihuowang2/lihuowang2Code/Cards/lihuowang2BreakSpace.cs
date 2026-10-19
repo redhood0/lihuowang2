@@ -22,7 +22,7 @@ namespace lihuowang2.Cards;
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2BreakSpace : ModCardTemplate
 {
-    private const int energyCost = 3;
+    private const int energyCost = 2;
     private const CardType type = CardType.Attack;
     private const CardRarity rarity = CardRarity.Rare;
     private const TargetType targetType = TargetType.AllEnemies;
@@ -39,7 +39,7 @@ public class lihuowang2BreakSpace : ModCardTemplate
         [HoverTipFactory.FromCard<Void>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(33m, ValueProp.Move)
+        new DamageVar(21m, ValueProp.Move)
     ];
 
     public lihuowang2BreakSpace() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
@@ -74,6 +74,6 @@ public class lihuowang2BreakSpace : ModCardTemplate
     // 升级：伤害 30 → 40
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(11);
+        DynamicVars.Damage.UpgradeValueBy(5);
     }
 }

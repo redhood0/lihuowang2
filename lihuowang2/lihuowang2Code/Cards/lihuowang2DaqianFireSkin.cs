@@ -41,9 +41,9 @@ public class lihuowang2DaqianFireSkin : ModCardTemplate
         DaqianTags.DaqianLu
     ];
 
-    // 悬停提示：点燃效果
+    // 悬停提示：点燃效果 + 官方的「灼伤」卡面预览
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromPower<DianranPower>()];
+        [HoverTipFactory.FromPower<DianranPower>(), HoverTipFactory.FromCard<Burn>()];
 
     // 卡图资源。对应 lihuowang2/images/cards/lihuowang2DaqianFireSkin.png（缺失时用占位图）。
     public override CardAssetProfile AssetProfile => new(

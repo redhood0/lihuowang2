@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models.Relics;
 using lihuowang2.Characters;
+using lihuowang2.Patches;
 using STS2RitsuLib;
 using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop;
@@ -58,6 +59,11 @@ public partial class Entry
         ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(DemonTongue));       // 恶魔之舌（稀有）
         ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(RuinedHelmet));      // 损毁头盔（稀有）
         ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(Brimstone));         // 硫磺（商店）
+
+        // 补丁：「污浊药水」原本用 `!c.IsPet` 排除宠物，而 MinionLib 的修真随从正是宠物，
+        // 于是药水只伤玩家和怪物、随从毫发无损。这里把修真随从额外加进伤害目标。
+        // 打不上只会保持官方行为（内部已 try/catch + 日志），不影响其它功能。
+        FoulPotionHitsXiuZhenMinionsPatch.Apply(Logger);
 
         // 注：曾经给「怜悯」的灼烧做过"可指定友方目标并给目标回血"（6 个 vanilla 补丁），已按需求回退，
         // 现在灼烧回到官方行为（不可指定目标，打出后固定回自己血）；相关经验记在 AGENTS.md 的"补丁备忘"里。

@@ -15,14 +15,12 @@
   "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
   "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "The half you know is lying to the other half. Take my eye or leave it - your choice.",
 
-  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "Refine it, swap it - it is still this rotten body. Do as you like, just do not ask if it hurts.",
-  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
-  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "Pain is good. Only what has burned once deserves to remain. I will give you new bones - dare you take them?",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "Self-harm!? Hurting yourself is bad! Very bad! Here, try this!",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char.disabled": "Suit yourself. I have cut myself plenty of times before. (Li Huowang line, unused)",
 
-  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "...Why are you backing away? I do not bite.",
-  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",
-  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "Eek! Do not come so close! ...But here, take this shiny one - take it and go, and do not dirty my things!",
-  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/nonupeipe/nonupeipe_giggle",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "Come here, little Daoist. I have a gift for you. But before that - take that red bamboo slip farther away.",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient.sfx": "event:/sfx/npcs/nonupeipe/nonupeipe_giggle",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char.disabled": "Why back off so far? All I have on me is one bamboo slip. (Li Huowang line, unused)",
 
   "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "Another performer. You people just love watching others dance.",
   "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "Continue",

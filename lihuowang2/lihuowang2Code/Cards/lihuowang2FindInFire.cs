@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -36,6 +37,11 @@ public class lihuowang2FindInFire : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Draw", 3m)
     ];
+
+    // 悬停提示：描述里点名了官方的「灼烧」诅咒牌，给一张卡面预览
+    // （与「回娘家」展示 Regret、「破碎虚空」展示 Void 用的是同一种写法）。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromCard<Burn>()];
 
     public lihuowang2FindInFire() : base(energyCost, type, rarity, targetType, shouldShowInCardLibrary)
     {

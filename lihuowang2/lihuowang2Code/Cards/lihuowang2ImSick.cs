@@ -39,12 +39,12 @@ public class lihuowang2ImSick : ModCardTemplate
     {
         await PowerCmd.Apply<CrazyPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
 
-        // 洗入：疯狂（自建无色）+ 疑虑 + 悔恨 + 扭曲（随机位置洗进抽牌堆）
+        // 洗入：疯狂（自建无色）+ 疑虑 + 悔恨 + 愧疚（随机位置洗进抽牌堆）
         await CardPileCmd.AddToCombatAndPreview<Doubt>(Owner.Creature, PileType.Draw, 1, Owner.Creature.Player,
             CardPilePosition.Random);
         await CardPileCmd.AddToCombatAndPreview<Regret>(Owner.Creature, PileType.Draw, 1, Owner.Creature.Player,
             CardPilePosition.Random);
-        await CardPileCmd.AddToCombatAndPreview<Writhe>(Owner.Creature, PileType.Draw, 1, Owner.Creature.Player,
+        await CardPileCmd.AddToCombatAndPreview<Guilty>(Owner.Creature, PileType.Draw, 1, Owner.Creature.Player,
             CardPilePosition.Random);
         await CardPileCmd.AddToCombatAndPreview<lihuowang2Madness>(Owner.Creature, PileType.Draw, 1, Owner.Creature.Player,
             CardPilePosition.Random);

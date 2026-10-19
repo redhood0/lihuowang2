@@ -39,7 +39,7 @@ public class lihuowang2ZiHuiJianZhan : ModCardTemplate
 
     // 数值：Damage = 伤害（6，升级 +2 → 8）；ShaQi = 获得煞气（1，升级 +1 → 2）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6m, ValueProp.Move),
+        new DamageVar(4m, ValueProp.Move),
         new DynamicVar("ShaQi", 1m)
     ];
 
@@ -63,7 +63,7 @@ public class lihuowang2ZiHuiJianZhan : ModCardTemplate
     // 升级：伤害 6 → 8；煞气 1 → 2
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2);
+        DynamicVars.Damage.UpgradeValueBy(1);
         DynamicVars["ShaQi"].UpgradeValueBy(1);
     }
 }

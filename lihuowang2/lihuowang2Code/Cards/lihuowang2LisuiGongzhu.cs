@@ -26,12 +26,15 @@ namespace lihuowang2.Cards;
 // 卡组里的初始卡「黑太岁」会被超越成这张牌（映射注册见 Lihuowang2Heitaisui 上的
 // [RegisterArchaicToothTranscendence]）。
 [RegisterCard(typeof(lihuowang2CardPool))]
-// 尘封古籍（达弗事件里的先古遗物）候选：本角色的先古卡必须在这里登记一份。
-// 否则 DustyTome.SetupForPlayer 的候选池 =「本角色先古卡 - 所有超越卡」= 空，
-// 取 .Id 时直接空引用崩溃，表现为进达弗事件卡住/报 NullReferenceException。
-// RitsuLib 的补丁会优先取这里登记的候选，从而绕开引擎那段会崩的逻辑
-// （见 STS2RitsuLib.Relics.Patches.DustyTomeSetupForPlayerPatch）。
-[RegisterDustyTomeCard(typeof(lihuowang2Character))]
+// ⚠ 这里**故意不**登记 [RegisterDustyTomeCard] —— 官方遗物「尘封魔典」(DustyTome)
+//   只应该给出「迷惘天道·季灾」，不该给出本牌。
+//   原因：官方 DustyTome.SetupForPlayer 的候选池本来就是「本角色先古卡 − 所有超越卡」，
+//   而本牌正是初始卡「黑太岁」的超越卡（映射见 Lihuowang2Heitaisui 上的
+//   [RegisterArchaicToothTranscendence]），所以官方逻辑本来就会把本牌排除掉；
+//   是 RitsuLib 的补丁优先读**显式登记**的候选，才把本牌混进了候选池。
+//   现在只有季灾登记了（见 lihuowang2JiZai），候选池非空，不会触发空池 NRE。
+//   （登记为空才会崩：DustyTome.SetupForPlayer 的候选池 = 空 → 取 .Id 时空引用。
+//   补丁见 STS2RitsuLib.Relics.Patches.DustyTomeSetupForPlayerPatch。）
 public sealed class lihuowang2LisuiGongzhu : ModCardTemplate
 {
     private const int energyCost = 1;

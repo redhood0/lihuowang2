@@ -75,6 +75,9 @@
   "LIHUOWANG2_POWER_XING_SHAN_POWER.description": "每回合开始时，随机移除一个友方角色身上的一层负面状态，自身失去1点生命。",
   "LIHUOWANG2_POWER_XING_SHAN_POWER.smartDescription": "每回合开始时，随机移除一个友方角色身上的一层负面状态，自身失去1点生命。",
   "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.title": "迷惘之力",
+  "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.title": "虚拟？现实",
+  "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.description": "每当你[gold]预见[/gold]，对一个随机敌人造成[blue]{Amount}[/blue]点伤害。",
+  "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.smartDescription": "每当你[gold]预见[/gold]，对一个随机敌人造成[blue]{Amount}[/blue]点伤害。",
   "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.description": "[red]迷惘[/red]可以被主动打出：随机击晕一个敌人并获得[blue]1[/blue]点能量。",
   "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.smartDescription": "「迷惘」可以被主动打出：随机击晕一个敌人并获得[blue]1[/blue]点能量。"
 }

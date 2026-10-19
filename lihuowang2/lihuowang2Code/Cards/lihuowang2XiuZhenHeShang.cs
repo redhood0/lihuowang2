@@ -63,21 +63,19 @@ public class lihuowang2XiuZhenHeShang : ModCardTemplate
     // 悬停提示：
     //  1. 随从「和尚」本身——卡面只写了召唤与最大能量的代价，这里补上它的血量与「唯一」规则
     //     （标题/描述走模组 cards 本地化表，图标直接用随从图）
-    //  2. 随从身上的「先天一炁」（最大能量的扣减与死亡归还）
-    //  3. 随从身上的「唯一」（已在场时不额外召唤、改为加血）
-    //  4. 随从身上的「诵经」（召唤自带 1 层，攒到 10 层就说「世尊」+ 对随机敌人砸 999 点，然后回到 1 层）
-    //  5. 随从身上的「行善」（每回合开始时随机给一个**友方角色**解一层负面状态，含双人模式的队友；不解随从）
+    //  2. 随从身上的「唯一」（已在场时不额外召唤、改为加血）
+    //  3. 随从身上的「行善」（每回合开始时随机给一个**友方角色**解一层负面状态，含双人模式的队友；不解随从）
     //     —— 卡面完全没提这两条，靠 hover 说明；说明文本走 powers 本地化表
-    //     （LIHUOWANG2_POWER_SONG_JING_POWER.* / LIHUOWANG2_POWER_XING_SHAN_POWER.*）。
+    //     （LIHUOWANG2_POWER_XING_SHAN_POWER.*）。
+    //  注：「先天一炁」与「诵经」已按要求**不出现在 hover 里**（只是不展示，机制照旧：
+    //      随从召唤时仍会上「先天一炁」扣 1 点最大能量、死亡归还；「诵经」仍会攒层并触发世尊）。
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         new HoverTip(
             new LocString("cards", $"{LocKeyPrefix}.minion.title"),
             MinionHoverDescription(),
             GD.Load<Texture2D>(HeShang.SpritePath)),
-        HoverTipFactory.FromPower<XiuZhenPower>(),
         HoverTipFactory.FromPower<UniquePower>(),
-        HoverTipFactory.FromPower<SongJingPower>(),
         HoverTipFactory.FromPower<XingShanPower>()
     ];
 

@@ -42,7 +42,7 @@ public class lihuowang2DaLiDan : ModCardTemplate
 
     // 数值：Block = 格挡（3，升级 +2 → 5）；Str = 力量（2，升级 +1 → 3）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(3m, ValueProp.Move),
+        new BlockVar(2m, ValueProp.Move),
         new DynamicVar("Str", 2m)
     ];
 
@@ -66,7 +66,7 @@ public class lihuowang2DaLiDan : ModCardTemplate
     // 升级：格挡 3 → 5；力量 2 → 3
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2);
+        DynamicVars.Block.UpgradeValueBy(1);
         DynamicVars["Str"].UpgradeValueBy(1);
     }
 }

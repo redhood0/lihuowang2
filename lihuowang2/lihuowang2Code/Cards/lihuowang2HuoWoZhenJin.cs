@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using lihuowang2.Characters;
 using lihuowang2.Powers;
@@ -30,8 +31,9 @@ public class lihuowang2HuoWoZhenJin : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     // 悬停提示：「怜悯」效果（由 HuoWoPower 实现：每回合可打出层数的灼伤，每张回 3 血）
+    // + 官方「灼伤」的卡面预览。
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromPower<HuoWoPower>()];
+        [HoverTipFactory.FromPower<HuoWoPower>(), HoverTipFactory.FromCard<Burn>()];
 
     // 卡图资源。对应 lihuowang2/images/cards/lihuowang2HuoWoZhenJin.png（缺失时用占位图）。
     public override CardAssetProfile AssetProfile => new(

@@ -15,14 +15,12 @@
   "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
   "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "你清楚的那一半，正在骗另一半。要不要我这一眼——你自己挑。",
 
-  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "换来换去，还是这副烂身子。你要炼就炼，别问我疼不疼。",
-  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
-  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "疼是好事。烧过一遍的东西才配留下来——我替你换一副骨头，你敢不敢接？",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "自残！？伤害自己不好！很坏！给你，试试这个！",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char.disabled": "随你。反正我割自己又不是头一回。（李火旺问句，暂不使用）",
 
-  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "……你退什么？我又不咬人。",
-  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",
-  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "呜！别靠那么近！……不过，这个亮晶晶的给你——拿着快走，别弄脏我的东西！",
-  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/nonupeipe/nonupeipe_giggle",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "过来吧小道士，我为你准备了礼物。不过在那之前，先把那个红色竹简拿远点。",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient.sfx": "event:/sfx/npcs/nonupeipe/nonupeipe_giggle",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char.disabled": "躲那么远干什么？我身上就一卷竹简。（李火旺问句，暂不使用）",
 
   "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "又是唱戏的。你们这些人，就爱把人当戏看。",
   "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "继续",

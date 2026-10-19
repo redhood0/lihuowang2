@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -21,6 +23,10 @@ public class lihuowang2Relic_HuoLian : ModRelicTemplate
         IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png");
+
+    // 悬停提示：描述里点名了官方的「灼伤」，给一张卡面预览。
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromCard<Burn>()];
 
     // 最大能量 +1（持有期间一直生效，等价原版 energyMaster +1）。
     // ⚠ 必须判 player != Owner：引擎给每个玩家算最大能量时（PlayerCombatState.MaxEnergy）
