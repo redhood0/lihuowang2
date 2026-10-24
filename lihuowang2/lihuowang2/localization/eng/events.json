@@ -89,5 +89,16 @@
   "LIHUOWANG2_EVENT_LIHUOWANG2_SHANGJI_GUANKOU.pages.RELIC_END.description": "As the eye vanishes, you come to know this secret",
   "LIHUOWANG2_EVENT_LIHUOWANG2_SHANGJI_GUANKOU.pages.HEAL_END.description": "As the eye vanishes, you come to know this secret",
   "LIHUOWANG2_EVENT_LIHUOWANG2_SHANGJI_GUANKOU.pages.LEAVE_END.description": "You pay the third eye no further mind, turn, and dive back into the pool, swimming for the surface.",
-  "LIHUOWANG2_EVENT_LIHUOWANG2_ZHENGDE_TEMPLE.pages.DOG_END.description": "Follow me if you want. You'll make a fine [jitter]poison tester[/jitter]. Since you love mantou so much, I'll call you \"Mantou\" from now on..."
+  "LIHUOWANG2_EVENT_LIHUOWANG2_ZHENGDE_TEMPLE.pages.DOG_END.description": "Follow me if you want. You'll make a fine [jitter]poison tester[/jitter]. Since you love mantou so much, I'll call you \"Mantou\" from now on...",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.title": "The Great Ship",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.description": "Beihai's new port. Xu Shou's white cruise liner lies at anchor here.\n\nThe prow is vast and blunt, like a fat-headed fish resting on the water, and the hull is a single uniform wood-yellow. It looms like a mountain — oppressive in its sheer weight.\n\nAccording to Ji Zai, if he kills Doumu's Xinput, he can seize Doumu's [purple]true-and-false heavenly dao[/purple].\n\nBut at the same time, you remember the [gold]bargain[/gold] they offered.",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.options.ACCEPT.title": "(Accept the bargain)",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.options.ACCEPT.description": "Gain [gold]250[/gold] gold. Add a [purple]Regret[/purple] to your deck.",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.options.FIGHT.title": "(He must die!!!)",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.options.FIGHT.description": "A [red]grueling fight[/red]. Win to obtain a [gold]random Rare relic[/gold].",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.TRADE_END.description": "You accept the bargain, and they pay you richly as promised.\n\n[purple]But is this really all right?[/purple]",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.VICTORY.description": "At last the thing falls, and the sea grows calm again.\n\nJi Zai's people step out of the shadows and drop your payment at your feet.",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.VICTORY.options.TAKE.title": "(Take the payment)",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.VICTORY.options.TAKE.description": "Obtain [gold]2 random Rare relics[/gold] and [gold]88[/gold] gold.",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.VICTORY_END.description": "You pick the thing up and walk away from the docks."
 }

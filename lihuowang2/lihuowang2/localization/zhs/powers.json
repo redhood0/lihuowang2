@@ -78,6 +78,6 @@
   "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.title": "虚拟？现实",
   "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.description": "每当你[gold]预见[/gold]，对一个随机敌人造成[blue]{Amount}[/blue]点伤害。",
   "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.smartDescription": "每当你[gold]预见[/gold]，对一个随机敌人造成[blue]{Amount}[/blue]点伤害。",
-  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.description": "[red]迷惘[/red]可以被主动打出：随机击晕一个敌人并获得[blue]1[/blue]点能量。",
-  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.smartDescription": "「迷惘」可以被主动打出：随机击晕一个敌人并获得[blue]1[/blue]点能量。"
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.description": "[red]迷惘[/red]可以被主动打出：随机击晕一个敌人，获得[blue]1[/blue]点能量并抽[blue]1[/blue]张牌。",
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.smartDescription": "「迷惘」可以被主动打出：随机击晕一个敌人，获得[blue]1[/blue]点能量并抽[blue]1[/blue]张牌。"
 }

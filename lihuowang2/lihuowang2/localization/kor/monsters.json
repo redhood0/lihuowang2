@@ -1,0 +1,11 @@
+{
+  "LIHUOWANG2_MONSTER_TEST_MINION.name": "조조",
+  "LIHUOWANG2_MONSTER_QIU_CHI_BAO.name": "추치바오",
+  "LIHUOWANG2_MONSTER_QIU_CHI_BAO.talk.summon": "이 돌 물약은 먹어도 속이 안 쓰려",
+  "LIHUOWANG2_MONSTER_PENG_LONG_TENG.name": "펑룽텅",
+  "LIHUOWANG2_MONSTER_PENG_LONG_TENG.talk.summon": "어디 한번 신나게 붙어 보자!",
+  "LIHUOWANG2_MONSTER_HE_SHANG.name": "화상",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.0": "나무아미타불",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.1": "아미타불",
+  "LIHUOWANG2_MONSTER_HE_SHANG.talk.chant.final": "오호, 내가 바로 세존이었구나~"
+}

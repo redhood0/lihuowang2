@@ -260,5 +260,8 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_VIRTUAL_REALITY.description": "每当你[gold]预见[/gold]，对一个随机敌人造成{Damage:diff()}点伤害。",
   "LIHUOWANG2_CARD_LIHUOWANG2_VIRTUAL_REALITY.smartDescription": "每当你[gold]预见[/gold]，对一个随机敌人造成{Damage:diff()}点伤害。",
   "LIHUOWANG2_CARD_LIHUOWANG2_JI_ZAI.description": "将[blue]X[/blue]张[red]迷惘[/red]洗入你的抽牌堆，然后抽[blue]X[/blue]张牌。\n获得[blue]迷惘之力[/blue]{IfUpgraded:show:2回合|1回合}。",
-  "LIHUOWANG2_CARD_LIHUOWANG2_JI_ZAI.smartDescription": "将[blue]X[/blue]张[red]迷惘[/red]洗入你的抽牌堆，然后抽[blue]X[/blue]张牌。\n获得[blue]迷惘之力[/blue]{IfUpgraded:show:2回合|1回合}。"
+  "LIHUOWANG2_CARD_LIHUOWANG2_JI_ZAI.smartDescription": "将[blue]X[/blue]张[red]迷惘[/red]洗入你的抽牌堆，然后抽[blue]X[/blue]张牌。\n获得[blue]迷惘之力[/blue]{IfUpgraded:show:2回合|1回合}。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_QING_JIAO_ROU_SI.title": "青椒肉丝",
+  "LIHUOWANG2_CARD_LIHUOWANG2_QING_JIAO_ROU_SI.description": "失去[red]3[/red]点生命。使一个友方单位回复[green]{Heal:diff()}[/green]点生命，并移除[blue]1[/blue]层随机负面效果。",
+  "LIHUOWANG2_CARD_LIHUOWANG2_QING_JIAO_ROU_SI.smartDescription": "失去[red]3[/red]点生命。使一个友方单位回复[green]{Heal:diff()}[/green]点生命，并移除[blue]1[/blue]层随机负面效果。"
 }

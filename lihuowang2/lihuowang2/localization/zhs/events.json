@@ -89,5 +89,16 @@
   "LIHUOWANG2_EVENT_LIHUOWANG2_SHANGJI_GUANKOU.pages.FULL.options.HEAL.description": "（回复{Heal}生命）",
   "LIHUOWANG2_EVENT_LIHUOWANG2_SHANGJI_GUANKOU.pages.RELIC_END.description": "随着眼睛的消失，你知晓了这个秘密",
   "LIHUOWANG2_EVENT_LIHUOWANG2_SHANGJI_GUANKOU.pages.HEAL_END.description": "随着眼睛的消失，你知晓了这个秘密",
-  "LIHUOWANG2_EVENT_LIHUOWANG2_SHANGJI_GUANKOU.pages.LEAVE_END.description": "你不再理会那第三颗眼，转身钻回潭水，向上面游去。"
+  "LIHUOWANG2_EVENT_LIHUOWANG2_SHANGJI_GUANKOU.pages.LEAVE_END.description": "你不再理会那第三颗眼，转身钻回潭水，向上面游去。",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.title": "大船",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.description": "北海新港，徐寿的白色游轮停靠在此。\n\n巨大如同胖头鱼一般的船头坐落在水面上，再搭配上通体一色的木黄色，看起来如同山般充满着压迫感。\n\n根据季灾的说法，只要杀死斗姥心蟠，他就能夺走斗姥的[purple]真假天道[/purple]。\n\n但同时，你也想到了他们提出的[gold]交易[/gold]。",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.options.ACCEPT.title": "（接受交易）",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.options.ACCEPT.description": "获得[gold]250[/gold]金币，将一张[purple]「悔恨」[/purple]加入牌组。",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.options.FIGHT.title": "（他必须死！！！）",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.INITIAL.options.FIGHT.description": "一场[red]艰难的战斗[/red]。胜利后获得一件[gold]随机稀有遗物[/gold]。",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.TRADE_END.description": "你接受了交易，他们如约给了丰厚的回报。\n\n[purple]可这真的好吗？[/purple]",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.VICTORY.description": "那东西终于倒下了，海面重新归于平静。\n\n季灾的人从阴影里走出来，把报酬丢在你脚边。",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.VICTORY.options.TAKE.title": "（拾起报酬）",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.VICTORY.options.TAKE.description": "获得[gold]2件随机稀有遗物[/gold]和[gold]88[/gold]金币。",
+  "LIHUOWANG2_EVENT_LIHUOWANG2_BIG_SHIP.pages.VICTORY_END.description": "你弯腰拾起那件东西，转身离开了码头。"
 }

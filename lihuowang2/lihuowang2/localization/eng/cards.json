@@ -258,5 +258,8 @@
   "LIHUOWANG2_CARD_LIHUOWANG2_VIRTUAL_REALITY.description": "Whenever you [gold]Foresee[/gold], deal {Damage:diff()} damage to a random enemy.",
   "LIHUOWANG2_CARD_LIHUOWANG2_VIRTUAL_REALITY.smartDescription": "Whenever you [gold]Foresee[/gold], deal {Damage:diff()} damage to a random enemy.",
   "LIHUOWANG2_CARD_LIHUOWANG2_JI_ZAI.description": "Shuffle [blue]X[/blue] [red]Bewilderment[/red] into your draw pile, then draw [blue]X[/blue] cards.\nGain [blue]Power of Bewilderment[/blue] for {IfUpgraded:show:2 turns|1 turn}.",
-  "LIHUOWANG2_CARD_LIHUOWANG2_JI_ZAI.smartDescription": "Shuffle [blue]X[/blue] [red]Bewilderment[/red] into your draw pile, then draw [blue]X[/blue] cards.\nGain [blue]Power of Bewilderment[/blue] for {IfUpgraded:show:2 turns|1 turn}."
+  "LIHUOWANG2_CARD_LIHUOWANG2_JI_ZAI.smartDescription": "Shuffle [blue]X[/blue] [red]Bewilderment[/red] into your draw pile, then draw [blue]X[/blue] cards.\nGain [blue]Power of Bewilderment[/blue] for {IfUpgraded:show:2 turns|1 turn}.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_QING_JIAO_ROU_SI.title": "Pepper Pork",
+  "LIHUOWANG2_CARD_LIHUOWANG2_QING_JIAO_ROU_SI.description": "Lose [red]3[/red] HP. Heal a friendly unit for [green]{Heal:diff()}[/green] HP and remove [blue]1[/blue] stack of a random debuff.",
+  "LIHUOWANG2_CARD_LIHUOWANG2_QING_JIAO_ROU_SI.smartDescription": "Lose [red]3[/red] HP. Heal a friendly unit for [green]{Heal:diff()}[/green] HP and remove [blue]1[/blue] stack of a random debuff."
 }

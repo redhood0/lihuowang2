@@ -34,7 +34,15 @@ public class FireDefensePower : ModPowerTemplate
     public override async Task BeforeDamageReceived(PlayerChoiceContext choiceContext, Creature target,
         decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner || amount <= 0m || dealer == null || dealer == Owner || Owner.IsDead)
+        // 判「是不是敌方的一次攻击」要看伤害类型，不能看伤害数值。
+        // 引擎对 0 点伤害同样会走到这里（基类注释：Even if the actual damage amount will be 0,
+        // this will still be called），而 0 攻怪物打出来就是 amount == 0；
+        // 之前写了 amount <= 0m 就把这类攻击整个滤掉了，表现就是"被攻击了但不触发"。
+        // 官方「荆棘」(ThornsPower) 用的是同一个判断：props.IsPoweredAttack()
+        //（= 带 Move 且不带 Unpowered，即力量修正生效的真实攻击），
+        // 这样中毒/灼烧/真实掉血这类非攻击伤害不会误触发。
+        if (target != Owner || !props.IsPoweredAttack() || dealer == null || dealer == Owner
+            || Owner.IsDead)
             return;
 
         Flash();

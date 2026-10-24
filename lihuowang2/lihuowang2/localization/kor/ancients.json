@@ -1,0 +1,42 @@
+{
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "또 당신이군. 당신네 늙은 것들은 뭘 내줄 때마다 먼저 사람이 아픈지부터 보더군.",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "계속",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "[sine]난 아픈 건 보지 않아. 물건은 내려놓을 테니, 누가 줍느냐에 따라 그 무게도 그 사람이 지는 거야——골라 봐, 무겁다고 투정 부리지 말고.[/sine]",
+  "NEOW.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/neow/neow_welcome",
+
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "오? 너도 탑으로 돌아왔구나, 머리는 좀 괜찮아졌어?",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "대답한다",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.char": "난 안 아프다고!",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.next": "계속",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-2r.ancient": "여전하네. 갖고 싶은 게 있으면 알아서 가져가.",
+  "DARV.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-2r.ancient.sfx": "event:/sfx/npcs/darv/darv_excited",
+
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "눈으로 날 쳐다보지 마. 내 몸에 뭐가 붙어 있는진 나도 알아.",
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "계속",
+  "PAEL.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "네가 아는 그 절반이 나머지 절반을 속이고 있어. 내 이 눈길을 받을지——고르는 건 네 몫이야.",
+
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "자해!? 자신을 다치게 하면 안 돼! 아주 나쁘다고! 자, 이걸 써 봐!",
+  "OROBAS.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char.disabled": "마음대로 해. 어차피 내가 내 몸을 베는 게 한두 번도 아닌데. (이화왕 대사, 미사용)",
+
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient": "이리 오렴, 어린 도사님. 선물을 준비했어. 다만 그전에, 그 빨간 죽간부터 좀 멀리 두렴.",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.ancient.sfx": "event:/sfx/npcs/nonupeipe/nonupeipe_giggle",
+  "NONUPEIPE.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char.disabled": "그렇게 멀리 피할 것까지야? 내 몸엔 죽간 한 권뿐인데. (이화왕 대사, 미사용)",
+
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "또 판을 벌이는 자네군. 당신네 사람들은 남을 구경거리로 만들기를 좋아하지.",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "계속",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "구경? 아니, 아니——난 자네를 무대에 올려 주려는 걸세. 여기서 아무도 써 본 적 없는 한 판을 해 볼 텐가?",
+  "TANX.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/tanx/tanx_laugh",
+
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "불은 안 무서워. 난 불 속에서 한 번 탔고, 나왔을 땐 뼈까지 새까맸지.",
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "계속",
+  "TEZCATARA.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "그건 타는 게 아니라 바치는 거야. 남은 반 토막도 여기 넣어 봐——난 답은 주지 않아, 한 줌의 재만 줄 뿐이야.",
+
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "가면, 오르골, 장미…… 여긴 파하고 난 잔칫집 같군. 사람은 다 가고 아직 안 치웠어.",
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "계속",
+  "VAKUU.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "잔치가 끝났느냐는 누가 앉아 주느냐에 달렸지. 하나 골라 가져가렴——어차피 언젠가는 두고 갈 거니까.",
+
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.char": "너 누구냐? 좌망도?!!",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-0r.next": "계속",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient": "그 이름으로 날 부르는 자가 있긴 참 오랜만이군...",
+  "THE_ARCHITECT.talk.LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.0-1r.ancient.sfx": "event:/sfx/npcs/tanx/tanx_laugh"
+}

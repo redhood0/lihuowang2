@@ -78,6 +78,6 @@
   "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.title": "Virtual? Reality",
   "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.description": "Whenever you [gold]Foresee[/gold], deal [blue]{Amount}[/blue] damage to a random enemy.",
   "LIHUOWANG2_POWER_VIRTUAL_REALITY_POWER.smartDescription": "Whenever you [gold]Foresee[/gold], deal [blue]{Amount}[/blue] damage to a random enemy.",
-  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.description": "The [red]Bewilderment[/red] curse can be played: stun a random enemy and gain [blue]1[/blue] Energy.",
-  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.smartDescription": "The [red]Bewilderment[/red] curse can be played: stun a random enemy and gain [blue]1[/blue] Energy."
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.description": "The [red]Bewilderment[/red] curse can be played: stun a random enemy, gain [blue]1[/blue] Energy and draw [blue]1[/blue] card.",
+  "LIHUOWANG2_POWER_MI_WANG_ZHI_LI_POWER.smartDescription": "The [red]Bewilderment[/red] curse can be played: stun a random enemy, gain [blue]1[/blue] Energy and draw [blue]1[/blue] card."
 }

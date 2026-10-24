@@ -18,7 +18,7 @@ namespace lihuowang2.Cards;
 
 // 迷惘：一张诅咒。
 //   · 平时不能打出（IsPlayable 为 false）；
-//   · 持有「迷惘之力」（MiWangZhiLiPower）时**可以主动打出**：随机击晕一个敌人并获得 1 点能量；
+//   · 持有「迷惘之力」（MiWangZhiLiPower）时**可以主动打出**：随机击晕一个敌人、获得 1 点能量、抽 1 张牌；
 //   · 回合结束时若此牌仍在手牌中：获得 1 层「混乱」（官方 ConfusedPower）；
 //   · 关键字是「消耗」（Exhaust）：**只有被打出时**才进消耗堆，回合结束不会自动消失，
 //     所以它会一直留在手里、每回合结束都触发一次混乱（改前是 Ethereal/虚无，回合结束就自动消耗掉）。
@@ -40,8 +40,9 @@ public class lihuowang2CurseMiWang : ModCardTemplate
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 
-    // 打出时获得的能量
+    // 打出时获得的能量 / 抽的牌数
     private const decimal EnergyGain = 1m;
+    private const int DrawCount = 1;
 
     // 卡图：images/cards/MiWang.png —— 这个文件名和类名不一致（其它卡都是 <类名>.png），
     // 所以这里写死路径，而不是 $"{GetType().Name}.png"。
@@ -103,7 +104,7 @@ public class lihuowang2CurseMiWang : ModCardTemplate
     //     而本牌在持有迷惘之力时要能被主动打出。同结构的「炸炉」是永久不可打出，所以它仍然带那个关键字。
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    // 打出（只有持有「迷惘之力」时才可能走到这里）：随机击晕一个敌人 + 获得 1 点能量。
+    // 打出（只有持有「迷惘之力」时才可能走到这里）：随机击晕一个敌人 + 获得 1 点能量 + 抽 1 张牌。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         Player? player = Owner.Creature.Player;
@@ -124,6 +125,12 @@ public class lihuowang2CurseMiWang : ModCardTemplate
         }
 
         await PlayerCmd.GainEnergy(EnergyGain, player);
+
+        // 再抽 1 张牌：能量不亏+有牌进来，打出「迷惘」才算净赚一手。
+        // 走引擎标准抽牌流程（抽牌堆空了自己洗、遵守手牌上限、会触发 Hook.ShouldDraw /
+        // AfterCardDrawn 这些钩子，例如「禁止抽牌」的减益同样会挡住它）。
+        // 注意：Draw 不会套用"抽牌数 +N"这类修正，数量就是传进去的 DrawCount。
+        await CardPileCmd.Draw(choiceContext, DrawCount, player);
     }
 
     // 回合结束若此牌在手牌中：获得 1 层「混乱」。

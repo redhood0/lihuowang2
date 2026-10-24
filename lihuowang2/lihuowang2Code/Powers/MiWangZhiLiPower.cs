@@ -13,7 +13,8 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace lihuowang2.Powers;
 
 // 迷惘之力：让「迷惘」诅咒可以被主动打出，并且是**有层数的限时状态**。
-// 打出那张牌时的结算（随机击晕一个敌人 + 获得 1 点能量）写在卡牌本身里，见 lihuowang2CurseMiWang.OnPlay。
+// 打出那张牌时的结算（随机击晕一个敌人 + 获得 1 点能量 + 抽 1 张牌）写在卡牌本身里，
+// 见 lihuowang2CurseMiWang.OnPlay。
 //
 // 层数 = 还能维持几个回合：
 //   · 施加时默认给 DefaultStacks（1）层，见下面；

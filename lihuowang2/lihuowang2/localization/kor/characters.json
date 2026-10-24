@@ -1,0 +1,21 @@
+{
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.aromaPrinciple": "[sine][blue]새로운 여정은 깨끗한 템플릿에서 시작된다.[/blue][/sine]",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.banter.alive.endTurnPing": "계재... 계재! 꾸물대지 마!",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.banter.dead.endTurnPing": "왜 나만 이런 걸 견뎌야 해! 난 그냥 집에 가고 싶다고... 엄마... 양나... 날 기다리고 있어...",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.cardsModifierDescription": "템플릿 캐릭터의 카드가 보상과 상점에 등장합니다.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.cardsModifierTitle": "템플릿 카드",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.defeatMessage": "템플릿은 아직 손봐야 합니다.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.description": "여긴 어디지? 아직도 탑 안이라니!! 이건 가짜야...\n이건 전부 좌망도의 장난이다! 또 나를 속이려는 거지!!",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.eventDeathPrevention": "이화왕은 더 이상 분간하지 못한다.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.flavor": "새로운 모험으로 빚어지기를 기다리는 깨끗한 템플릿.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.goldMonologue": "이 골드면 테스트를 시작하기에 충분하다.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.possessiveAdjective": "그의",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.pronounObject": "그를",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.pronounPossessive": "그의",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.pronounSubject": "그",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.selectMessage": "이화왕 준비 완료.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.title": "이화왕",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.titleObject": "이화왕",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.unlockText": "[pink]{Prerequisite}[/pink]로 한 판을 진행하면 이 캐릭터를 해금합니다.",
+  "LIHUOWANG2_CHARACTER_LIHUOWANG2_CHARACTER.victoryMessage": "심소 검증 완료."
+}

@@ -56,15 +56,17 @@ public class lihuowang2DaqianSearch : ModCardTemplate
         if (candidates.Count == 0)
             return;
 
-        // 张数足够少：全部拿回手牌
+        // 只有唯一一张时可选的余地为零，直接拿回；
+        // 2 张及以上一律弹选牌界面——哪怕总数没超过上限（如消耗堆里刚好 2~3 张），
+        // 玩家也可能只想拿其中 1 张，不能替他全选。
+        // 下限给 0：既可以拿 0 张（取消），也可以只拿部分。
         IEnumerable<CardModel> toReturn;
-        if (candidates.Count <= max)
+        if (candidates.Count == 1)
         {
             toReturn = candidates;
         }
         else
         {
-            // 否则弹出选牌界面，最多选 max 张，可取消
             toReturn = await CardSelectCmd.FromCombatPile(
                 choiceContext, exhaustPile, player,
                 new CardSelectorPrefs(SelectionScreenPrompt, 0, max) { Cancelable = true },
