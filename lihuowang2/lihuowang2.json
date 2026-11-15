@@ -8,9 +8,9 @@
   "has_pck": true,
   "has_dll": true,
   "affects_gameplay": true,
-  "min_game_version": "0.111.0",
+  "min_game_version": "0.113.0",
   "dependencies": [
-    { "id": "STS2-RitsuLib", "version": "0.5.17" },
-    { "id": "MinionLib", "min_version": "0.6.3" }
+    { "id": "STS2-RitsuLib", "version": "0.6.13" },
+    { "id": "MinionLib", "min_version": "0.7.0" }
   ]
 }

@@ -34,9 +34,11 @@ public class lihuowang2FireDefense : ModCardTemplate
     public override bool GainsBlock => true;
 
     // 悬停提示：神火护体效果。
-    // 传入当前点燃层数：能力面板的文案里有 {Amount}，不传的话会显示「0 层」。
+    // 传入「打出后的总层数」（当前已有层数 + 本次）—— 能力吃叠加，只写本次数值会显示偏小；
+    // 不传的话能力面板文案里的 {Amount} 会显示「0 层」。图鉴里 Owner 为 null，按 0 算。
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromPower<FireDefensePower>(DynamicVars["Ignite"].IntValue)];
+        [HoverTipFactory.FromPower<FireDefensePower>(
+            (Owner?.Creature?.GetPower<FireDefensePower>()?.Amount ?? 0) + DynamicVars["Ignite"].IntValue)];
 
     // 卡图资源。对应 lihuowang2/images/cards/lihuowang2FireDefense.png（缺失时用占位图）。
     public override CardAssetProfile AssetProfile => new(
@@ -61,12 +63,9 @@ public class lihuowang2FireDefense : ModCardTemplate
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         // 2. 获得神火护体（本回合受击时点燃所有敌人，层数见 Ignite；下个自己回合开始时消失）。
-        //    先移除旧实例再施加：这个能力不吃叠加，层数始终等于「本次打出」的数值。
-        //    （否则同一回合打出第二张同名牌会走引擎的 ModifyAmount 累加，变成点燃 4/5 层。）
-        FireDefensePower? existing = Owner.Creature.GetPower<FireDefensePower>();
-        if (existing != null)
-            await PowerCmd.Remove(existing);
-
+        //    **可叠加**：StackType.Counter 下引擎的 PowerCmd.Apply 会走 ModifyAmount（Amount += 新值），
+        //    所以同一回合打出两张就是 2+2=4 层，受击时点燃 4 层。
+        //    （不要再"先 Remove 旧实例再 Apply"——那会把层数重置成本次数值，表现就是"无法叠加"。）
         await PowerCmd.Apply<FireDefensePower>(choiceContext, Owner.Creature,
             DynamicVars["Ignite"].BaseValue, Owner.Creature, this);
     }

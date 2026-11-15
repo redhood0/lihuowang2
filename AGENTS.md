@@ -213,3 +213,25 @@ This file is for project-specific instructions that DodWork and AI agents should
     （Prefix 里 `__result = 同侧 && IsAlive; return false;` 跳过原逻辑，仅对 ④ 记下的牌生效）。
 3. **被补丁影响的牌要同步改文案**（中英各 `description` + `smartDescription`）：例如当时改的是
    `powers.json` 的「怜悯」与 `cards.json` 的「火袄真经」；**回退时同样要改回官方措辞**。
+
+## 备忘：依赖版本必须跟游戏版本同步（**0.113.0 踩过**）
+
+RitsuLib / MinionLib **都是按游戏版本分支编译的**，游戏升级后必须同步升 NuGet 包与 manifest，
+否则会出现"特效、事件莫名其妙坏了"这类**运行期**问题（编译照样能过，因为符号都在）。
+
+1. **查包对应哪个游戏版本**：包里 `contentFiles/any/any/mod_manifest.json` 的 `min_game_version` 就是目标版本。
+   实测对照：RitsuLib `0.5.17`→`0.111.0`、`0.6.10`→多版本包（`compat/0.107.1|0.109.0|0.110.0|0.111.0`）、
+   `0.6.13`→`0.113.0`；MinionLib `0.6.3`→`0.110.1`、`0.7.0`→`0.113.0`。
+   查最新版：`https://api.nuget.org/v3-flatcontainer/<包id小写>/index.json`，再下 `.nupkg` 解开看上面那个 json。
+2. **要同步改三处**：`.csproj` 的 `PackageReference` 版本、`lihuowang2.json` 的
+   `dependencies[STS2-RitsuLib].version`（构建 target 会自动同步）与 `MinionLib.min_version`（要手改）、
+   以及 `min_game_version`。
+3. **RitsuLib 0.6.x 起是 loader + 变体结构**：`mods/STS2-RitsuLib/{STS2-RitsuLib.dll(loader), compat/<游戏版本>/, shared/, assets.zip}`。
+   构建 target 会先 `RemoveDir compat/shared/assets` 再重装，**别手工只拷根 DLL**（缺 `compat/<版本>` 或
+   `assets.zip` 会导致特效/图标/多语言缺失）。本地 `mods/` 版本优先于 Steam Workshop 版本（ID 相同时版本高者胜）。
+4. **先看日志再猜**：`%APPDATA%\SlayTheSpire2\logs\godot.log` 是**最新一次**运行（带时间戳的 `.log` 是上一次的归档，别看错）。
+   重点看 `Release Version:` / `Host Version:` / `RitsuLib Version: x [compat branch: y]`（y 必须等于游戏版本）、
+   各 `Patcher - * Patch application complete: ... failed`、`[AutoRegister] Processed assembly 'lihuowang2': N succeeded, M failed`。
+5. **别把别人的 mod 故障当成自己的**：`BaseLib` v3.4.7/v3.4.8 引用了 STS2 0.113.0 已删除的
+   `MegaCrit.Sts2.Core.Models.SingletonModel`（0.113 的 `sts2.dll` 里搜不到该类型名，改成了 `RunModel`），
+   整包 `TypeLoadException` → 依赖它的 mod（QuickRestart 等）全挂；本模组不依赖 BaseLib，manifest 里也没写。

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using lihuowang2.Cards;
 using MegaCrit.Sts2.Core.Commands;
@@ -50,6 +52,11 @@ public sealed class lihuowang2LongmenWaterBandits : lihuowang2EventTemplate
     // 开战要求：见类注释（引擎硬性约束）。
     public override bool IsShared => true;
 
+    // 前面几个点不出现：前 4 个点（ActFloor 1~4 = 起始 Neow 点 + 头三个地图点）不抽到水匪。
+    // 想调就只改这个数字：ActFloor 从 1 起算且 row 0 的 Ancient 点就是 1，
+    // 所以填 N 表示"第 N 层起才可能出现"（填 5 = 前 4 个点不会遇到）。
+    protected override int MinActFloor => 5;
+
     public override EventAssetProfile AssetProfile => new(
         InitialPortraitPath: $"{Entry.ResPath}/images/event/LongmenWaterBandits.png");
 
@@ -93,9 +100,27 @@ public sealed class lihuowang2LongmenWaterBandits : lihuowang2EventTemplate
     // ② 杀光他们：开一场战斗，并在战斗结束后回到本事件（见 Resume）
     private Task FightThem()
     {
-        EnterCombatWithoutExitingEvent(BanditEncounter, [], shouldResumeAfterCombat: true);
+        EncounterModel encounter = BanditEncounter;
+        EnterCombatWithoutExitingEvent(
+            EngineTakesMutableEncounter ? encounter.ToMutable() : encounter,
+            [],
+            shouldResumeAfterCombat: true);
         return Task.CompletedTask;
     }
+
+    // 兼容两代引擎的签名差异（踩过坑）：
+    //   0.111.0 起：参数是 canonicalEncounter，引擎自己在 EventCombatSynchronizer 里 ToMutable()；
+    //   0.107.x 及更早：参数是 mutableEncounter，直接 new CombatState(encounter)，
+    //                   而 CombatState 构造第一句就是 encounter.AssertMutable()。
+    // 所以旧版必须自己传可变实例，新版必须传规范实例（规范实例上再调 ToMutable() 也会抛 MutableModelException，
+    // 因为 ToMutable() 内部先 AssertCanonical()）。版本只能按参数名判别：
+    //   日志实测 v0.107.1 帧为 `EnterCombatWithoutExitingEvent(EncounterModel mutableEncounter, ...)`。
+    private static readonly bool EngineTakesMutableEncounter = Array.Find(
+        typeof(EventModel).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic),
+        m => m.Name == nameof(EnterCombatWithoutExitingEvent)
+             && m.GetParameters().Length == 3
+             && m.GetParameters()[0].ParameterType == typeof(EncounterModel))
+        ?.GetParameters()[0].Name == "mutableEncounter";
 
     // 战斗结束回到事件：摆出战利品页（两个选项，金币数是同一个值，区别只在要不要那卷竹简）
     public override Task Resume(AbstractRoom exitedRoom)

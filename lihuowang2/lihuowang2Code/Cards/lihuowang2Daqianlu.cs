@@ -64,8 +64,12 @@ public class lihuowang2Daqianlu : ModCardTemplate
 
         await PreviewPileAdd(added);
 
-        // 绝境彩蛋：仅剩 1 点生命且能量打空时，把 0 费「登阶」塞回手牌
-        if (Owner.Creature.CurrentHp <= 1 && Owner.PlayerCombatState!.Energy <= 0)
+        // 绝境彩蛋：生命堵到 1、能量打空、**并且手牌打空**时，才把 0 费「登阶」塞回手上。
+        // 之前漏了"0 手牌"这一条，只要 1 血 0 能量就触发 —— 手里还攥着一堆牌时也会白拿登阶。
+        // 注意这张残卷在结算前就已经从手牌移到 Play 区（CardModel.Play → CardPileCmd.AddDuringManualCardPlay），
+        // 所以这里读到的 Hand 数量，天生就是"打完这张之后还剩几张"，不用再 -1。
+        bool handEmpty = PileType.Hand.GetPile(player).Cards.Count == 0;
+        if (handEmpty && Owner.Creature.CurrentHp <= 1 && Owner.PlayerCombatState!.Energy <= 0)
         {
             CardModel? dengjie = combatState.CreateCard<lihuowang2DaqianDengjie>(player);
             if (dengjie != null)

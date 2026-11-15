@@ -44,13 +44,15 @@
 
     <ItemGroup>
         <PackageReference Include="Krafs.Publicizer" Version="2.3.2" PrivateAssets="all" />
-        <!-- 主线 RitsuLib（STS2 0.105.0+），跟踪 NuGet 最新版本。兼容分支和 manifest 版本对齐规则见 README。 -->
-        <PackageReference Include="STS2.RitsuLib" GeneratePathProperty="true" Version="0.5.17" />
+        <!-- 主线 RitsuLib（STS2 0.105.0+），跟踪 NuGet 最新版本。兼容分支和 manifest 版本对齐规则见 README。
+             0.6.13 对应游戏 0.113.0（包内 mod_manifest 的 min_game_version = 0.113.0）；
+             0.5.17 对应 0.111.0。RitsuLib 每个版本按游戏版本分支编译，换游戏版本要同步换这里。 -->
+        <PackageReference Include="STS2.RitsuLib" GeneratePathProperty="true" Version="0.6.13" />
         <!-- MinionLib：随从 / 组件卡牌库。包内含 Source Generator，检测到本项目引用了
              RitsuLib（程序集 STS2-RitsuLib）后会在 lihuowang2.RitsuAdapters 下生成
              ModMinionTemplate / ModComponentsCardTemplate / ModActionTemplate 等适配类。
              注意：不要改成引用 GitHub Release 的 DLL，否则拿不到 analyzer 与 buildTransitive target。 -->
-        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.6.3" />
+        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.7.0" />
     </ItemGroup>
 
     <ItemGroup>

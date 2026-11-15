@@ -22,7 +22,9 @@ public class FireDefensePower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     // 层数可见（图标上会显示数字）且需要手动赋值，所以用 Counter。
     // 不用 Single：引擎里 Single 的层数「不显示」（RefreshAmount 只对 Counter 显示数字），
-    // 而这里玩家需要直接看到会点燃几层；卡牌侧每次都先移除旧实例再按当前数值施加，所以不会累加。
+    // 而这里玩家需要直接看到会点燃几层。
+    // Counter 还带来一个效果：同一回合打出多张「神火护体」时引擎会累加（2+2=4 层），
+    // 每层就是每次受击点燃的层数 —— 这是预期行为（卡牌侧不再 Remove 旧实例）。
     public override PowerStackType StackType => PowerStackType.Counter;
 
     // 图标先用现成 Heitaisui 占位，有正式图后替换路径
