@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models.Relics;
 using lihuowang2.Characters;
 using lihuowang2.Patches;
+using lihuowang2.Relics;
 using STS2RitsuLib;
 using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop;
@@ -59,6 +60,9 @@ public partial class Entry
         ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(DemonTongue));       // 恶魔之舌（稀有）
         ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(RuinedHelmet));      // 损毁头盔（稀有）
         ModHelper.AddModelToPool(typeof(lihuowang2RelicPool), typeof(Brimstone));         // 硫磺（商店）
+
+        // 火莲改为「达弗」的先古遗物：注册到达弗的初始选项里（必须在内容注册冻结之前）。
+        lihuowang2Relic_HuoLian.RegisterDarvOption();
 
         // 补丁：「污浊药水」原本用 `!c.IsPet` 排除宠物，而 MinionLib 的修真随从正是宠物，
         // 于是药水只伤玩家和怪物、随从毫发无损。这里把修真随从额外加进伤害目标。

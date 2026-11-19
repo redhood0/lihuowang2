@@ -48,7 +48,7 @@ public class lihuowang2FireDefense : ModCardTemplate
     // Block  = 格挡（14，升级 +6 → 20）；
     // Ignite = 神火护体每次点燃的层数（2，升级 +1 → 3）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(14m, ValueProp.Move),
+        new BlockVar(13m, ValueProp.Move),
         new DynamicVar("Ignite", 2m)
     ];
 
@@ -73,7 +73,7 @@ public class lihuowang2FireDefense : ModCardTemplate
     // 升级：格挡 14 → 20；点燃层数 2 → 3
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(6);
+        DynamicVars.Block.UpgradeValueBy(4);
         DynamicVars["Ignite"].UpgradeValueBy(1);
     }
 }

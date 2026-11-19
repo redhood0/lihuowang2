@@ -16,13 +16,13 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Cards;
 
-// 触手·食鬼：需要黑太岁才能打出；吃掉手里所有诅咒并抽等量牌 +1（升级后诅咒与状态都吃）。
+// 触手·噬魂（稀有）：需要黑太岁才能打出；吃掉手里所有诅咒并抽等量牌 +1（升级后诅咒与状态都吃）。
 [RegisterCard(typeof(lihuowang2CardPool))]
 public class lihuowang2TentacleEatGhost : ModCardTemplate
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Uncommon;
+    private const CardRarity rarity = CardRarity.Rare;
     private const TargetType targetType = TargetType.Self;
     private const bool shouldShowInCardLibrary = true;
 

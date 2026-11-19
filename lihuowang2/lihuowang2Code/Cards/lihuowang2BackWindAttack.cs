@@ -63,6 +63,6 @@ public class lihuowang2BackWindAttack : ModCardTemplate
     protected override void OnUpgrade()
     {
         // EnergyCost.UpgradeBy(-1);
-        DynamicVars.Damage.UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(2);
     }
 }

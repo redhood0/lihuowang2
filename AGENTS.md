@@ -116,7 +116,10 @@ This file is for project-specific instructions that DodWork and AI agents should
 
 ## 备忘：随机附魔（enchantment）必须自己兜住"官方附魔会崩的组合"
 
-随机给卡牌附魔（如 `Cards/lihuowang2XiuJia.cs` 修假）时，**官方 `CanEnchant` 只判"能不能附"，
+> ⚠ 现状（2026-11-18）：「修假」已重做为"1 费，从 3 张其他角色的卡牌里选 1 张加入手牌"，**随机附魔那套代码已经删除**
+> （`Cards/lihuowang2XiuJia.cs` 现在只剩取池 + 三选一 + 加手牌）。下面的经验保留，供以后再做"随机附魔"时参考。
+
+随机给卡牌附魔时，**官方 `CanEnchant` 只判"能不能附"，
 不判"附了之后打出去会不会崩"**，必须自己加安全过滤。逐个扫过官方 21 个正常附魔后，确认只有两个雷：
 
 | 附魔 | 崩因 | 屏蔽条件 |
@@ -235,3 +238,27 @@ RitsuLib / MinionLib **都是按游戏版本分支编译的**，游戏升级后�
 5. **别把别人的 mod 故障当成自己的**：`BaseLib` v3.4.7/v3.4.8 引用了 STS2 0.113.0 已删除的
    `MegaCrit.Sts2.Core.Models.SingletonModel`（0.113 的 `sts2.dll` 里搜不到该类型名，改成了 `RunModel`），
    整包 `TypeLoadException` → 依赖它的 mod（QuickRestart 等）全挂；本模组不依赖 BaseLib，manifest 里也没写。
+
+## 备忘：回合制的"结算型能力"必须用 `AfterSideTurnStart`，不能用 `BeforeSideTurnStart`（**踩过坑**）
+
+「在某个侧回合开始时结算并造成伤害」的能力（中毒、点燃这类 DoT），**必须挂 `AfterSideTurnStart`**：
+
+```csharp
+public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants,
+    ICombatState combatState)
+{
+    if (!participants.Contains(Owner) || Owner.IsDead) return;   // 只处理"自己那一侧"开始
+    ...
+    if (Owner.IsAlive) await PowerCmd.Remove(this);
+    else await Cmd.CustomScaledWait(0.1f, 0.25f);                // 被烧死：留死亡结算时间
+}
+```
+
+- **崩点**：用 `BeforeSideTurnStart` 时引擎还没走完死亡结算，该能力在"回合真正开始之前"把单位打死，
+  敌方回合的行动队列就卡住不推进（实测：点燃烧死一只敌人，同侧另一只怪还挂着攻击意图，
+  战斗就停在那里不动）。官方 `PoisonPower`（中毒）也是用 `AfterSideTurnStart` 结算。
+- 结算致死时**额外等一小段死亡动画**（`Cmd.CustomScaledWait(0.1f, 0.25f)`，官方中毒同款），
+  否则同侧其它敌人的行动会卡在那一帧。
+- 该钩子会通知场上所有能力，**必须用 `participants.Contains(Owner)` 筛"自己的侧"**，
+  否则敌人回合也会替玩家结算一次。
+- 参考：`Powers/DianranPower.cs`（点燃）。

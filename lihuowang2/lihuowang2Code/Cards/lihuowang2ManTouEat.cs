@@ -53,6 +53,6 @@ public class lihuowang2ManTouEat : ModCardTemplate
     // 升级：人工制品 1 → 2（且死亡概率大幅降低，见本地化/OnPlay）
     protected override void OnUpgrade()
     {
-        DynamicVars["Magic"].UpgradeValueBy(1);
+        // DynamicVars["Magic"].UpgradeValueBy(1);
     }
 }

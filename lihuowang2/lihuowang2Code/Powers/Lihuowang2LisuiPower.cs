@@ -76,7 +76,8 @@ public class Lihuowang2LisuiPower : ModPowerTemplate
     internal static bool IsTentacle(CardModel? card) => card switch
     {
         lihuowang2TentacleSlash or lihuowang2TentacleBind or
-        lihuowang2TentacleMend or lihuowang2TentacleEatGhost => true,
+        lihuowang2TentacleMend or lihuowang2TentacleEatGhost or
+        lihuowang2YanShen => true,
         _ => false
     };
 }

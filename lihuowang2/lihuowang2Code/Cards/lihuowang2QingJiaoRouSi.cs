@@ -29,7 +29,7 @@ namespace lihuowang2.Cards;
 public class lihuowang2QingJiaoRouSi : ModCardTemplate
 {
     // 基础耗能
-    private const int energyCost = 0;
+    private const int energyCost = 1;
     // 卡牌类型（技能）
     private const CardType type = CardType.Skill;
     // 卡牌稀有度
@@ -38,7 +38,7 @@ public class lihuowang2QingJiaoRouSi : ModCardTemplate
     private const bool shouldShowInCardLibrary = true;
 
     // 自己失去的生命（无视格挡的真实 HP 损失，不随升级变化）
-    private const decimal SelfHpLoss = 3m;
+    private const decimal SelfHpLoss = 5m;
 
     // 自定义目标类型：所有「存活、与出牌玩家同阵营、但**不是玩家本人**」的生物
     //（= 队友 + 随从，独独排除自己 —— 这就是那条不写在卡面上的潜规则）。
@@ -58,7 +58,7 @@ public class lihuowang2QingJiaoRouSi : ModCardTemplate
 
     // 数值：Heal = 治疗量（3，升级 +2 → 5）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Heal", 3m)
+        new DynamicVar("Heal", 10m)
     ];
 
     // 关键字：消耗（升级后会被去掉，见 OnUpgrade）。
@@ -141,6 +141,6 @@ public class lihuowang2QingJiaoRouSi : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars["Heal"].UpgradeValueBy(2);
-        RemoveKeyword(CardKeyword.Exhaust);
+        // RemoveKeyword(CardKeyword.Exhaust);
     }
 }

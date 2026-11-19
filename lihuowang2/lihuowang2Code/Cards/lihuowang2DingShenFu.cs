@@ -25,7 +25,7 @@ public class lihuowang2DingShenFu : ModCardTemplate
 {
     private const int energyCost = 2;
     private const CardType type = CardType.Skill;
-    private const CardRarity rarity = CardRarity.Rare;
+    private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.AnyEnemy;
     private const bool shouldShowInCardLibrary = true;
 

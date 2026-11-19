@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Powers;
 
-// 魍魉之躯：每有 2 张诅咒牌进入自己的手牌，获得 amount 点力量。
+// 魍魉之躯：每有 2 张诅咒牌进入自己的手牌，获得 amount 点力量和 amount 点敏捷。
 [RegisterPower]
 public class WangLiangBodyPower : ModPowerTemplate
 {
@@ -55,8 +55,10 @@ public class WangLiangBodyPower : ModPowerTemplate
 
         _curseEnteredHand = 0;
         Flash();
-        // 该钩子没有 PlayerChoiceContext，施加力量本身也不会产生玩家选择，
+        // 该钩子没有 PlayerChoiceContext，施加力量/敏捷本身也不会产生玩家选择，
         // 所以用 ThrowingPlayerChoiceContext（模组里其他无上下文钩子也是这么写的）。
+        // 力量与敏捷各给 Amount 点（Amount = 层数，卡牌侧基础 1、升级后 2）。
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, base.Amount, Owner, null);
+        await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), Owner, base.Amount, Owner, null);
     }
 }

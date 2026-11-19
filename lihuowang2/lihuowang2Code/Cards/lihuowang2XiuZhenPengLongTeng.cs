@@ -21,7 +21,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace lihuowang2.Cards;
 
-// 修真·彭龙腾：2 费技能（升级后 1 费），稀有，消耗。
+// 修真·彭龙腾：3 费技能，稀有，消耗（升级后移除「消耗」，费用不变，仍是 3 费）。
 // 失去 1 点最大能量，召唤随从「彭龙腾」（20 生命、站在玩家前方、替玩家承受未格挡的伤害）。
 // 那 1 点最大能量由随从身上的「先天一炁」扣着：随从死亡时能力消失，能量上限自动还回来。
 //
@@ -123,9 +123,11 @@ public class lihuowang2XiuZhenPengLongTeng : ModCardTemplate
         PengLongTeng.PlaySummonLine(minion);
     }
 
-    // 升级：费用 2 → 1
+    // 升级：移除「消耗」，费用保持 3 费（不再降费）。
+    // RemoveKeyword 能删掉 CanonicalKeywords 里的关键字（实例的 LocalKeywords 初始就是它的并集），
+    // 升级后的牌打完进弃牌堆，之后还能再抽到；卡面上的「消耗」标记也会随之消失。
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

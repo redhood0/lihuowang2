@@ -37,7 +37,7 @@ public class lihuowang2WangLiangBody : ModCardTemplate
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
-    // 数值：Power = 每 2 张诅咒获得的力量（1，升级 +1 → 2）。
+    // 数值：Power = 每 2 张诅咒获得的力量与敏捷各多少（1，升级 +1 → 2，两者同步提升）。
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Power", 1m)
     ];
